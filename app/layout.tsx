@@ -31,7 +31,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${syne.variable}`}>
       <head>
-        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4JFEK747YT"
           strategy="afterInteractive"
@@ -49,7 +48,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
 
-        {/* Floating ember particles — fixed, pointer-events none, z-index 3 */}
+        {/* Floating ember particles */}
         <div aria-hidden="true">
           <div className="ember ember-1" />
           <div className="ember ember-2" />
@@ -71,6 +70,21 @@ export default function RootLayout({
           <div className="ember ember-18" />
           <div className="ember ember-19" />
           <div className="ember ember-20" />
+          <div className="ember ember-21" />
+          <div className="ember ember-22" />
+          <div className="ember ember-23" />
+          <div className="ember ember-24" />
+          <div className="ember ember-25" />
+          <div className="ember ember-26" />
+          <div className="ember ember-27" />
+          <div className="ember ember-28" />
+          <div className="ember ember-29" />
+          <div className="ember ember-30" />
+          <div className="ember ember-31" />
+          <div className="ember ember-32" />
+          <div className="ember ember-33" />
+          <div className="ember ember-34" />
+          <div className="ember ember-35" />
         </div>
 
         {children}
