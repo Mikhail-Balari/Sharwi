@@ -33,17 +33,6 @@ function renderSubtitle(text: string) {
   )
 }
 
-const glassStyle = {
-  background: "linear-gradient(135deg, rgba(255,80,0,0.13) 0%, rgba(120,30,0,0.22) 45%, rgba(10,4,2,0.75) 100%)",
-  backdropFilter: "blur(18px) saturate(1.4)",
-  WebkitBackdropFilter: "blur(18px) saturate(1.4)",
-  border: "1px solid rgba(255,90,0,0.22)",
-  borderTop: "1px solid rgba(255,140,60,0.35)",
-  borderLeft: "1px solid rgba(255,120,40,0.28)",
-  boxShadow: "0 4px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,160,60,0.18), inset 0 -1px 0 rgba(180,40,0,0.12)",
-  textDecoration: "none",
-}
-
 export function AudienceSelector() {
   return (
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
@@ -60,22 +49,42 @@ export function AudienceSelector() {
               key={a.title}
               href={a.href}
               onClick={a.onTrack}
-              className="group flex items-center gap-5 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.03]"
-              style={glassStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,106,0,0.45)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,90,0,0.22)"
+              className="group relative overflow-hidden flex items-center gap-5 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.03]"
+              style={{
+                background: "radial-gradient(ellipse at 30% 25%, rgba(160,55,0,0.28) 0%, rgba(60,15,0,0.55) 45%, rgba(4,2,1,0.82) 100%)",
+                backdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
+                WebkitBackdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
+                border: "1px solid transparent",
+                backgroundClip: "padding-box",
+                boxShadow: `
+                  0 0 0 1px rgba(255,140,40,0.35),
+                  inset 0 1.5px 0 rgba(255,200,100,0.45),
+                  inset 1.5px 0 0 rgba(255,160,60,0.25),
+                  inset 0 -2px 12px rgba(0,0,0,0.6),
+                  0 8px 32px rgba(0,0,0,0.6)
+                `,
+                textDecoration: "none",
               }}
             >
+              {/* Highlight line top */}
+              <div aria-hidden="true" style={{
+                position: "absolute", top: 0, left: "8%", right: "8%", height: "1px",
+                background: "linear-gradient(90deg, transparent, rgba(255,210,120,0.7), rgba(255,180,80,0.5), transparent)",
+                pointerEvents: "none",
+              }} />
+              {/* Reflejo difuso */}
+              <div aria-hidden="true" style={{
+                position: "absolute", top: "-30%", left: "-10%", width: "50%", height: "50%",
+                background: "radial-gradient(ellipse, rgba(255,150,50,0.10) 0%, transparent 70%)",
+                pointerEvents: "none", borderRadius: "50%",
+              }} />
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
+                className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 relative z-10"
                 style={{ background: "rgba(255,106,0,0.15)" }}
               >
                 <a.icon size={26} className="text-[#FF6A00]" />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 relative z-10">
                 <h3 className="font-display text-lg font-bold text-white mb-1">{a.title}</h3>
                 <p className="text-[#9CA3AF] text-sm leading-relaxed">
                   {renderSubtitle(a.subtitle)}
