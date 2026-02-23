@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
+  themeColor: '#050301',
 }
 
 export default function RootLayout({
@@ -48,6 +48,31 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="font-sans antialiased">
+
+        {/* Floating ember particles — fixed, pointer-events none, z-index 3 */}
+        <div aria-hidden="true">
+          <div className="ember ember-1" />
+          <div className="ember ember-2" />
+          <div className="ember ember-3" />
+          <div className="ember ember-4" />
+          <div className="ember ember-5" />
+          <div className="ember ember-6" />
+          <div className="ember ember-7" />
+          <div className="ember ember-8" />
+          <div className="ember ember-9" />
+          <div className="ember ember-10" />
+          <div className="ember ember-11" />
+          <div className="ember ember-12" />
+          <div className="ember ember-13" />
+          <div className="ember ember-14" />
+          <div className="ember ember-15" />
+          <div className="ember ember-16" />
+          <div className="ember ember-17" />
+          <div className="ember ember-18" />
+          <div className="ember ember-19" />
+          <div className="ember ember-20" />
+        </div>
+
         {children}
         <Analytics />
       </body>
