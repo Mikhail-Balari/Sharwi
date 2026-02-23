@@ -33,6 +33,17 @@ function renderSubtitle(text: string) {
   )
 }
 
+const glassStyle = {
+  background: "linear-gradient(135deg, rgba(255,80,0,0.13) 0%, rgba(120,30,0,0.22) 45%, rgba(10,4,2,0.75) 100%)",
+  backdropFilter: "blur(18px) saturate(1.4)",
+  WebkitBackdropFilter: "blur(18px) saturate(1.4)",
+  border: "1px solid rgba(255,90,0,0.22)",
+  borderTop: "1px solid rgba(255,140,60,0.35)",
+  borderLeft: "1px solid rgba(255,120,40,0.28)",
+  boxShadow: "0 4px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,160,60,0.18), inset 0 -1px 0 rgba(180,40,0,0.12)",
+  textDecoration: "none",
+}
+
 export function AudienceSelector() {
   return (
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
@@ -49,16 +60,14 @@ export function AudienceSelector() {
               key={a.title}
               href={a.href}
               onClick={a.onTrack}
-              className="group flex items-center gap-5 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(255,106,0,0.15)]"
-              style={{
-                background: "rgba(20,14,8,0.65)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,106,0,0.15)",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
-                textDecoration: "none",
+              className="group flex items-center gap-5 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.03]"
+              style={glassStyle}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,106,0,0.45)"
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,106,0,0.5)" }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,106,0,0.15)" }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,90,0,0.22)"
+              }}
             >
               <div
                 className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
