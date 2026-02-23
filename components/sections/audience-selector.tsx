@@ -51,32 +51,25 @@ export function AudienceSelector() {
               onClick={a.onTrack}
               className="group relative overflow-hidden flex items-center gap-5 rounded-2xl p-6 transition-all duration-300 hover:scale-[1.03]"
               style={{
-                background: "radial-gradient(ellipse at 30% 25%, rgba(160,55,0,0.28) 0%, rgba(60,15,0,0.55) 45%, rgba(4,2,1,0.82) 100%)",
-                backdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
-                WebkitBackdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
-                border: "1px solid transparent",
-                backgroundClip: "padding-box",
+                background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
+                backdropFilter: "blur(20px) saturate(1.3)",
+                WebkitBackdropFilter: "blur(20px) saturate(1.3)",
                 boxShadow: `
-                  0 0 0 1px rgba(255,140,40,0.35),
-                  inset 0 1.5px 0 rgba(255,200,100,0.45),
-                  inset 1.5px 0 0 rgba(255,160,60,0.25),
-                  inset 0 -2px 12px rgba(0,0,0,0.6),
-                  0 8px 32px rgba(0,0,0,0.6)
+                  0 0 0 1.5px rgba(255,90,10,0.75),
+                  inset 0 1.5px 0 rgba(255,160,40,0.55),
+                  inset 1.5px 0 0 rgba(255,120,20,0.30),
+                  inset 0 -2px 16px rgba(0,0,0,0.7),
+                  0 0 12px rgba(255,80,0,0.10),
+                  0 6px 28px rgba(0,0,0,0.65)
                 `,
                 textDecoration: "none",
               }}
             >
-              {/* Highlight line top */}
+              {/* Highlight superior */}
               <div aria-hidden="true" style={{
-                position: "absolute", top: 0, left: "8%", right: "8%", height: "1px",
-                background: "linear-gradient(90deg, transparent, rgba(255,210,120,0.7), rgba(255,180,80,0.5), transparent)",
+                position: "absolute", top: 0, left: "6%", right: "6%", height: "1px",
+                background: "linear-gradient(90deg, transparent, rgba(255,180,60,0.80), rgba(255,140,30,0.60), transparent)",
                 pointerEvents: "none",
-              }} />
-              {/* Reflejo difuso */}
-              <div aria-hidden="true" style={{
-                position: "absolute", top: "-30%", left: "-10%", width: "50%", height: "50%",
-                background: "radial-gradient(ellipse, rgba(255,150,50,0.10) 0%, transparent 70%)",
-                pointerEvents: "none", borderRadius: "50%",
               }} />
               <div
                 className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 relative z-10"
