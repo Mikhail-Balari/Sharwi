@@ -7,7 +7,7 @@
     border-color: rgba(255, 106, 0, 0.15);
   }
   body {
-    background-color: #080604;
+    background-color: #060402;
     color: #F5F5F5;
   }
 }
@@ -17,12 +17,12 @@ html {
 }
 
 body {
-  background-color: #080604;
+  background-color: #060402;
   color: #F5F5F5;
   position: relative;
 }
 
-/* Noise texture — very subtle grain */
+/* Noise grain texture */
 body::before {
   content: '';
   position: fixed;
@@ -32,13 +32,16 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.28;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.10 0 0 0 0.05 0 0.05 0 0 0.02 0 0 0.02 0 0.01 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.40;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.10 0 0 0 0.05 0 0.04 0 0 0.01 0 0 0.02 0 0.00 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 512px 512px;
 }
 
-/* Very subtle ember hints — corners only, black dominates */
+/* 
+  Manchones naranjas intensos SOLO en esquinas — lejos del centro donde está el texto.
+  El negro cubre el 70%+ de la pantalla en todo momento.
+*/
 body::after {
   content: '';
   position: fixed;
@@ -49,11 +52,16 @@ body::after {
   pointer-events: none;
   z-index: 2;
   background:
-    radial-gradient(ellipse at 0% 0%, rgba(255,70,0,0.10) 0%, transparent 40%),
-    radial-gradient(ellipse at 100% 20%, rgba(255,60,0,0.06) 0%, transparent 35%),
-    radial-gradient(ellipse at 0% 100%, rgba(255,80,0,0.09) 0%, transparent 40%),
-    radial-gradient(ellipse at 100% 85%, rgba(255,60,0,0.07) 0%, transparent 35%),
-    radial-gradient(ellipse at 50% 100%, rgba(255,50,0,0.05) 0%, transparent 35%);
+    /* Esquina superior izquierda — mancha fuerte */
+    radial-gradient(ellipse at -10% -5%, rgba(255,60,0,0.55) 0%, rgba(180,30,0,0.20) 30%, transparent 55%),
+    /* Esquina inferior derecha — mancha fuerte */
+    radial-gradient(ellipse at 110% 105%, rgba(255,70,0,0.50) 0%, rgba(200,40,0,0.18) 28%, transparent 52%),
+    /* Borde izquierdo medio — acento sutil */
+    radial-gradient(ellipse at -5% 55%, rgba(220,50,0,0.20) 0%, transparent 38%),
+    /* Esquina superior derecha — muy sutil */
+    radial-gradient(ellipse at 105% 0%, rgba(200,40,0,0.15) 0%, transparent 35%),
+    /* Borde inferior izquierdo */
+    radial-gradient(ellipse at 5% 100%, rgba(255,50,0,0.22) 0%, transparent 35%);
 }
 
 /* Logo pulse animation */
