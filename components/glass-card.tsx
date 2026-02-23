@@ -13,61 +13,42 @@ export function GlassCard({ children, className = "", hoverEffect = true }: Glas
     <div
       className={`
         rounded-2xl p-6 relative overflow-hidden
-        transition-all duration-400 ease-out
+        transition-all duration-300 ease-out
         ${hoverEffect ? "hover:scale-[1.03]" : ""}
         ${className}
       `}
       style={{
-        /* Cuerpo oscuro con tinte ámbar — como el interior de la burbuja */
-        background: "radial-gradient(ellipse at 30% 25%, rgba(160,55,0,0.28) 0%, rgba(60,15,0,0.55) 45%, rgba(4,2,1,0.82) 100%)",
-        backdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
-        WebkitBackdropFilter: "blur(24px) saturate(1.6) brightness(1.05)",
-        /* Borde con gradiente — simula el borde brillante del vidrio */
-        border: "1px solid transparent",
-        backgroundClip: "padding-box",
+        /* Interior casi negro con degradé mínimo solo en esquina superior izquierda */
+        background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
+        backdropFilter: "blur(20px) saturate(1.3)",
+        WebkitBackdropFilter: "blur(20px) saturate(1.3)",
         boxShadow: `
-          /* Borde externo — anillo de luz ámbar */
-          0 0 0 1px rgba(255,140,40,0.35),
-          /* Reflejo superior — highlight de luz */
-          inset 0 1.5px 0 rgba(255,200,100,0.45),
-          /* Reflejo lateral izquierdo */
-          inset 1.5px 0 0 rgba(255,160,60,0.25),
-          /* Sombra interna inferior — profundidad */
-          inset 0 -2px 12px rgba(0,0,0,0.6),
-          /* Sombra interna derecha */
-          inset -2px 0 8px rgba(0,0,0,0.4),
-          /* Glow exterior muy sutil */
-          0 8px 32px rgba(0,0,0,0.6),
-          0 0 0 0.5px rgba(255,100,0,0.08)
+          /* Anillo exterior naranja-rojo fuerte — el efecto cristal principal */
+          0 0 0 1.5px rgba(255,90,10,0.75),
+          /* Highlight superior — línea de luz brillante */
+          inset 0 1.5px 0 rgba(255,160,40,0.55),
+          /* Highlight lateral izquierdo */
+          inset 1.5px 0 0 rgba(255,120,20,0.30),
+          /* Sombra interna — profundidad oscura */
+          inset 0 -2px 16px rgba(0,0,0,0.7),
+          inset -2px 0 10px rgba(0,0,0,0.5),
+          /* Glow exterior naranja muy sutil */
+          0 0 12px rgba(255,80,0,0.10),
+          0 6px 28px rgba(0,0,0,0.65)
         `,
       }}
     >
-      {/* Highlight superior — reflejo de luz como en la burbuja */}
+      {/* Línea highlight superior — reflejo de luz sobre el borde */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           top: 0,
-          left: "8%",
-          right: "8%",
+          left: "6%",
+          right: "6%",
           height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(255,210,120,0.7), rgba(255,180,80,0.5), transparent)",
-          borderRadius: "0 0 50% 50%",
+          background: "linear-gradient(90deg, transparent, rgba(255,180,60,0.80), rgba(255,140,30,0.60), transparent)",
           pointerEvents: "none",
-        }}
-      />
-      {/* Reflejo secundario — zona de luz difusa arriba-izquierda */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "-30%",
-          left: "-10%",
-          width: "55%",
-          height: "55%",
-          background: "radial-gradient(ellipse, rgba(255,150,50,0.12) 0%, transparent 70%)",
-          pointerEvents: "none",
-          borderRadius: "50%",
         }}
       />
       {/* Contenido */}
