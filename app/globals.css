@@ -7,7 +7,7 @@
     border-color: rgba(255, 106, 0, 0.15);
   }
   body {
-    background-color: #0E0B08;
+    background-color: #0A0804;
     color: #F5F5F5;
   }
 }
@@ -17,12 +17,12 @@ html {
 }
 
 body {
-  background-color: #0E0B08;
+  background-color: #0A0804;
   color: #F5F5F5;
   position: relative;
 }
 
-/* Scorched stone noise texture */
+/* Scorched stone noise texture — warm grain */
 body::before {
   content: '';
   position: fixed;
@@ -32,13 +32,13 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.22;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.15 0 0 0 0.08 0 0.08 0 0 0.04 0 0 0.04 0 0.01 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.12 0 0 0 0.06 0 0.06 0 0 0.02 0 0 0.02 0 0.01 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 512px 512px;
 }
 
-/* Warm radial ember glows */
+/* Ember orange glows — concentrated in corners and edges, not center */
 body::after {
   content: '';
   position: fixed;
@@ -49,11 +49,13 @@ body::after {
   pointer-events: none;
   z-index: 2;
   background:
-    radial-gradient(ellipse at 50% 8%, rgba(255,100,0,0.09) 0%, transparent 55%),
-    radial-gradient(ellipse at 30% 35%, rgba(255,80,0,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 55%, rgba(255,100,0,0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 75%, rgba(255,80,0,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 92%, rgba(255,100,0,0.07) 0%, transparent 50%);
+    radial-gradient(ellipse at 0% 0%, rgba(255,80,0,0.22) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 15%, rgba(255,60,0,0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 15% 50%, rgba(255,70,0,0.10) 0%, transparent 35%),
+    radial-gradient(ellipse at 85% 60%, rgba(255,80,0,0.12) 0%, transparent 38%),
+    radial-gradient(ellipse at 0% 100%, rgba(255,90,0,0.18) 0%, transparent 45%),
+    radial-gradient(ellipse at 100% 90%, rgba(255,70,0,0.14) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,60,0,0.10) 0%, transparent 40%);
 }
 
 /* Logo pulse animation */
