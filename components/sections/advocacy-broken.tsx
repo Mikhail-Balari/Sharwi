@@ -29,8 +29,8 @@ export function AdvocacyBroken() {
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3 text-balance">
-          Employee Advocacy is{" "}
-          <span className="text-[#FF6A00]">broken</span>
+          <span className="text-[#FF6A00]">Employee Advocacy</span>{" "}
+          is broken
         </h2>
         <p className="text-[#9CA3AF] text-center max-w-xl mx-auto mb-12">
           {"The data tells a clear story: traditional approaches don't work"}
