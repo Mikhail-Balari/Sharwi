@@ -38,7 +38,7 @@ export function AudienceSelector() {
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3" style={{ letterSpacing: "-0.03em" }}>
-          How do you want to use Sharwi?
+          How do you want to use <span style={{ color: "#FF6A00" }}>Sharwi</span>?
         </h2>
         <p className="text-[#9CA3AF] text-center mb-12">
           Choose the option that best reflects your role.
