@@ -24,7 +24,9 @@ export function TechnologySection() {
           THE TECHNOLOGY
         </p>
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-4 text-balance max-w-3xl mx-auto">
-          {"We don't use the AI everyone else uses. We use "}
+          {"We don't use the "}
+          <span className="text-[#FF6A00]">AI</span>
+          {" everyone else uses. We use "}
           <span className="text-[#FF6A00]">RLM.</span>
         </h2>
         <p className="text-[#9CA3AF] text-center max-w-3xl mx-auto mb-14 leading-relaxed">
