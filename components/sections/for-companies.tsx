@@ -32,7 +32,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
     <section id="for-companies" className="py-20" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3 text-balance" style={{ letterSpacing: "-0.03em" }}>
-          For Companies That Want Authentic Advocacy
+          For Companies That Want <span style={{ color: "#FF6A00" }}>Authentic Advocacy</span>
         </h2>
         <p className="text-[#9CA3AF] text-center max-w-2xl mx-auto mb-12 leading-relaxed">
           Sharwi provides structured visibility into contribution patterns, collaboration depth, and performance signals beyond surface KPIs.
