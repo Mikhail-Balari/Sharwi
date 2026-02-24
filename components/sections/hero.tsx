@@ -61,59 +61,127 @@ function WireframeMesh() {
 
 function HeroLogo() {
   return (
-    <div className="relative flex items-center justify-center">
-      <div
-        className="absolute"
-        style={{
-          width: "500px",
-          height: "500px",
-          background: "radial-gradient(circle, rgba(255,100,0,0.35) 0%, transparent 65%)",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      <svg
-        className="absolute"
-        width="420"
-        height="420"
-        viewBox="0 0 420 420"
-        style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-        aria-hidden="true"
-      >
-        {Array.from({ length: 8 }).map((_, i) => {
-          const angle = (i * 45 * Math.PI) / 180
-          const x1 = 210 + Math.cos(angle) * 90
-          const y1 = 210 + Math.sin(angle) * 90
-          const x2 = 210 + Math.cos(angle) * 200
-          const y2 = 210 + Math.sin(angle) * 200
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="rgba(255,100,0,0.2)"
-              strokeWidth="0.8"
-            />
-          )
-        })}
-        <circle cx="210" cy="210" r="130" fill="none" stroke="rgba(255,100,0,0.1)" strokeWidth="0.8" />
-        <circle cx="210" cy="210" r="180" fill="none" stroke="rgba(255,100,0,0.06)" strokeWidth="0.5" />
-      </svg>
+    <div className="relative flex items-center justify-center" style={{ width: "clamp(260px, 38vw, 440px)", height: "clamp(300px, 44vw, 500px)" }}>
+
+      {/* Outer ambient glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "radial-gradient(ellipse at 50% 60%, rgba(255,80,0,0.28) 0%, rgba(200,40,0,0.12) 40%, transparent 70%)",
+        filter: "blur(30px)",
+      }} />
+
       <svg
         viewBox="0 0 152 221"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="relative logo-glow"
-        style={{ width: "auto", height: "clamp(200px, 30vw, 380px)" }}
+        className="relative"
+        style={{ width: "100%", height: "100%", overflow: "visible" }}
         aria-label="Sharwi logo"
       >
-        <path d="M48 138.326C55.6368 149.317 105.149 126.317 117.5 136.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M48 154.326C55.6368 165.317 105.149 142.317 117.5 152.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M48 170.326C55.6368 181.317 105.149 158.317 117.5 168.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-        <path d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z" stroke="#FF6A00" strokeWidth="18"/>
+        <defs>
+          {/* Crystal body fill — red-dark interior like the image */}
+          <radialGradient id="crystalBody" cx="38%" cy="22%" r="75%" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stopColor="#ff4400" stopOpacity="0.55" />
+            <stop offset="30%" stopColor="#cc2200" stopOpacity="0.40" />
+            <stop offset="65%" stopColor="#220400" stopOpacity="0.70" />
+            <stop offset="100%" stopColor="#080100" stopOpacity="0.85" />
+          </radialGradient>
+
+          {/* Outer edge bright glow — the hot orange-yellow rim */}
+          <filter id="outerGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="6" result="blur1" />
+            <feGaussianBlur stdDeviation="14" result="blur2" />
+            <feMerge>
+              <feMergeNode in="blur2" />
+              <feMergeNode in="blur1" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* Inner line neon glow */}
+          <filter id="neonLines" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3" result="b1" />
+            <feGaussianBlur stdDeviation="7" result="b2" />
+            <feMerge>
+              <feMergeNode in="b2" />
+              <feMergeNode in="b1" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+          {/* Specular highlight — bright reflection top-left */}
+          <linearGradient id="specular" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255,200,80,0.55)" />
+            <stop offset="35%" stopColor="rgba(255,120,30,0.20)" />
+            <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+          </linearGradient>
+
+          {/* Edge rim gradient — bright orange-yellow on edges */}
+          <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFB020" />
+            <stop offset="30%" stopColor="#FF5500" />
+            <stop offset="70%" stopColor="#CC2200" />
+            <stop offset="100%" stopColor="#FF4400" />
+          </linearGradient>
+
+          <linearGradient id="linesGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#FF6600" />
+            <stop offset="50%" stopColor="#FFAA20" />
+            <stop offset="100%" stopColor="#FF5500" />
+          </linearGradient>
+
+          <clipPath id="logoClip">
+            <path d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z"/>
+          </clipPath>
+        </defs>
+
+        {/* === LAYER 1: Crystal body fill === */}
+        <path
+          d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z"
+          fill="url(#crystalBody)"
+        />
+
+        {/* === LAYER 2: Specular highlight — top-left bright area === */}
+        <path
+          d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z"
+          fill="url(#specular)"
+          opacity="0.8"
+        />
+
+        {/* === LAYER 3: Outer rim — hot glowing edge === */}
+        <path
+          d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z"
+          stroke="url(#rimGrad)"
+          strokeWidth="14"
+          fill="none"
+          filter="url(#outerGlow)"
+          opacity="0.95"
+        />
+
+        {/* === LAYER 4: Inner rim — tighter bright line === */}
+        <path
+          d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z"
+          stroke="#FFB030"
+          strokeWidth="2"
+          fill="none"
+          opacity="0.7"
+        />
+
+        {/* === LAYER 5: Neon wave lines === */}
+        <g filter="url(#neonLines)" clipPath="url(#logoClip)">
+          <path d="M48 138.326C55.6368 149.317 105.149 126.317 117.5 136.826" stroke="url(#linesGrad)" strokeWidth="7" strokeLinecap="round" opacity="0.95"/>
+          <path d="M48 154.326C55.6368 165.317 105.149 142.317 117.5 152.826" stroke="url(#linesGrad)" strokeWidth="7" strokeLinecap="round" opacity="0.95"/>
+          <path d="M48 170.326C55.6368 181.317 105.149 158.317 117.5 168.826" stroke="url(#linesGrad)" strokeWidth="7" strokeLinecap="round" opacity="0.95"/>
+        </g>
+
+        {/* === LAYER 6: Top highlight arc — the bright white-orange reflection at top === */}
+        <path
+          d="M60 30 Q76 12 100 18"
+          stroke="rgba(255,220,120,0.65)"
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+          filter="url(#neonLines)"
+        />
       </svg>
     </div>
   )
