@@ -28,7 +28,7 @@ export function CtaFooter() {
               }}
             >
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4 text-balance">
-                Visibility should reflect{" "}
+                <span className="text-[#FF6A00]">Visibility</span> should reflect{" "}
                 <span className="text-[#FF6A00]">reality.</span>
               </h2>
               <p className="text-[#9CA3AF] max-w-xl mx-auto mb-8 leading-relaxed">
