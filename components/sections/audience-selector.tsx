@@ -76,7 +76,7 @@ export function AudienceSelector() {
                 <Briefcase size={22} className="text-[#FF6A00]" />
               </div>
               <div>
-                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Layer 2 — Personal</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
                 <h3 className="font-display text-xl font-bold text-white">I'm a professional</h3>
               </div>
             </div>
@@ -113,7 +113,7 @@ export function AudienceSelector() {
                 <Building2 size={22} className="text-[#FF6A00]" />
               </div>
               <div>
-                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Layer 1 — Enterprise</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
                 <h3 className="font-display text-xl font-bold text-white">I represent a company</h3>
               </div>
             </div>
@@ -140,32 +140,6 @@ export function AudienceSelector() {
           }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2">
-
-            {/* Layer 1: Enterprise */}
-            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-                  style={{ background: "#FF6A00" }}>1</span>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
-              </div>
-              <h4 className="font-display text-lg font-bold text-white mb-3">
-                The company buys the infrastructure
-              </h4>
-              <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
-                {[
-                  "Connects to Jira, GitHub, CRM, and internal systems",
-                  "Transforms real employee work into verified brand content",
-                  "Measures impact in leads, conversions and CAC reduction",
-                  "Compliance guardrails — legal and policy controls built in",
-                  "Dashboard: VVR, proof-backed rate, pipeline attribution",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Layer 2: Personal */}
             <div className="p-7">
@@ -209,4 +183,28 @@ export function AudienceSelector() {
       </div>
     </section>
   )
-}
+}            {/* Layer 1: Enterprise */}
+            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
+                  style={{ background: "#FF6A00" }}>1</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
+              </div>
+              <h4 className="font-display text-lg font-bold text-white mb-3">
+                The company buys the infrastructure
+              </h4>
+              <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
+                {[
+                  "Connects to Jira, GitHub, CRM, and internal systems",
+                  "Transforms real employee work into verified brand content",
+                  "Measures impact in leads, conversions and CAC reduction",
+                  "Compliance guardrails — legal and policy controls built in",
+                  "Dashboard: VVR, proof-backed rate, pipeline attribution",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
