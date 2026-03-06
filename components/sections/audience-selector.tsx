@@ -143,8 +143,8 @@ export function AudienceSelector() {
             <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
               <div className="flex items-center gap-2 mb-4">
                 <span
-                  className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold"
-                  style={{ background: "rgba(255,106,0,0.15)", color: "#FF6A00", border: "1px solid rgba(255,106,0,0.4)" }}
+                  className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
+                  style={{ background: "#FF6A00" }}
                 >
                   1
                 </span>
