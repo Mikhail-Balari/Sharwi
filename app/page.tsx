@@ -3,15 +3,15 @@
 import { useState } from "react"
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/sections/hero"
-import { AudienceSelector } from "@/components/sections/audience-selector"
-import { ForProfessionals } from "@/components/sections/for-professionals"
-import { ForCompanies } from "@/components/sections/for-companies"
 import { ProblemSection } from "@/components/sections/problem"
 import { AdvocacyBroken } from "@/components/sections/advocacy-broken"
 import { WhySharwi } from "@/components/sections/why-sharwi"
 import { HowItWorks } from "@/components/sections/how-it-works"
 import { BuiltFor } from "@/components/sections/built-for"
 import { ValueForEveryone } from "@/components/sections/value-for-everyone"
+import { AudienceSelector } from "@/components/sections/audience-selector"
+import { ForProfessionals } from "@/components/sections/for-professionals"
+import { ForCompanies } from "@/components/sections/for-companies"
 import { TechnologySection } from "@/components/sections/technology"
 import { UseCasesSection } from "@/components/sections/use-cases"
 import { LiveDemoSection } from "@/components/sections/live-demo"
@@ -31,15 +31,17 @@ export default function Home() {
     <main className="min-h-screen">
       <Header onRequestDemo={openDemoModal} />
       <HeroSection onRequestDemo={openDemoModal} />
-      <AudienceSelector />
-      <ForProfessionals onRequestDemo={openDemoModal} />
-      <ForCompanies onRequestDemo={openDemoModal} />
-      <ProblemSection />
-      <AdvocacyBroken />
-      <WhySharwi />
-      <HowItWorks />
-      <BuiltFor />
-      <ValueForEveryone />
+
+      {/* 1 */ }<ProblemSection />
+      {/* 2 */ }<AdvocacyBroken />
+      {/* 3 */ }<WhySharwi />
+      {/* 4 */ }<HowItWorks />
+      {/* 5 */ }<BuiltFor />
+      {/* 6 */ }<ValueForEveryone />
+      {/* 7 */ }<AudienceSelector />
+      {/* 8 */ }<ForProfessionals onRequestDemo={openDemoModal} />
+      {/* 9 */ }<ForCompanies onRequestDemo={openDemoModal} />
+
       <TechnologySection />
       <UseCasesSection />
       <LiveDemoSection />
