@@ -49,7 +49,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
 
         <div className="flex items-center justify-center gap-2 mb-4">
           <span className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-            style={{ background: "#FF6A00" }}>2</span>
+            style={{ background: "#FF6A00" }}>1</span>
           <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
         </div>
 
