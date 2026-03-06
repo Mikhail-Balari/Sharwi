@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Briefcase, Building2, ChevronRight, ArrowRight } from "lucide-react"
+import { Briefcase, Building2, ChevronRight } from "lucide-react"
 import { trackExploreAsProfessional, trackExploreForCompanies } from "@/lib/analytics"
 
 const glassStyle = {
@@ -19,8 +19,9 @@ const glassStyle = {
 }
 
 const glassStyleActive = {
-  ...glassStyle,
   background: "radial-gradient(ellipse at 15% 10%, rgba(180,55,0,0.30) 0%, rgba(8,3,0,0.95) 55%)",
+  backdropFilter: "blur(20px) saturate(1.3)",
+  WebkitBackdropFilter: "blur(20px) saturate(1.3)",
   boxShadow: `
     0 0 0 1.5px rgba(255,106,0,1),
     inset 0 1.5px 0 rgba(255,180,60,0.70),
@@ -31,6 +32,14 @@ const glassStyleActive = {
   `,
 }
 
+const highlightLine = (
+  <div aria-hidden="true" style={{
+    position: "absolute", top: 0, left: "6%", right: "6%", height: "1px",
+    background: "linear-gradient(90deg, transparent, rgba(255,180,60,0.80), rgba(255,140,30,0.60), transparent)",
+    pointerEvents: "none",
+  }} />
+)
+
 export function AudienceSelector() {
   const [active, setActive] = useState<"professional" | "company" | null>(null)
 
@@ -38,7 +47,6 @@ export function AudienceSelector() {
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
 
-        {/* Header */}
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#FF6A00] text-center mb-3">
           TWO LAYERS. ONE PLATFORM.
         </p>
@@ -53,10 +61,10 @@ export function AudienceSelector() {
           and for the organizations they power.
         </p>
 
-        {/* Two cards */}
+        {/* Two selector cards — Personal first, Enterprise second */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-14">
 
-          {/* Card: Professional */}
+          {/* Card 1: Personal Layer */}
           <button
             onClick={() => {
               setActive(active === "professional" ? null : "professional")
@@ -65,11 +73,7 @@ export function AudienceSelector() {
             className="group relative overflow-hidden text-left rounded-2xl p-7 transition-all duration-300 hover:scale-[1.02]"
             style={active === "professional" ? glassStyleActive : glassStyle}
           >
-            <div aria-hidden="true" style={{
-              position: "absolute", top: 0, left: "6%", right: "6%", height: "1px",
-              background: "linear-gradient(90deg, transparent, rgba(255,180,60,0.80), rgba(255,140,30,0.60), transparent)",
-              pointerEvents: "none",
-            }} />
+            {highlightLine}
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                 style={{ background: "rgba(255,106,0,0.15)" }}>
@@ -77,7 +81,7 @@ export function AudienceSelector() {
               </div>
               <div>
                 <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
-                <h3 className="font-display text-xl font-bold text-white">I'm a professional</h3>
+                <h3 className="font-display text-xl font-bold text-white">{"I'm a professional"}</h3>
               </div>
             </div>
             <p className="text-[#9CA3AF] text-sm leading-relaxed mb-4 relative z-10">
@@ -86,14 +90,13 @@ export function AudienceSelector() {
               <span className="text-white font-medium">verified professional visibility</span>{" "}
               that follows you throughout your career.
             </p>
-            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10
-              transition-all duration-200 group-hover:gap-2.5">
+            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
               Explore as a Professional
               <ChevronRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </button>
 
-          {/* Card: Company */}
+          {/* Card 2: Enterprise Layer */}
           <button
             onClick={() => {
               setActive(active === "company" ? null : "company")
@@ -102,11 +105,7 @@ export function AudienceSelector() {
             className="group relative overflow-hidden text-left rounded-2xl p-7 transition-all duration-300 hover:scale-[1.02]"
             style={active === "company" ? glassStyleActive : glassStyle}
           >
-            <div aria-hidden="true" style={{
-              position: "absolute", top: 0, left: "6%", right: "6%", height: "1px",
-              background: "linear-gradient(90deg, transparent, rgba(255,180,60,0.80), rgba(255,140,30,0.60), transparent)",
-              pointerEvents: "none",
-            }} />
+            {highlightLine}
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                 style={{ background: "rgba(255,106,0,0.15)" }}>
@@ -118,20 +117,19 @@ export function AudienceSelector() {
               </div>
             </div>
             <p className="text-[#9CA3AF] text-sm leading-relaxed mb-4 relative z-10">
-              Your workforce is already creating value every day — it just doesn't reach the market.
-              Sharwi turns your team's real work into{" "}
+              Your workforce is already creating value every day — it just never reaches the market.
+              Sharwi turns your team{"'"}s real work into{" "}
               <span className="text-white font-medium">verified revenue-driving content</span>{" "}
               that reduces CAC and builds trust at scale.
             </p>
-            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10
-              transition-all duration-200 group-hover:gap-2.5">
+            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
               Explore for Companies
               <ChevronRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
           </button>
         </div>
 
-        {/* Dual layer explainer — always visible */}
+        {/* Dual layer explainer — Personal first, Enterprise second */}
         <div
           className="max-w-4xl mx-auto rounded-2xl overflow-hidden"
           style={{
@@ -141,11 +139,15 @@ export function AudienceSelector() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2">
 
-            {/* Layer 2: Personal */}
-            <div className="p-7">
+            {/* Personal Layer — left */}
+            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
               <div className="flex items-center gap-2 mb-4">
-                <span className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold"
-                  style={{ background: "rgba(255,106,0,0.15)", color: "#FF6A00", border: "1px solid rgba(255,106,0,0.4)" }}>2</span>
+                <span
+                  className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold"
+                  style={{ background: "rgba(255,106,0,0.15)", color: "#FF6A00", border: "1px solid rgba(255,106,0,0.4)" }}
+                >
+                  1
+                </span>
                 <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
               </div>
               <h4 className="font-display text-lg font-bold text-white mb-3">
@@ -160,8 +162,37 @@ export function AudienceSelector() {
                   "If your next company doesn't use Sharwi, you keep your history",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ background: "rgba(255,106,0,0.5)" }} />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "rgba(255,106,0,0.5)" }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Enterprise Layer — right */}
+            <div className="p-7">
+              <div className="flex items-center gap-2 mb-4">
+                <span
+                  className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
+                  style={{ background: "#FF6A00" }}
+                >
+                  2
+                </span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
+              </div>
+              <h4 className="font-display text-lg font-bold text-white mb-3">
+                The company buys the infrastructure
+              </h4>
+              <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
+                {[
+                  "Connects to Jira, GitHub, CRM, and internal systems",
+                  "Transforms real employee work into verified brand content",
+                  "Measures impact in leads, conversions and CAC reduction",
+                  "Compliance guardrails — legal and policy controls built in",
+                  "Dashboard: VVR, proof-backed rate, pipeline attribution",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
                     {item}
                   </li>
                 ))}
@@ -183,28 +214,4 @@ export function AudienceSelector() {
       </div>
     </section>
   )
-}            {/* Layer 1: Enterprise */}
-            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-                  style={{ background: "#FF6A00" }}>1</span>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
-              </div>
-              <h4 className="font-display text-lg font-bold text-white mb-3">
-                The company buys the infrastructure
-              </h4>
-              <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
-                {[
-                  "Connects to Jira, GitHub, CRM, and internal systems",
-                  "Transforms real employee work into verified brand content",
-                  "Measures impact in leads, conversions and CAC reduction",
-                  "Compliance guardrails — legal and policy controls built in",
-                  "Dashboard: VVR, proof-backed rate, pipeline attribution",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+}
