@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { getRequiredParam } from "../../utils/request";
 import { createReviewSchema } from "./review.schemas";
 import { createReview, listReviewsForCurrentUser, listReviewsForWorker } from "./review.service";
 
@@ -13,5 +14,5 @@ export async function listMyReviewsHandler(request: Request, response: Response)
 }
 
 export async function listWorkerReviewsHandler(request: Request, response: Response) {
-  return response.json(await listReviewsForWorker(request.params.id));
+  return response.json(await listReviewsForWorker(getRequiredParam(request.params.id, "Worker")));
 }

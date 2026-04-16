@@ -1,9 +1,10 @@
 import { createClient } from "@supabase/supabase-js"
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase =
+  supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null
 
 export interface DemoRequest {
   name: string
@@ -16,6 +17,10 @@ export interface DemoRequest {
 
 export async function saveDemoRequest(data: DemoRequest): Promise<{ success: boolean; error?: string }> {
   try {
+    if (!supabase) {
+      return { success: false, error: "Supabase is not configured" }
+    }
+
     const { error } = await supabase.from("demo_requests").insert([
       {
         name: data.name,

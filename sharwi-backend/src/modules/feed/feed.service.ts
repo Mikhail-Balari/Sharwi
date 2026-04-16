@@ -2,6 +2,26 @@ import { pool } from "../../db/pool";
 import { toRelativeLabel } from "../../utils/date";
 import { HttpError } from "../../utils/http-error";
 
+type JobFeedRow = {
+  id: string;
+  title: string;
+  verification_status: string;
+  created_at: Date;
+};
+
+type ReviewFeedRow = {
+  id: string;
+  reviewer_name: string;
+  created_at: Date;
+};
+
+type NotificationRow = {
+  id: string;
+  title: string;
+  body: string;
+  created_at: Date;
+};
+
 export async function getFeed(userId: string) {
   const workerResult = await pool.query("SELECT id FROM worker_profiles WHERE user_id = $1", [userId]);
   const worker = workerResult.rows[0];
@@ -9,7 +29,7 @@ export async function getFeed(userId: string) {
     throw new HttpError(404, "Worker profile not found.");
   }
 
-  const jobsResult = await pool.query(
+  const jobsResult = await pool.query<JobFeedRow>(
     `
       SELECT id, title, verification_status, created_at
       FROM jobs
@@ -20,7 +40,7 @@ export async function getFeed(userId: string) {
     [worker.id]
   );
 
-  const reviewsResult = await pool.query(
+  const reviewsResult = await pool.query<ReviewFeedRow>(
     `
       SELECT id, reviewer_name, created_at
       FROM reviews
@@ -32,14 +52,14 @@ export async function getFeed(userId: string) {
   );
 
   const feedItems = [
-    ...jobsResult.rows.map((row) => ({
+    ...jobsResult.rows.map((row: JobFeedRow) => ({
       id: row.id,
       type: "achievement",
       title: `${row.title} verification ${row.verification_status}`,
       summary: "Your verified work history is strengthening your Sharwi profile.",
       createdAtLabel: toRelativeLabel(new Date(row.created_at)),
     })),
-    ...reviewsResult.rows.map((row) => ({
+    ...reviewsResult.rows.map((row: ReviewFeedRow) => ({
       id: row.id,
       type: "discovery",
       title: `New review from ${row.reviewer_name}`,
@@ -52,7 +72,7 @@ export async function getFeed(userId: string) {
 }
 
 export async function getNotifications(userId: string) {
-  const result = await pool.query(
+  const result = await pool.query<NotificationRow>(
     `
       SELECT id, title, body, created_at
       FROM notifications
@@ -63,7 +83,7 @@ export async function getNotifications(userId: string) {
     [userId]
   );
 
-  return result.rows.map((row) => ({
+  return result.rows.map((row: NotificationRow) => ({
     id: row.id,
     title: row.title,
     body: row.body,

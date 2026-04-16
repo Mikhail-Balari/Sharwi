@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { getRequiredParam } from "../../utils/request";
 import { updateProfileSchema } from "./worker.schemas";
 import {
   getCurrentReputation,
@@ -15,7 +16,7 @@ export async function getWorkers(request: Request, response: Response) {
 }
 
 export async function getWorker(request: Request, response: Response) {
-  return response.json(await getWorkerById(request.params.id));
+  return response.json(await getWorkerById(getRequiredParam(request.params.id, "Worker")));
 }
 
 export async function getMyWorkerProfile(request: Request, response: Response) {

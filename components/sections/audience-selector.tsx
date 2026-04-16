@@ -118,7 +118,7 @@ export function AudienceSelector() {
             </div>
             <p className="text-[#9CA3AF] text-sm leading-relaxed mb-4 relative z-10">
               Your workforce is already creating value every day — it just never reaches the market.
-              Sharwi turns your team{"'"}s real work into{" "}
+              Sharwi turns your team&apos;s real work into{" "}
               <span className="text-white font-medium">verified revenue-driving content</span>{" "}
               that reduces CAC and builds trust at scale.
             </p>

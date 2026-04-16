@@ -2,6 +2,17 @@ import { pool } from "../../db/pool";
 import { HttpError } from "../../utils/http-error";
 import { UpdateProfileInput } from "./worker.schemas";
 
+type WorkerSkillRow = {
+  name: string;
+};
+
+type WorkHistoryRow = {
+  id: string;
+  company_name: string;
+  title: string;
+  verification_status: string;
+};
+
 function mapWorkerSummary(row: Record<string, unknown>) {
   return {
     id: row.id,
@@ -74,7 +85,7 @@ export async function getWorkerById(workerId: string) {
     throw new HttpError(404, "Worker not found.");
   }
 
-  const skillsResult = await pool.query(
+  const skillsResult = await pool.query<WorkerSkillRow>(
     `
       SELECT s.name
       FROM worker_skills ws
@@ -85,7 +96,7 @@ export async function getWorkerById(workerId: string) {
     [workerId]
   );
 
-  const workHistoryResult = await pool.query(
+  const workHistoryResult = await pool.query<WorkHistoryRow>(
     `
       SELECT id, company_name, title, verification_status
       FROM jobs
@@ -104,8 +115,8 @@ export async function getWorkerById(workerId: string) {
     location: profile.location,
     yearsExperience: profile.years_experience,
     discoverable: profile.discoverable,
-    skills: skillsResult.rows.map((row) => row.name),
-    workHistory: workHistoryResult.rows.map((row) => ({
+    skills: skillsResult.rows.map((row: WorkerSkillRow) => row.name),
+    workHistory: workHistoryResult.rows.map((row: WorkHistoryRow) => ({
       id: row.id,
       companyName: row.company_name,
       title: row.title,

@@ -3,13 +3,22 @@ import { toRelativeLabel } from "../../utils/date";
 import { HttpError } from "../../utils/http-error";
 import { CreateReviewInput } from "./review.schemas";
 
+type ReviewRow = {
+  id: string;
+  reviewer_name: string;
+  rating: number | string;
+  summary: string;
+  created_at: Date;
+  company_name: string | null;
+};
+
 export async function createReview(input: CreateReviewInput) {
   const worker = await pool.query("SELECT id FROM worker_profiles WHERE id = $1", [input.workerProfileId]);
   if (!worker.rowCount) {
     throw new HttpError(404, "Worker profile not found.");
   }
 
-  const result = await pool.query(
+  const result = await pool.query<ReviewRow>(
     `
       INSERT INTO reviews (worker_profile_id, company_id, reviewer_name, rating, summary)
       VALUES ($1, $2, $3, $4, $5)
@@ -33,7 +42,7 @@ export async function listReviewsForWorker(workerProfileId: string) {
     [workerProfileId]
   );
 
-  return result.rows.map((row) => ({
+  return result.rows.map((row: ReviewRow) => ({
     id: row.id,
     companyName: row.company_name ?? "Verified company",
     reviewerName: row.reviewer_name,

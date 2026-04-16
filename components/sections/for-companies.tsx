@@ -117,7 +117,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
             style={{ background: "rgba(255,106,0,0.04)" }}>
             <p className="text-center text-xs text-[#6B7280]">
               When leads from employees convert at 2× the rate and CPL drops 50%, you need fewer leads to hit the same revenue.
-              That's the CAC reduction mechanics Sharwi is built around.
+              That&apos;s the CAC reduction mechanics Sharwi is built around.
             </p>
           </div>
         </div>

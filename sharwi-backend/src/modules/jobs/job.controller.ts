@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+import { getRequiredParam } from "../../utils/request";
 import { createJobSchema, verifyJobSchema } from "./job.schemas";
 import { createJob, getJob, verifyJob } from "./job.service";
 
@@ -14,5 +15,5 @@ export async function verifyJobHandler(request: Request, response: Response) {
 }
 
 export async function getJobHandler(request: Request, response: Response) {
-  return response.json(await getJob(request.params.id));
+  return response.json(await getJob(getRequiredParam(request.params.id, "Job")));
 }
