@@ -11,11 +11,21 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
+          animation: "fade",
           contentStyle: {
             backgroundColor: colors.background,
           },
         }}
-      />
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="login" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="post-detail"
+          options={{ animation: "slide_from_bottom" }}
+        />
+      </Stack>
     </AppProviders>
   );
 }
