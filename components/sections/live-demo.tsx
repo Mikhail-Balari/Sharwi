@@ -1,91 +1,135 @@
 "use client"
 
 import { useEffect } from "react"
-import { trackTryDemoLive, trackDemoInteraction } from "@/lib/analytics"
+import { ArrowRight } from "lucide-react"
+import {
+  trackCtaClick,
+  trackMobileDemoInteraction,
+  trackTryDemoLive,
+} from "@/lib/analytics"
+
+const mobileDemoUrl = "https://sharwi-527721ed.base44.app"
 
 export function LiveDemoSection() {
   useEffect(() => {
     let interactionTracked = false
-    const handleMessage = (e: MessageEvent) => {
-      if (
-        typeof e.origin === "string" &&
-        e.origin.includes("base44.app") &&
-        !interactionTracked
-      ) {
-        interactionTracked = true
-        trackDemoInteraction()
+
+    const markInteraction = (source: string) => {
+      if (interactionTracked) return
+      interactionTracked = true
+      trackMobileDemoInteraction(source)
+    }
+
+    const handleMessage = (event: MessageEvent) => {
+      if (typeof event.origin === "string" && event.origin.includes("base44.app")) {
+        markInteraction("iframe_message")
       }
     }
-    const handleIframeFocus = () => {
-      if (!interactionTracked) {
-        interactionTracked = true
-        trackDemoInteraction()
-      }
+
+    const handleBlur = () => {
+      markInteraction("iframe_focus")
     }
+
     window.addEventListener("message", handleMessage)
-    window.addEventListener("blur", handleIframeFocus)
+    window.addEventListener("blur", handleBlur)
+
     return () => {
       window.removeEventListener("message", handleMessage)
-      window.removeEventListener("blur", handleIframeFocus)
+      window.removeEventListener("blur", handleBlur)
     }
   }, [])
 
   return (
-    <section id="live-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1200px] mx-auto px-6">
-        <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3">
-          See Sharwi in <span className="text-[#FF6A00]">action</span>
-        </h2>
-        <p className="text-[#9CA3AF] text-center mb-10">
-          Try the product prototype directly below
-        </p>
-      </div>
+    <section id="mobile-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
+      <div className="max-w-[1240px] mx-auto px-6">
+        <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
+          <div>
+            <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
+              Embedded Mobile Demo
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
+              Show the product experience where Sharwi starts: in the hands of the professional.
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-slate-300">
+              This embedded prototype gives visitors a real feel for the Personal Layer.
+              It is intentionally lightweight: enough to validate the experience without
+              pretending the final full product is already built.
+            </p>
 
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px", padding: "40px 20px" }}>
-        <div style={{
-          width: "100%", maxWidth: "520px", margin: "auto", borderRadius: "28px",
-          background: "rgba(20, 14, 8, 0.65)", backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255, 106, 0, 0.25)",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.4), 0 0 80px rgba(255,106,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1)",
-          overflow: "hidden", position: "relative",
-        }}>
-          <div style={{
-            position: "absolute", top: "-50%", left: "-50%", width: "200%", height: "200%",
-            background: "radial-gradient(circle, rgba(255,106,0,0.12) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }} />
-          <div style={{
-            position: "relative", zIndex: 1, width: "calc(100% - 36px)",
-            aspectRatio: "390 / 844", height: "min(92vh, 844px)", maxHeight: "844px",
-            overflow: "hidden", borderRadius: "22px", margin: "18px",
-            background: "rgba(0,0,0,0.55)", boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)",
-          }}>
-            <iframe
-              src="https://sharwi-527721ed.base44.app"
-              scrolling="no"
-              style={{
-                width: "calc(100% + 18px)", height: "100%", border: "none",
-                overflow: "hidden", display: "block", marginLeft: "-9px", position: "relative",
-              }}
-              title="Sharwi Mobile App Demo"
-            />
+            <div className="grid gap-4 mt-8">
+              {[
+                {
+                  title: "Capture in seconds",
+                  body: "Log work fast or pull it from connected systems.",
+                },
+                {
+                  title: "Keep the evidence attached",
+                  body: "The story stays grounded in source material and context.",
+                },
+                {
+                  title: "Approve before anything goes out",
+                  body: "Human control is preserved even when AI drafts the first version.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                >
+                  <p className="text-base font-semibold text-white">{item.title}</p>
+                  <p className="mt-2 text-sm leading-7 text-slate-400">{item.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap mt-8">
+              <a
+                href={mobileDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={trackTryDemoLive}
+                data-cta="open-mobile-demo"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.35)]"
+              >
+                Open Prototype
+                <ArrowRight size={18} />
+              </a>
+              <a
+                href="#request-demo"
+                onClick={() => trackCtaClick("mobile_demo_request_demo")}
+                data-cta="request-demo"
+                data-cta-source="mobile_demo"
+                className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-[#ff6a00]/40 hover:bg-white/[0.08]"
+              >
+                Request Guided Demo
+              </a>
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[620px]">
+            <div className="absolute inset-0 rounded-[44px] bg-[radial-gradient(circle_at_top,rgba(255,106,0,0.2),transparent_55%)] blur-3xl" />
+            <div className="relative mx-auto max-w-[430px] rounded-[42px] border border-white/12 bg-[#0c1016]/95 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.5)]">
+              <div className="mx-auto mb-4 h-7 w-36 rounded-full bg-white/10" />
+              <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black">
+                <iframe
+                  src={mobileDemoUrl}
+                  scrolling="no"
+                  title="Sharwi Mobile App Demo"
+                  className="h-[760px] w-full bg-black"
+                />
+              </div>
+            </div>
+            <div className="mx-auto mt-6 grid max-w-[520px] gap-4 sm:grid-cols-3">
+              {["Personal capture flow", "Proof-backed draft", "Approval-first UX"].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-
-        <a
-          href="https://sharwi-527721ed.base44.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={trackTryDemoLive}
-          className="group inline-block relative overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.5)]"
-          style={{
-            padding: "16px 32px", fontSize: "18px", fontWeight: 600,
-            background: "#ff6a00", color: "white", borderRadius: "12px",
-            textDecoration: "none", boxShadow: "0 8px 24px rgba(255,106,0,0.4)",
-          }}
-        >
-          <span style={{ position: "relative", zIndex: 1 }}>Try Demo Live</span>
-        </a>
       </div>
     </section>
   )

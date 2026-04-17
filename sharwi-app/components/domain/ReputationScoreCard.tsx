@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "@/components/ui/Card";
 import { Text } from "@/components/ui/Text";
 import { ReputationBreakdown } from "@/types/models";
-import { colors, spacing } from "@/types/theme";
+import { colors, spacing } from "@/constants/theme";
 
 export function ReputationScoreCard({ score }: { score: ReputationBreakdown }) {
   return (
@@ -46,3 +46,4 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
+

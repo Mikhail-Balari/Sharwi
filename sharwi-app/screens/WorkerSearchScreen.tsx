@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/Input";
 import { Screen } from "@/components/ui/Screen";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { fetchWorkers } from "@/services/api/workers";
-import { spacing } from "@/types/theme";
+import { spacing } from "@/constants/theme";
 
 const filters = ["Verified", "Remote", "Product", "Engineering"];
 
@@ -44,3 +44,4 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
 });
+

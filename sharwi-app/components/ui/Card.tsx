@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { colors, radii, spacing } from "@/types/theme";
+import { colors, radii, spacing } from "@/constants/theme";
 
 type CardProps = PropsWithChildren<{
   style?: StyleProp<ViewStyle>;
@@ -21,3 +21,4 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
 });
+

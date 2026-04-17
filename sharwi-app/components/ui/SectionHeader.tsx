@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
 import { Text } from "@/components/ui/Text";
-import { spacing } from "@/types/theme";
+import { spacing } from "@/constants/theme";
 
 export function SectionHeader({ eyebrow, title, description }: { eyebrow?: string; title: string; description?: string }) {
   return (
@@ -18,3 +18,4 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
 });
+

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Text } from "@/components/ui/Text";
 import { WorkerProfile } from "@/types/models";
-import { spacing } from "@/types/theme";
+import { spacing } from "@/constants/theme";
 
 export function ProfileHeaderCard({ profile }: { profile: WorkerProfile }) {
   return (
@@ -33,3 +33,4 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
 });
+

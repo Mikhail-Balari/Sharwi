@@ -1,11 +1,12 @@
 "use client"
 
 import { useState, useEffect, useCallback, type ReactNode } from "react"
-import { X, CheckCircle } from "lucide-react"
+import { CheckCircle, X } from "lucide-react"
 import { saveDemoRequest } from "@/lib/supabase"
 import {
-  trackDemoModalOpen,
+  trackDemoFormStart,
   trackDemoFormSubmit,
+  trackDemoSuccess,
 } from "@/lib/analytics"
 
 interface ModalProps {
@@ -73,46 +74,86 @@ interface RequestDemoModalProps {
   onSuccess: () => void
 }
 
+const roles = [
+  "Founder / CEO",
+  "Investor / Advisor",
+  "Marketing",
+  "Revenue / GTM",
+  "People / Talent",
+  "Operations",
+  "Data / Analytics",
+  "Digital Transformation",
+  "Other",
+]
+
+const companySizes = [
+  "Solo / fund",
+  "1-50",
+  "51-200",
+  "201-1,000",
+  "1,001-5,000",
+  "5,000+",
+]
+
+const problems = [
+  "Proof-backed employee advocacy",
+  "Governance and approvals",
+  "Visibility into trusted reach",
+  "Directional CAC improvement",
+  "Attribution clarity",
+  "Executive reporting for a pilot",
+  "Product diligence / investor overview",
+]
+
 export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModalProps) {
   const [formData, setFormData] = useState({
-    name: "",
-    role: "",
+    fullName: "",
     company: "",
-    email: "",
-    message: "",
+    role: "",
+    workEmail: "",
+    companySize: "",
+    problemToSolve: "",
+    notes: "",
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
+  const [hasStarted, setHasStarted] = useState(false)
 
-  // Track modal open
   useEffect(() => {
-    if (isOpen) {
-      trackDemoModalOpen()
+    if (!isOpen) {
+      setHasStarted(false)
     }
   }, [isOpen])
 
-  const roles = [
-    "Founder",
-    "HR & Talent",
-    "Marketing",
-    "Data & Analytics",
-    "Engineering",
-    "Operations",
-    "Digital Transformation",
-    "Other",
-  ]
+  const markStarted = () => {
+    if (hasStarted) return
+    setHasStarted(true)
+    trackDemoFormStart()
+  }
+
+  const updateField = (
+    field: keyof typeof formData,
+    value: string
+  ) => {
+    markStarted()
+    setFormData((current) => ({ ...current, [field]: value }))
+  }
 
   const validate = () => {
-    const newErrors: Record<string, string> = {}
-    if (!formData.name.trim()) newErrors.name = "Name is required"
-    if (!formData.role) newErrors.role = "Role is required"
-    if (!formData.company.trim()) newErrors.company = "Company is required"
-    if (!formData.email.trim()) newErrors.email = "Email is required"
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
-      newErrors.email = "Invalid email format"
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
+    const nextErrors: Record<string, string> = {}
+
+    if (!formData.fullName.trim()) nextErrors.fullName = "Full name is required"
+    if (!formData.company.trim()) nextErrors.company = "Company is required"
+    if (!formData.role) nextErrors.role = "Role is required"
+    if (!formData.workEmail.trim()) nextErrors.workEmail = "Work email is required"
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail))
+      nextErrors.workEmail = "Enter a valid email"
+    if (!formData.companySize) nextErrors.companySize = "Company size is required"
+    if (!formData.problemToSolve) nextErrors.problemToSolve = "Choose the main problem to solve"
+
+    setErrors(nextErrors)
+    return Object.keys(nextErrors).length === 0
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -122,32 +163,41 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
     setIsSubmitting(true)
     setSubmitError("")
 
-    // Save to Supabase
     const result = await saveDemoRequest({
-      name: formData.name,
-      role: formData.role,
+      fullName: formData.fullName,
       company: formData.company,
-      email: formData.email,
-      message: formData.message,
+      role: formData.role,
+      workEmail: formData.workEmail,
+      companySize: formData.companySize,
+      problemToSolve: formData.problemToSolve,
+      notes: formData.notes,
     })
 
     if (!result.success) {
-      console.error("Failed to save lead:", result.error)
-      // Still proceed — don't block UX for a DB error
+      setSubmitError("We couldn't save the request right now. Please try again.")
+      setIsSubmitting(false)
+      return
     }
 
-    // Track in Google Analytics
     trackDemoFormSubmit({
-      name: formData.name,
       role: formData.role,
-      company: formData.company,
-      email: formData.email,
+      companySize: formData.companySize,
+      problemToSolve: formData.problemToSolve,
+      hasNotes: Boolean(formData.notes.trim()),
     })
 
     setIsSubmitting(false)
     onClose()
     onSuccess()
-    setFormData({ name: "", role: "", company: "", email: "", message: "" })
+    setFormData({
+      fullName: "",
+      company: "",
+      role: "",
+      workEmail: "",
+      companySize: "",
+      problemToSolve: "",
+      notes: "",
+    })
     setErrors({})
   }
 
@@ -159,30 +209,49 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="520px">
+    <Modal isOpen={isOpen} onClose={onClose} maxWidth="640px">
       <div className="p-8">
-        <h2 className="font-display text-2xl font-bold text-white mb-2">
-          Request your personalized demo
-        </h2>
-        <p className="text-[#9CA3AF] mb-6">
-          See how Sharwi transforms real work into real visibility.
-        </p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div>
+        <div className="mb-6">
+          <h2 className="font-display text-2xl font-bold text-white mb-2">
+            Request a Sharwi demo
+          </h2>
+          <p className="text-[#9CA3AF] leading-relaxed">
+            Tell us whether you are exploring Sharwi as a pilot customer, an internal sponsor, or an investor, and we’ll tailor the walkthrough.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="md:col-span-1">
             <input
               type="text"
-              placeholder="Name *"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              placeholder="Full name *"
+              value={formData.fullName}
+              onFocus={markStarted}
+              onChange={(e) => updateField("fullName", e.target.value)}
               className={inputClass}
               style={inputStyle}
             />
-            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
+            {errors.fullName && <p className="text-red-400 text-sm mt-1">{errors.fullName}</p>}
           </div>
-          <div>
+
+          <div className="md:col-span-1">
+            <input
+              type="text"
+              placeholder="Company *"
+              value={formData.company}
+              onFocus={markStarted}
+              onChange={(e) => updateField("company", e.target.value)}
+              className={inputClass}
+              style={inputStyle}
+            />
+            {errors.company && <p className="text-red-400 text-sm mt-1">{errors.company}</p>}
+          </div>
+
+          <div className="md:col-span-1">
             <select
               value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+              onFocus={markStarted}
+              onChange={(e) => updateField("role", e.target.value)}
               className={`${inputClass} appearance-none`}
               style={{
                 ...inputStyle,
@@ -192,57 +261,100 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               <option value="" disabled>
                 Role *
               </option>
-              {roles.map((r) => (
-                <option key={r} value={r} className="bg-[#1A1A1A] text-white">
-                  {r}
+              {roles.map((role) => (
+                <option key={role} value={role} className="bg-[#1A1A1A] text-white">
+                  {role}
                 </option>
               ))}
             </select>
             {errors.role && <p className="text-red-400 text-sm mt-1">{errors.role}</p>}
           </div>
-          <div>
-            <input
-              type="text"
-              placeholder="Company *"
-              value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-              className={inputClass}
-              style={inputStyle}
-            />
-            {errors.company && <p className="text-red-400 text-sm mt-1">{errors.company}</p>}
-          </div>
-          <div>
+
+          <div className="md:col-span-1">
             <input
               type="email"
-              placeholder="Email *"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              placeholder="Work email *"
+              value={formData.workEmail}
+              onFocus={markStarted}
+              onChange={(e) => updateField("workEmail", e.target.value)}
               className={inputClass}
               style={inputStyle}
             />
-            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+            {errors.workEmail && <p className="text-red-400 text-sm mt-1">{errors.workEmail}</p>}
           </div>
-          <div>
+
+          <div className="md:col-span-1">
+            <select
+              value={formData.companySize}
+              onFocus={markStarted}
+              onChange={(e) => updateField("companySize", e.target.value)}
+              className={`${inputClass} appearance-none`}
+              style={{
+                ...inputStyle,
+                color: formData.companySize ? "#F5F5F5" : "#6B7280",
+              }}
+            >
+              <option value="" disabled>
+                Company or fund size *
+              </option>
+              {companySizes.map((size) => (
+                <option key={size} value={size} className="bg-[#1A1A1A] text-white">
+                  {size}
+                </option>
+              ))}
+            </select>
+            {errors.companySize && <p className="text-red-400 text-sm mt-1">{errors.companySize}</p>}
+          </div>
+
+          <div className="md:col-span-1">
+            <select
+              value={formData.problemToSolve}
+              onFocus={markStarted}
+              onChange={(e) => updateField("problemToSolve", e.target.value)}
+              className={`${inputClass} appearance-none`}
+              style={{
+                ...inputStyle,
+                color: formData.problemToSolve ? "#F5F5F5" : "#6B7280",
+              }}
+            >
+              <option value="" disabled>
+                Problem to solve *
+              </option>
+              {problems.map((problem) => (
+                <option key={problem} value={problem} className="bg-[#1A1A1A] text-white">
+                  {problem}
+                </option>
+              ))}
+            </select>
+            {errors.problemToSolve && <p className="text-red-400 text-sm mt-1">{errors.problemToSolve}</p>}
+          </div>
+
+          <div className="md:col-span-2">
             <textarea
-              placeholder="Message (optional)"
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              rows={3}
+              placeholder="Optional notes"
+              value={formData.notes}
+              onFocus={markStarted}
+              onChange={(e) => updateField("notes", e.target.value)}
+              rows={4}
               className={`${inputClass} resize-none`}
               style={inputStyle}
             />
           </div>
+
           {submitError && (
-            <p className="text-red-400 text-sm text-center">{submitError}</p>
+            <p className="text-red-400 text-sm text-center md:col-span-2">{submitError}</p>
           )}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ background: "#FF6A00" }}
-          >
-            {isSubmitting ? "Sending..." : "Request Demo"}
-          </button>
+
+          <div className="md:col-span-2 mt-2">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ background: "#FF6A00" }}
+            >
+              {isSubmitting ? "Sending..." : "Request Demo"}
+            </button>
+          </div>
         </form>
       </div>
     </Modal>
@@ -255,6 +367,12 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      trackDemoSuccess()
+    }
+  }, [isOpen])
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="420px">
       <div className="p-8 flex flex-col items-center text-center">
@@ -264,8 +382,10 @@ export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
         >
           <CheckCircle size={32} className="text-green-400" />
         </div>
-        <h2 className="font-display text-2xl font-bold text-white mb-2">Thank you!</h2>
-        <p className="text-[#9CA3AF] mb-6">{"We'll be in touch"}</p>
+        <h2 className="font-display text-2xl font-bold text-white mb-2">Demo request received</h2>
+        <p className="text-[#9CA3AF] mb-6">
+          We&apos;ll use this context to tailor the next Sharwi enterprise walkthrough.
+        </p>
         <button
           onClick={onClose}
           className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)]"
@@ -287,7 +407,14 @@ interface UseCaseModalProps {
   benefits: string[]
 }
 
-export function UseCaseModal({ isOpen, onClose, title, description, examplePost, benefits }: UseCaseModalProps) {
+export function UseCaseModal({
+  isOpen,
+  onClose,
+  title,
+  description,
+  examplePost,
+  benefits,
+}: UseCaseModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-8">
@@ -303,10 +430,10 @@ export function UseCaseModal({ isOpen, onClose, title, description, examplePost,
         <div className="mb-6">
           <p className="font-bold text-white mb-3">Key Benefits</p>
           <ul className="flex flex-col gap-2.5">
-            {benefits.map((b, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-[#9CA3AF]">
+            {benefits.map((benefit, index) => (
+              <li key={index} className="flex items-start gap-2.5 text-[#9CA3AF]">
                 <span className="mt-1.5 w-2 h-2 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
-                {b}
+                {benefit}
               </li>
             ))}
           </ul>

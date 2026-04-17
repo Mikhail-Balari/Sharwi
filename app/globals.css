@@ -4,166 +4,67 @@
 
 @layer base {
   * {
-    border-color: rgba(255, 106, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.08);
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #030201;
-    color: #F5F5F5;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(255, 106, 0, 0.18), transparent 34%),
+      radial-gradient(circle at 85% 10%, rgba(82, 130, 255, 0.12), transparent 28%),
+      linear-gradient(180deg, #06090f 0%, #0a1018 45%, #06090f 100%);
+    color: #f5f7fb;
+    position: relative;
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #030201;
-  color: #F5F5F5;
-  position: relative;
-}
-
-/* Noise grain muy sutil */
 body::before {
-  content: '';
+  content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.25;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.06 0 0 0 0.03 0 0.02 0 0 0.01 0 0 0.01 0 0.00 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 512px 512px;
+  z-index: 0;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 92%);
 }
 
-/* 
-  Glows MUY concentrados — radio pequeño fijo, opacidad baja.
-  Solo tocan las esquinas extremas, no se expanden al centro.
-*/
 body::after {
-  content: '';
+  content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
   background:
-    radial-gradient(ellipse 15% 10% at 0% 0%,   rgba(200,50,0,0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 12% 8%  at 100% 100%, rgba(190,45,0,0.15) 0%, transparent 100%),
-    radial-gradient(ellipse 10% 7%  at 0% 100%,  rgba(170,40,0,0.12) 0%, transparent 100%),
-    radial-gradient(ellipse  8% 6%  at 100% 0%,  rgba(160,35,0,0.09) 0%, transparent 100%);
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 35%),
+    radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.08), transparent 28%);
 }
 
-/* ── BRASAS FLOTANTES ─────────────────────────────────────────── */
-
-@keyframes ember-rise-1 {
-  0%   { transform: translate(0px, 0px) scale(1);      opacity: 0; }
-  10%  { opacity: 0.65; }
-  50%  { transform: translate(8px, -45vh) scale(0.8);  opacity: 0.45; }
-  80%  { opacity: 0.25; }
-  100% { transform: translate(-4px, -90vh) scale(0.4); opacity: 0; }
-}
-@keyframes ember-rise-2 {
-  0%   { transform: translate(0px, 0px) scale(1);       opacity: 0; }
-  12%  { opacity: 0.55; }
-  45%  { transform: translate(-10px, -40vh) scale(0.7); opacity: 0.40; }
-  75%  { opacity: 0.22; }
-  100% { transform: translate(6px, -85vh) scale(0.3);   opacity: 0; }
-}
-@keyframes ember-rise-3 {
-  0%   { transform: translate(0px, 0px) scale(1);       opacity: 0; }
-  8%   { opacity: 0.60; }
-  55%  { transform: translate(12px, -50vh) scale(0.6);  opacity: 0.38; }
-  85%  { opacity: 0.18; }
-  100% { transform: translate(-8px, -95vh) scale(0.3);  opacity: 0; }
-}
-@keyframes ember-rise-4 {
-  0%   { transform: translate(0px, 0px) scale(1);        opacity: 0; }
-  15%  { opacity: 0.50; }
-  50%  { transform: translate(-6px, -42vh) scale(0.75);  opacity: 0.32; }
-  80%  { opacity: 0.18; }
-  100% { transform: translate(10px, -88vh) scale(0.35);  opacity: 0; }
-}
-@keyframes ember-rise-5 {
-  0%   { transform: translate(0px, 0px) scale(1);        opacity: 0; }
-  10%  { opacity: 0.45; }
-  60%  { transform: translate(5px, -55vh) scale(0.6);    opacity: 0.28; }
-  90%  { opacity: 0.12; }
-  100% { transform: translate(-3px, -92vh) scale(0.25);  opacity: 0; }
+main,
+header,
+section,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
-.ember {
-  position: fixed;
-  bottom: -10px;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff5e0 0%, #ff8c00 40%, #ff4500 80%, transparent 100%);
-  box-shadow: 0 0 4px 1px rgba(255,100,0,0.55);
-  pointer-events: none;
-  z-index: 3;
-  will-change: transform, opacity;
+::selection {
+  background: rgba(255, 106, 0, 0.28);
+  color: #ffffff;
 }
 
-.ember-1  { left:  2%; animation: ember-rise-1  9s  2.0s infinite; }
-.ember-2  { left:  5%; animation: ember-rise-3 11s  0.3s infinite; }
-.ember-3  { left:  8%; animation: ember-rise-2  8s  5.5s infinite; }
-.ember-4  { left: 11%; animation: ember-rise-4 13s  1.2s infinite; }
-.ember-5  { left: 14%; animation: ember-rise-5 10s  7.0s infinite; }
-.ember-6  { left: 17%; animation: ember-rise-1  7s  3.5s infinite; }
-.ember-7  { left: 20%; animation: ember-rise-3 12s  0.8s infinite; }
-.ember-8  { left: 23%; animation: ember-rise-2  9s  6.2s infinite; }
-.ember-9  { left: 26%; animation: ember-rise-4 11s  2.8s infinite; }
-.ember-10 { left: 29%; animation: ember-rise-5  8s  4.5s infinite; }
-.ember-11 { left: 32%; animation: ember-rise-1 10s  1.5s infinite; }
-.ember-12 { left: 35%; animation: ember-rise-2 13s  8.0s infinite; }
-.ember-13 { left: 38%; animation: ember-rise-3  7s  0.2s infinite; }
-.ember-14 { left: 41%; animation: ember-rise-4  9s  5.8s infinite; }
-.ember-15 { left: 44%; animation: ember-rise-5 11s  3.0s infinite; }
-.ember-16 { left: 47%; animation: ember-rise-1  8s  6.8s infinite; }
-.ember-17 { left: 50%; animation: ember-rise-3 10s  1.8s infinite; }
-.ember-18 { left: 53%; animation: ember-rise-2 12s  4.2s infinite; }
-.ember-19 { left: 56%; animation: ember-rise-4  9s  7.5s infinite; }
-.ember-20 { left: 59%; animation: ember-rise-5  8s  2.5s infinite; }
-.ember-21 { left: 62%; animation: ember-rise-1 11s  5.2s infinite; }
-.ember-22 { left: 65%; animation: ember-rise-3  7s  0.6s infinite; }
-.ember-23 { left: 68%; animation: ember-rise-2 13s  3.8s infinite; }
-.ember-24 { left: 71%; animation: ember-rise-4 10s  7.2s infinite; }
-.ember-25 { left: 74%; animation: ember-rise-5  9s  1.0s infinite; }
-.ember-26 { left: 77%; animation: ember-rise-1  8s  4.8s infinite; }
-.ember-27 { left: 80%; animation: ember-rise-3 11s  6.5s infinite; }
-.ember-28 { left: 83%; animation: ember-rise-2  9s  2.2s infinite; }
-.ember-29 { left: 86%; animation: ember-rise-4 10s  8.5s infinite; }
-.ember-30 { left: 89%; animation: ember-rise-5 12s  0.9s infinite; }
-.ember-31 { left: 91%; animation: ember-rise-1  8s  5.0s infinite; }
-.ember-32 { left: 93%; animation: ember-rise-3  9s  3.2s infinite; }
-.ember-33 { left: 95%; animation: ember-rise-2 11s  7.8s infinite; }
-.ember-34 { left: 97%; animation: ember-rise-4  8s  1.6s infinite; }
-.ember-35 { left: 99%; animation: ember-rise-5 10s  4.0s infinite; }
-
-/* Logo pulse */
-@keyframes logoPulse {
-  0%, 100% {
-    filter:
-      drop-shadow(0 0 12px rgba(255,120,0,0.9))
-      drop-shadow(0 0 40px rgba(255,80,0,0.6))
-      drop-shadow(0 0 80px rgba(255,60,0,0.3));
-  }
-  50% {
-    filter:
-      drop-shadow(0 0 20px rgba(255,140,0,1))
-      drop-shadow(0 0 60px rgba(255,100,0,0.8))
-      drop-shadow(0 0 100px rgba(255,80,0,0.4));
-  }
+iframe::-webkit-scrollbar {
+  display: none;
 }
 
-.logo-glow {
-  animation: logoPulse 4s ease-in-out infinite;
+iframe {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
-iframe::-webkit-scrollbar { display: none; }
-iframe { -ms-overflow-style: none; scrollbar-width: none; }

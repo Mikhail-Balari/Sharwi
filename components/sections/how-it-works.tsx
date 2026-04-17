@@ -1,81 +1,110 @@
 "use client"
 
+import { BarChart3, Link2, ShieldCheck, Sparkles, Workflow } from "lucide-react"
+
 const steps = [
   {
     num: "01",
-    title: "Capture",
-    desc: "AI captures your real work contributions - insights, solutions, learnings - effortlessly.",
+    title: "Capture work",
+    desc: "Pull signal from the systems where work already happens: commits, docs, CRM notes, tickets, launches, and outcomes.",
+    icon: Workflow,
   },
   {
     num: "02",
-    title: "Transform",
-    desc: "Sharwi turns raw contributions into polished, shareable content that reflects your authentic voice.",
+    title: "Attach evidence",
+    desc: "Keep the proof, source links, approvals, and supporting context tied to every story candidate.",
+    icon: Link2,
   },
   {
     num: "03",
-    title: "Amplify",
-    desc: "Your expertise reaches the right audience. Build reputation. Generate visibility. Create impact.",
+    title: "AI draft",
+    desc: "Sharwi turns raw work into a credible narrative draft tailored to the professional and the use case.",
+    icon: Sparkles,
   },
   {
     num: "04",
-    title: "Measure",
-    desc: "Track real engagement metrics. See the tangible value of genuine knowledge sharing.",
+    title: "Human control",
+    desc: "The user, manager, or reviewer still approves, edits, or rejects before anything goes public.",
+    icon: ShieldCheck,
+  },
+  {
+    num: "05",
+    title: "Measure impact",
+    desc: "Track trusted visibility, proof-backed publishing, meetings influenced, and pilot-level business signals.",
+    icon: BarChart3,
   },
 ]
 
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1200px] mx-auto px-6">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#FF6A00] text-center mb-3">
-          PROCESS
-        </p>
-        <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-14 text-balance">
-          How <span className="text-[#FF6A00]">Sharwi</span> Works
-        </h2>
+      <div className="max-w-[1240px] mx-auto px-6">
+        <div className="max-w-3xl mb-14">
+          <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
+            How Sharwi Works
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
+            One product loop for credibility, control, and ROI.
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-slate-300">
+            Sharwi does not invent stories. It operationalizes the proof already sitting inside
+            real work and makes it useful for both professionals and enterprise teams.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((s) => (
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-5">
+          {steps.map((step) => (
             <div
-              key={s.num}
-              className="group relative rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(255,106,0,0.2),inset_0_0_0_1px_rgba(255,106,0,0.15)]"
+              key={step.num}
+              className="group relative overflow-hidden rounded-[28px] p-6"
               style={{
-                background: "rgba(20,14,8,0.65)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,106,0,0.15)",
-                boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,106,0,0.55)"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,106,0,0.15)"
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 18px 40px rgba(0,0,0,0.18)",
               }}
             >
-              {/* Big background number */}
-              <span
-                className="absolute top-2 right-4 font-extrabold transition-colors duration-300 select-none"
-                style={{
-                  fontSize: "90px",
-                  lineHeight: "1",
-                  color: "rgba(255,106,0,0.25)",
-                }}
-              >
-                <span className="group-hover:text-[rgba(255,106,0,0.5)] transition-colors duration-300">
-                  {s.num}
-                </span>
+              <span className="absolute right-5 top-4 text-[56px] font-bold tracking-[-0.05em] text-white/6">
+                {step.num}
               </span>
-
-              <div className="relative z-10 pt-20">
-                <h3 className="font-display text-lg font-bold text-white mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-[#9CA3AF] text-sm leading-relaxed">
-                  {s.desc}
-                </p>
+              <div className="relative z-10">
+                <div
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
+                  style={{ background: "rgba(255,106,0,0.12)" }}
+                >
+                  <step.icon size={20} className="text-[#FF6A00]" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-white mb-3">{step.title}</h3>
+                <p className="text-sm leading-7 text-slate-400">{step.desc}</p>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="grid gap-5 mt-8 lg:grid-cols-[1.15fr_0.85fr]">
+          <div
+            className="rounded-[28px] p-7"
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
+              Why this matters
+            </p>
+            <p className="text-lg leading-8 text-slate-200">
+              Evidence stays attached throughout the workflow, which means better trust,
+              better governance, and a clearer way to measure business outcomes later.
+            </p>
+          </div>
+          <div
+            className="rounded-[28px] p-7"
+            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+          >
+            <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
+              Validation posture
+            </p>
+            <p className="text-lg leading-8 text-slate-200">
+              The landing shows the workflow, the product experience, and the measurement model
+              without pretending the final platform is already fully shipped.
+            </p>
+          </div>
         </div>
       </div>
     </section>

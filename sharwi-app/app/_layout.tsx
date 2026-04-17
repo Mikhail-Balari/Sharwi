@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import { AppProviders } from "@/services/app-providers";
-import { colors } from "@/types/theme";
+import { colors } from "@/constants/theme";
 
 export default function RootLayout() {
   return (
@@ -19,3 +19,4 @@ export default function RootLayout() {
     </AppProviders>
   );
 }
+

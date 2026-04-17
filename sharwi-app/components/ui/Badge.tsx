@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
 import { Text } from "@/components/ui/Text";
-import { colors, radii, spacing } from "@/types/theme";
+import { colors, radii, spacing } from "@/constants/theme";
 
 export function Badge({ label, tone = "accent" }: { label: string; tone?: "accent" | "neutral" | "success" }) {
   return (
@@ -41,3 +41,4 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
+

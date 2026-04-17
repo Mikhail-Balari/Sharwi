@@ -1,85 +1,172 @@
-// Google Analytics 4 event tracking utility
-// GA_ID: G-4JFEK747YT
+"use client"
+
+const DEBUG_EVENT_KEY = "sharwi_event_log"
+const DEBUG_EVENT_LIMIT = 60
+
+export type SharwiEventName =
+  | "landing_page_view"
+  | "cta_click"
+  | "mobile_demo_interaction"
+  | "enterprise_demo_interaction"
+  | "demo_form_start"
+  | "demo_form_submit"
+  | "demo_success"
+
+type EventParams = Record<string, string | number | boolean | null | undefined>
+
+export interface AnalyticsDebugEvent {
+  name: SharwiEventName
+  params: EventParams
+  at: string
+}
 
 declare global {
   interface Window {
-    gtag: (...args: unknown[]) => void
-    dataLayer: unknown[]
+    gtag?: (...args: unknown[]) => void
+    dataLayer?: unknown[]
+    __sharwiAnalyticsDebug?: AnalyticsDebugEvent[]
+    __sharwiLandingTracked?: boolean
   }
 }
 
-export function trackEvent(
-  eventName: string,
-  params?: {
-    event_category?: string
-    event_label?: string
-    value?: number
-    [key: string]: unknown
+function appendDebugEvent(event: AnalyticsDebugEvent) {
+  if (typeof window === "undefined") {
+    return
   }
-) {
-  if (typeof window !== "undefined" && typeof window.gtag === "function") {
-    window.gtag("event", eventName, params)
+
+  const existing = getDebugEvents()
+  const next = [...existing, event].slice(-DEBUG_EVENT_LIMIT)
+  window.__sharwiAnalyticsDebug = next
+  window.localStorage.setItem(DEBUG_EVENT_KEY, JSON.stringify(next))
+}
+
+export function getDebugEvents(): AnalyticsDebugEvent[] {
+  if (typeof window === "undefined") {
+    return []
+  }
+
+  const cached = window.__sharwiAnalyticsDebug
+  if (cached?.length) {
+    return cached
+  }
+
+  const raw = window.localStorage.getItem(DEBUG_EVENT_KEY)
+  if (!raw) {
+    return []
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as AnalyticsDebugEvent[]
+    window.__sharwiAnalyticsDebug = parsed
+    return parsed
+  } catch {
+    return []
   }
 }
 
-// ── Pre-defined events ──────────────────────────────────────────
+export function trackEvent(name: SharwiEventName, params: EventParams = {}) {
+  if (typeof window === "undefined") {
+    return
+  }
 
-// Navigation
-export const trackNavRequestDemo = () =>
-  trackEvent("click", { event_category: "navigation", event_label: "nav_request_demo" })
+  const eventParams = {
+    page_path: window.location.pathname,
+    ...params,
+  }
 
-// Hero
-export const trackHeroRequestDemo = () =>
-  trackEvent("click", { event_category: "hero", event_label: "hero_request_demo" })
+  appendDebugEvent({
+    name,
+    params: eventParams,
+    at: new Date().toISOString(),
+  })
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", name, eventParams)
+  }
+}
+
+export const trackLandingPageView = () => {
+  if (typeof window === "undefined" || window.__sharwiLandingTracked) {
+    return
+  }
+
+  window.__sharwiLandingTracked = true
+  trackEvent("landing_page_view", {
+    location: "landing",
+  })
+}
+
+export const trackCtaClick = (location: string, ctaType = "request_demo") =>
+  trackEvent("cta_click", {
+    location,
+    cta_type: ctaType,
+  })
+
+export const trackMobileDemoInteraction = (interaction: string) =>
+  trackEvent("mobile_demo_interaction", {
+    interaction,
+  })
+
+export const trackEnterpriseDemoInteraction = (
+  module: string,
+  value?: string | number
+) =>
+  trackEvent("enterprise_demo_interaction", {
+    module,
+    value,
+  })
+
+export const trackDemoFormStart = (entryPoint = "request_demo_modal") =>
+  trackEvent("demo_form_start", {
+    entry_point: entryPoint,
+  })
+
+export const trackDemoFormSubmit = (details: {
+  role: string
+  companySize: string
+  problemToSolve: string
+  hasNotes: boolean
+}) =>
+  trackEvent("demo_form_submit", {
+    role: details.role,
+    company_size: details.companySize,
+    problem_to_solve: details.problemToSolve,
+    has_notes: details.hasNotes,
+  })
+
+export const trackDemoSuccess = (surface = "request_demo_modal") =>
+  trackEvent("demo_success", {
+    surface,
+  })
+
+// Compatibility wrappers for the existing landing page components.
+export const trackNavRequestDemo = () => trackCtaClick("header_nav")
+
+export const trackHeroRequestDemo = () => trackCtaClick("hero_primary")
 
 export const trackHeroSeeHowItWorks = () =>
-  trackEvent("click", { event_category: "hero", event_label: "hero_see_how_it_works" })
+  trackCtaClick("hero_secondary", "see_how_it_works")
 
-// Audience selector
 export const trackExploreAsProfessional = () =>
-  trackEvent("click", { event_category: "audience", event_label: "explore_as_professional" })
+  trackCtaClick("audience_selector_professional", "explore")
 
 export const trackExploreForCompanies = () =>
-  trackEvent("click", { event_category: "audience", event_label: "explore_for_companies" })
+  trackCtaClick("audience_selector_company", "explore")
 
-// For Professionals / For Companies CTAs
 export const trackForProfessionalsRequestDemo = () =>
-  trackEvent("click", { event_category: "for_professionals", event_label: "for_professionals_request_demo" })
+  trackCtaClick("for_professionals")
 
 export const trackForCompaniesRequestDemo = () =>
-  trackEvent("click", { event_category: "for_companies", event_label: "for_companies_request_demo" })
+  trackCtaClick("for_companies")
 
-// Use Cases
 export const trackSeeExample = (useCaseName: string) =>
-  trackEvent("click", {
-    event_category: "use_cases",
-    event_label: `see_example_${useCaseName.toLowerCase().replace(/[^a-z0-9]/g, "_")}`,
-  })
+  trackCtaClick(`use_case_${useCaseName.toLowerCase().replace(/[^a-z0-9]/g, "_")}`, "see_example")
 
-// Live Demo
-export const trackTryDemoLive = () =>
-  trackEvent("click", { event_category: "live_demo", event_label: "try_demo_live" })
+export const trackTryDemoLive = () => trackCtaClick("mobile_demo_external", "open_demo")
 
-export const trackDemoInteraction = () =>
-  trackEvent("demo_interaction", { event_category: "live_demo", event_label: "embedded_demo_used" })
+export const trackDemoInteraction = () => trackMobileDemoInteraction("iframe_engaged")
 
-// Request Demo Modal
-export const trackDemoModalOpen = () =>
-  trackEvent("modal_open", { event_category: "demo_modal", event_label: "request_demo_modal_opened" })
+export const trackDemoModalOpen = () => trackCtaClick("request_demo_modal", "modal_open")
 
-export const trackDemoFormSubmit = (formData: {
-  name: string
-  role: string
-  company: string
-  email: string
-}) =>
-  trackEvent("form_submit", {
-    event_category: "conversion",
-    event_label: "request_demo_submitted",
-    role: formData.role,
-    company: formData.company,
-  })
-
-// Final CTA
 export const trackScheduleLiveDemo = () =>
-  trackEvent("click", { event_category: "cta", event_label: "schedule_live_demo" })
+  trackCtaClick("request_demo_section", "schedule_live_demo")

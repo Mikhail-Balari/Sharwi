@@ -1,33 +1,63 @@
+import {
+  BORDER_RADIUS,
+  COLORS,
+  SPACING,
+  TYPOGRAPHY,
+} from "@/constants/theme";
+
+export {
+  BORDER_RADIUS,
+  COLORS,
+  SPACING,
+  TYPOGRAPHY,
+};
+
 export const colors = {
-  background: "#0B0B0F",
-  surface: "#14141B",
-  surfaceElevated: "#1C1C24",
-  border: "#2A2A36",
-  text: "#F7F6F3",
-  mutedText: "#A6A3B3",
-  accent: "#FF6A00",
-  accentSoft: "rgba(255, 106, 0, 0.16)",
-  successSoft: "rgba(72, 187, 120, 0.18)",
+  background: COLORS.backgroundDeep,
+  backgroundAlt: COLORS.backgroundSurface,
+  backgroundInset: COLORS.cardSecondary,
+  surface: COLORS.cardPrimary,
+  surfaceElevated: COLORS.cardPrimary,
+  surfaceStrong: COLORS.cardSecondary,
+  surfaceSoft: COLORS.chipBg,
+  border: COLORS.cardBorder,
+  borderStrong: COLORS.cardAccentBorder,
+  text: COLORS.textPrimary,
+  mutedText: COLORS.textSecondary,
+  accent: COLORS.accentOrange,
+  accentPressed: COLORS.accentOrangeDim,
+  accentSoft: COLORS.accentOrangeGlow,
+  accentGlow: COLORS.accentOrangeGlow,
+  accentMuted: COLORS.textSecondary,
+  pressOverlay: COLORS.accentOrangeGlow,
+  success: COLORS.verifiedGreen,
+  successSoft: COLORS.verifiedGreenDim,
+  info: COLORS.textSecondary,
+  infoSoft: COLORS.chipBg,
+  warning: COLORS.textSecondary,
+  warningSoft: COLORS.chipBg,
 };
 
 export const spacing = {
-  xs: 6,
-  sm: 10,
-  md: 16,
-  lg: 20,
-  xl: 28,
+  xs: SPACING.xs,
+  sm: SPACING.sm,
+  md: SPACING.lg,
+  lg: SPACING.xl,
+  xl: SPACING.sectionGap,
+  xxl: 32,
 };
 
 export const radii = {
-  md: 16,
-  lg: 24,
-  round: 999,
+  md: BORDER_RADIUS.card,
+  lg: BORDER_RADIUS.featuredCard,
+  xl: 30,
+  round: BORDER_RADIUS.round,
 };
 
 export const typography = {
-  title: 30,
-  subtitle: 18,
-  body: 15,
-  caption: 13,
-  label: 12,
+  title: TYPOGRAPHY.screenTitle.fontSize,
+  subtitle: TYPOGRAPHY.cardTitle.fontSize,
+  body: TYPOGRAPHY.bodyText.fontSize,
+  caption: TYPOGRAPHY.timestamp.fontSize,
+  label: TYPOGRAPHY.sectionLabel.fontSize,
 };

@@ -1,21 +1,59 @@
+import { Pressable } from "react-native";
 import { Tabs } from "expo-router";
-import { Compass, Flame, ShieldCheck, UserCircle2, Sparkles } from "lucide-react-native";
+import { Award, Layers, User, Zap } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { colors } from "@/types/theme";
+import { COLORS, TYPOGRAPHY } from "@/constants/theme";
+
+function TabBarButton(props: any) {
+  return (
+    <Pressable
+      {...props}
+      android_ripple={null}
+      style={({ pressed }) => [
+        props.style,
+        { opacity: pressed ? 0.7 : 1 },
+      ]}
+    />
+  );
+}
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: colors.mutedText,
+        tabBarActiveTintColor: COLORS.accentOrange,
+        tabBarInactiveTintColor: COLORS.textMuted,
+        tabBarButton: (props) => <TabBarButton {...props} />,
+        tabBarShowLabel: true,
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          height: 86,
-          paddingBottom: 12,
-          paddingTop: 10,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom,
+          paddingTop: 8,
+          backgroundColor: "rgba(10, 9, 8, 0.92)",
+          borderTopWidth: 1,
+          borderTopColor: "rgba(255, 252, 242, 0.06)",
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: "500",
+          marginTop: 2,
+          fontFamily: TYPOGRAPHY.fontFamily,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 4,
+        },
+        sceneStyle: {
+          backgroundColor: COLORS.backgroundDeep,
         },
       }}
     >
@@ -24,17 +62,7 @@ export default function TabLayout() {
         options={{
           title: "Feed",
           tabBarIcon: ({ color, size }) => (
-            <Flame color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: "Discover",
-          tabBarIcon: ({ color, size }) => (
-            <Compass color={color} size={size} />
+            <Layers color={color} size={size} />
           ),
         }}
       />
@@ -43,8 +71,8 @@ export default function TabLayout() {
         name="create"
         options={{
           title: "Create",
-          tabBarIcon: ({ color, size }) => (
-            <Sparkles color={color} size={size} />
+          tabBarIcon: ({ color }) => (
+            <Zap color={color} size={22} />
           ),
         }}
       />
@@ -52,9 +80,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="reputation"
         options={{
-          title: "Score",
+          title: "Reputation",
           tabBarIcon: ({ color, size }) => (
-            <ShieldCheck color={color} size={size} />
+            <Award color={color} size={size} />
           ),
         }}
       />
@@ -64,10 +92,18 @@ export default function TabLayout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, size }) => (
-            <UserCircle2 color={color} size={size} />
+            <User color={color} size={size} />
           ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="search"
+        options={{
+          href: null,
         }}
       />
     </Tabs>
   );
 }
+

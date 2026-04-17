@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { Text } from "@/components/ui/Text";
 import { FeedItem } from "@/types/models";
-import { spacing } from "@/types/theme";
+import { spacing } from "@/constants/theme";
 
 export function FeedCard({ item }: { item: FeedItem }) {
   return (
@@ -27,3 +27,4 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
 });
+
