@@ -22,12 +22,18 @@ export default function SplashAnimated() {
   }, []);
 
   const navigateNext = async () => {
-    try {
-      const seen = await AsyncStorage.getItem("sharwi_onboarding_done");
-      router.replace(seen === "true" ? "/login" : "/onboarding");
-    } catch {
-      router.replace("/onboarding");
-    }
+    router.replace("/onboarding");
+
+    // try {
+    //   const seen = await AsyncStorage.getItem("sharwi_onboarding_done");
+    //   if (seen === "true") {
+    //     router.replace("/login");
+    //   } else {
+    //     router.replace("/onboarding");
+    //   }
+    // } catch {
+    //   router.replace("/onboarding");
+    // }
   };
 
   const runAnimation = () => {

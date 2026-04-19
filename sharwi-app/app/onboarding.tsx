@@ -21,19 +21,19 @@ const SLIDES = [
     id: 1,
     headline: "Your work",
     accent: "matters.",
-    body: "Most real professional work stays invisible.\nSharwi changes that.",
+    body: "Most real professional work stays invisible. Sharwi changes that.",
   },
   {
     id: 2,
-    headline: "Sharwi makes\nit",
+    headline: "Sharwi makes it",
     accent: "visible.",
-    body: "Without self-promotion.\nWithout pressure.",
+    body: "Without self-promotion. Without pressure.",
   },
   {
     id: 3,
-    headline: "You stay\nin",
+    headline: "You stay in",
     accent: "control.",
-    body: "You decide what gets shared.\nAlways.",
+    body: "You decide what gets shared. Always.",
     isLast: true,
   },
 ] as const;
@@ -65,10 +65,6 @@ export default function Onboarding() {
     <View style={[styles.container, { paddingBottom: insets.bottom }]}>
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
 
-      <View style={[styles.logoWrap, { paddingTop: insets.top + 20 }]}>
-        <SharwiLogo size={32} color="#DE5015" />
-      </View>
-
       <Animated.ScrollView
         ref={scrollRef}
         horizontal
@@ -80,7 +76,6 @@ export default function Onboarding() {
           { useNativeDriver: false, listener: handleScroll },
         )}
         style={{ flex: 1 }}
-        contentContainerStyle={{ alignItems: "flex-end" }}
       >
         {SLIDES.map((slide, index) => {
           const inputRange = [(index - 1) * width, index * width, (index + 1) * width];
@@ -99,15 +94,20 @@ export default function Onboarding() {
 
           return (
             <View key={slide.id} style={styles.slide}>
-              <Animated.View style={{ opacity, transform: [{ translateY }] }}>
-                <Text style={styles.headline}>
-                  {slide.headline}
-                  {"\n"}
-                  <Text style={styles.headlineAccent}>{slide.accent}</Text>
-                </Text>
+              <View style={styles.logoZone}>
+                <View style={[styles.logoGlow, { top: insets.top + 48 }]} />
+                <SharwiLogo size={80} color="#DE5015" />
+              </View>
 
-                <Text style={styles.body}>{slide.body}</Text>
-              </Animated.View>
+              <View style={styles.copyZone}>
+                <Animated.View style={[styles.copyInner, { opacity, transform: [{ translateY }] }]}>
+                  <Text style={styles.headline}>
+                    {slide.headline} <Text style={styles.headlineAccent}>{slide.accent}</Text>
+                  </Text>
+
+                  <Text style={styles.body}>{slide.body}</Text>
+                </Animated.View>
+              </View>
             </View>
           );
         })}
@@ -146,7 +146,7 @@ export default function Onboarding() {
         <Text style={styles.buttonText}>
           {currentIndex === SLIDES.length - 1 ? "Get Started" : "Continue"}
         </Text>
-        <Text style={styles.buttonArrow}>›</Text>
+        <Text style={styles.buttonArrow}>{">"}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -157,33 +157,51 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000000",
   },
-  logoWrap: {
-    position: "absolute",
-    left: 24,
-    zIndex: 10,
-  },
   slide: {
     width,
     flex: 1,
-    justifyContent: "flex-end",
-    paddingHorizontal: 28,
-    paddingBottom: 48,
+    alignItems: "center",
+  },
+  logoZone: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoGlow: {
+    position: "absolute",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "rgba(222,80,21,0.06)",
+    alignSelf: "center",
+  },
+  copyZone: {
+    flex: 1,
+    alignItems: "center",
+    paddingHorizontal: 32,
+    paddingBottom: 32,
+  },
+  copyInner: {
+    alignItems: "center",
   },
   headline: {
-    fontSize: 46,
+    fontSize: 40,
     fontWeight: "800",
     color: "#FFFCF2",
-    letterSpacing: -1.8,
-    lineHeight: 54,
-    marginBottom: 18,
+    letterSpacing: -1.5,
+    textAlign: "center",
+    lineHeight: 48,
+    marginBottom: 16,
   },
   headlineAccent: {
     color: "#DE5015",
   },
   body: {
-    fontSize: 17,
-    color: "#5C5955",
-    lineHeight: 27,
+    fontSize: 16,
+    color: "#8A8480",
+    lineHeight: 25,
+    textAlign: "center",
     fontWeight: "400",
   },
   dots: {

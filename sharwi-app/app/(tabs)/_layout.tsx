@@ -23,6 +23,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      initialRouteName="feed"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: COLORS.accentOrange,

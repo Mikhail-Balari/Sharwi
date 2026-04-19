@@ -164,18 +164,16 @@ export default function CreatePostScreen() {
   }, [draftOpacity, draftText, draftTranslateY]);
 
   useEffect(() => {
-    if (isEditing) {
-      setTimeout(() => {
-        editInputRef.current?.measureLayout(
-          scrollViewRef.current?.getInnerViewNode?.() as any,
-          (_x, y) => {
-            scrollViewRef.current?.scrollTo({ y: y - 20, animated: true });
-          },
-          () => {},
-        );
-        editInputRef.current?.focus();
-      }, 100);
+    if (!isEditing) {
+      return;
     }
+
+    const timer = setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+      editInputRef.current?.focus();
+    }, 200);
+
+    return () => clearTimeout(timer);
   }, [isEditing]);
 
   useEffect(() => {
