@@ -25,8 +25,9 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   Book the Sharwi walkthrough that explains the story in one meeting.
                 </h2>
                 <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
-                  We’ll walk through the Personal Layer, the mobile experience, the enterprise dashboard concept,
-                  and the benchmark logic you can use for a pilot or investment case.
+                  We will walk through the full product: the Personal Layer where professionals build verified visibility,
+                  and the Enterprise Layer where your team measures impact, manages governance, and tracks what employee
+                  content generates for the business.
                 </p>
                 <button
                   onClick={() => {
@@ -45,16 +46,16 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
               <div className="grid gap-4">
                 {[
                   {
-                    title: "For pilot customers",
-                    body: "Validate whether Sharwi can connect expert work, trusted visibility, and a measurable rollout story.",
+                    title: "For companies",
+                    body: "See how Sharwi activates your team, maintains governance, and measures the business impact of employee visibility.",
                   },
                   {
-                    title: "For investors",
-                    body: "See the category framing, product loop, and why the two-layer system matters commercially.",
+                    title: "For revenue leaders",
+                    body: "See how verified employee content reduces CAC, improves conversion quality, and builds pipeline without paid spend.",
                   },
                   {
-                    title: "For internal sponsors",
-                    body: "Get a sharper narrative for brand, revenue, talent, or transformation stakeholders who need proof and control.",
+                    title: "For HR and employer brand",
+                    body: "See how Sharwi turns your people&apos;s real work into credible visibility that attracts talent and builds trust without asking them to become content creators.",
                   },
                 ].map((item) => (
                   <div

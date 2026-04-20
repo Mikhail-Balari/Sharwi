@@ -16,8 +16,8 @@ const heroSignals = [
     icon: ShieldCheck,
   },
   {
-    label: "Pilot posture",
-    value: "Built to validate in weeks, not quarters",
+    label: "Time to results",
+    value: "Built to deliver impact in weeks, not quarters",
     icon: BarChart3,
   },
 ]
@@ -39,7 +39,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
         <div>
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">
             <span className="inline-flex h-2 w-2 rounded-full bg-[#ff6a00]" />
-            Main validation asset for investors and pilot customers
+            Trusted visibility infrastructure for modern teams
           </div>
 
           <h1 className="mt-7 font-display text-5xl font-bold leading-[0.94] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
@@ -106,7 +106,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
                 </div>
               </div>
               <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
-                Pilot-ready
+                Live product
               </div>
             </div>
 

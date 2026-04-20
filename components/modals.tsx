@@ -76,7 +76,7 @@ interface RequestDemoModalProps {
 
 const roles = [
   "Founder / CEO",
-  "Investor / Advisor",
+  "Advisor",
   "Marketing",
   "Revenue / GTM",
   "People / Talent",
@@ -87,7 +87,7 @@ const roles = [
 ]
 
 const companySizes = [
-  "Solo / fund",
+  "Solo / team",
   "1-50",
   "51-200",
   "201-1,000",
@@ -101,8 +101,8 @@ const problems = [
   "Visibility into trusted reach",
   "Directional CAC improvement",
   "Attribution clarity",
-  "Executive reporting for a pilot",
-  "Product diligence / investor overview",
+  "Executive reporting",
+  "Product overview",
 ]
 
 export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModalProps) {
@@ -132,10 +132,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
     trackDemoFormStart()
   }
 
-  const updateField = (
-    field: keyof typeof formData,
-    value: string
-  ) => {
+  const updateField = (field: keyof typeof formData, value: string) => {
     markStarted()
     setFormData((current) => ({ ...current, [field]: value }))
   }
@@ -216,7 +213,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
             Request a Sharwi demo
           </h2>
           <p className="text-[#9CA3AF] leading-relaxed">
-            Tell us whether you are exploring Sharwi as a pilot customer, an internal sponsor, or an investor, and we’ll tailor the walkthrough.
+            Tell us about your team and the visibility problem you want to solve, and we&apos;ll tailor the walkthrough.
           </p>
         </div>
 
@@ -295,7 +292,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               }}
             >
               <option value="" disabled>
-                Company or fund size *
+                Company or team size *
               </option>
               {companySizes.map((size) => (
                 <option key={size} value={size} className="bg-[#1A1A1A] text-white">

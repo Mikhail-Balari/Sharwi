@@ -30,7 +30,7 @@ const steps = [
   {
     num: "05",
     title: "Measure impact",
-    desc: "Track trusted visibility, proof-backed publishing, meetings influenced, and pilot-level business signals.",
+    desc: "Track trusted visibility, proof-backed publishing, meetings influenced, and business signals.",
     icon: BarChart3,
   },
 ]
@@ -80,9 +80,9 @@ export function HowItWorks() {
           ))}
         </div>
 
-        <div className="grid gap-5 mt-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="mt-8">
           <div
-            className="rounded-[28px] p-7"
+            className="rounded-[28px] p-7 max-w-[760px]"
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
           >
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
@@ -91,18 +91,6 @@ export function HowItWorks() {
             <p className="text-lg leading-8 text-slate-200">
               Evidence stays attached throughout the workflow, which means better trust,
               better governance, and a clearer way to measure business outcomes later.
-            </p>
-          </div>
-          <div
-            className="rounded-[28px] p-7"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
-          >
-            <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
-              Validation posture
-            </p>
-            <p className="text-lg leading-8 text-slate-200">
-              The landing shows the workflow, the product experience, and the measurement model
-              without pretending the final platform is already fully shipped.
             </p>
           </div>
         </div>

@@ -68,7 +68,7 @@ const useCases = [
     benefits: [
       "Build executive presence without ghostwriting",
       "Reinforce company values through leadership visibility",
-      "Attract partners, investors, and talent who align with your vision",
+      "Attract partners, customers, and talent who align with your vision",
       "Create a cultural tone that cascades through the organization",
     ],
   },
@@ -81,7 +81,7 @@ const useCases = [
     benefits: [
       "Build brand awareness with zero marketing budget",
       "Leverage founder and team stories as your strongest asset",
-      "Create credibility with investors, clients, and recruits",
+      "Create credibility with customers, clients, and recruits",
       "Scale visibility without scaling headcount",
     ],
   },

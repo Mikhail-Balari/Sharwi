@@ -51,9 +51,9 @@ export function LiveDemoSection() {
               Show the product experience where Sharwi starts: in the hands of the professional.
             </h2>
             <p className="mt-5 text-lg leading-8 text-slate-300">
-              This embedded prototype gives visitors a real feel for the Personal Layer.
-              It is intentionally lightweight: enough to validate the experience without
-              pretending the final full product is already built.
+              This is Sharwi&apos;s Personal Layer. The professional logs what they worked on,
+              selects a tone, and gets a proof-backed draft in seconds. They review it, edit if needed,
+              and publish. That is the full loop and it happens directly from their phone.
             </p>
 
             <div className="grid gap-4 mt-8">
@@ -90,7 +90,7 @@ export function LiveDemoSection() {
                 data-cta="open-mobile-demo"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.35)]"
               >
-                Open Prototype
+                Try the app
                 <ArrowRight size={18} />
               </a>
               <a
@@ -119,7 +119,11 @@ export function LiveDemoSection() {
               </div>
             </div>
             <div className="mx-auto mt-6 grid max-w-[520px] gap-4 sm:grid-cols-3">
-              {["Personal capture flow", "Proof-backed draft", "Approval-first UX"].map((item) => (
+              {[
+                "Log work in seconds",
+                "AI draft with evidence",
+                "You approve before anything goes out",
+              ].map((item) => (
                 <div
                   key={item}
                   className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"

@@ -16,10 +16,7 @@ import {
   Users,
 } from "lucide-react"
 import { GlassCard } from "../glass-card"
-import {
-  trackCtaClick,
-  trackEnterpriseDemoInteraction,
-} from "@/lib/analytics"
+import { trackCtaClick, trackEnterpriseDemoInteraction } from "@/lib/analytics"
 
 type ScenarioId = "scaleup" | "advisory" | "operations"
 type TimeRange = "30d" | "90d"
@@ -35,13 +32,13 @@ const scenarios = {
     label: "Series C SaaS",
     company: "Northstar Cloud",
     description:
-      "Sharwi connects product, GTM, and customer evidence into a proof-backed advocacy pilot for a scaling revenue team.",
+      "Sharwi connects product, GTM, and customer evidence into a proof-backed advocacy rollout for a scaling revenue team.",
     stack: ["GitHub", "HubSpot", "LinkedIn"],
     narratives: {
       all: "Sharwi is converting product delivery proof into pipeline-facing visibility without asking employees to become marketers.",
       gtm: "Revenue teams are using launch and customer proof to increase trusted reach around active deals.",
       delivery: "Delivery teams can publish credible updates without exposing internal noise or rewriting work into marketing copy.",
-      leadership: "Leadership gets a directional view of governance, trusted visibility, and CAC efficiency from one pilot layer.",
+      leadership: "Leadership gets a directional view of governance, trusted visibility, and CAC efficiency from one operating layer.",
     },
     metrics: {
       activeEmployees: 196,
@@ -79,10 +76,10 @@ const scenarios = {
       "Sharwi helps experts publish client-safe insights with governance controls while keeping an executive lens on trusted visibility.",
     stack: ["CRM", "Knowledge Base", "LinkedIn"],
     narratives: {
-      all: "The pilot is optimized for expert credibility, not raw content volume. Trust is coming from governed proof and consistent publishing.",
+      all: "This rollout is optimized for expert credibility, not raw content volume. Trust is coming from governed proof and consistent publishing.",
       gtm: "Business development sees which expert posts are opening conversations, without claiming perfect funnel attribution.",
       delivery: "Subject matter experts can share client-safe insights with approval guardrails and proof traceability.",
-      leadership: "Leadership gets account-level signal without turning the pilot into a reporting burden.",
+      leadership: "Leadership gets account-level signal without turning reporting into a burden.",
     },
     metrics: {
       activeEmployees: 118,
@@ -123,7 +120,7 @@ const scenarios = {
       all: "Distributed teams are using real operational proof to create buyer trust and recruiting credibility with lightweight governance.",
       gtm: "Revenue teams are reusing verified field proof to warm late-stage accounts and reduce skepticism in complex deals.",
       delivery: "Operational leaders can surface quality, uptime, and delivery proof without writing content from scratch.",
-      leadership: "Leadership sees how distributed trust signals support both pipeline and hiring narratives in one pilot dashboard.",
+      leadership: "Leadership sees how distributed trust signals support both pipeline and hiring narratives in one dashboard.",
     },
     metrics: {
       activeEmployees: 238,
@@ -157,7 +154,7 @@ const scenarios = {
 } as const
 
 const teamOptions: Array<{ id: TeamFilter; label: string }> = [
-  { id: "all", label: "Whole pilot" },
+  { id: "all", label: "Whole company" },
   { id: "gtm", label: "Revenue / GTM" },
   { id: "delivery", label: "Delivery / Ops" },
   { id: "leadership", label: "Leadership" },
@@ -167,11 +164,10 @@ function scaleValue(value: number, timeRange: TimeRange) {
   return Math.round(value * rangeMultiplier[timeRange])
 }
 
-function metricNote(label: string, timeRange: TimeRange) {
-  const rangeLabel = timeRange === "90d" ? "pilot window" : "recent month"
+function metricNote(label: string) {
   const notes: Record<string, string> = {
-    active: `Active across the ${rangeLabel}`,
-    posts: `Generated during the ${rangeLabel}`,
+    active: "Active this period",
+    posts: "Generated this period",
     proof: "Claim-level proof attached before publish",
     vvr: "Verified Visibility Rate in target audiences",
     leads: "CRM-linked and modeled influenced demand",
@@ -200,37 +196,37 @@ export function EnterpriseDemoSection({
     {
       label: "Active Employees",
       value: scaleValue(scenario.metrics.activeEmployees, timeRange).toString(),
-      note: metricNote("active", timeRange),
+      note: metricNote("active"),
       icon: Users,
     },
     {
       label: "Posts Generated",
       value: scaleValue(scenario.metrics.postsGenerated, timeRange).toLocaleString(),
-      note: metricNote("posts", timeRange),
+      note: metricNote("posts"),
       icon: Sparkles,
     },
     {
       label: "Proof-backed Rate",
       value: `${scenario.metrics.proofBackedRate - (timeRange === "30d" ? 2 : 0)}%`,
-      note: metricNote("proof", timeRange),
+      note: metricNote("proof"),
       icon: BadgeCheck,
     },
     {
       label: "Verified Visibility Rate (VVR)",
       value: `${scenario.metrics.vvr - (timeRange === "30d" ? 3 : 0)}%`,
-      note: metricNote("vvr", timeRange),
+      note: metricNote("vvr"),
       icon: Gauge,
     },
     {
       label: "Leads Influenced",
       value: scaleValue(scenario.metrics.leadsInfluenced, timeRange).toString(),
-      note: metricNote("leads", timeRange),
+      note: metricNote("leads"),
       icon: Target,
     },
     {
       label: "CAC Reduction",
       value: `${scenario.metrics.cacReduction - (timeRange === "30d" ? 6 : 0)}%`,
-      note: metricNote("cac", timeRange),
+      note: metricNote("cac"),
       icon: TrendingDown,
     },
     {
@@ -242,7 +238,7 @@ export function EnterpriseDemoSection({
     {
       label: "Attribution Snapshot",
       value: `${scenario.metrics.attributionSnapshot - (timeRange === "30d" ? 5 : 0)}%`,
-      note: metricNote("attribution", timeRange),
+      note: metricNote("attribution"),
       icon: ChartColumn,
     },
   ]
@@ -266,11 +262,11 @@ export function EnterpriseDemoSection({
               className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
               style={{ letterSpacing: "-0.03em" }}
             >
-              A credible command-center visual,
-              <span className="text-[#FF6A00]"> without pretending the full product already exists.</span>
+              The command center for verified employee visibility.
             </h2>
             <p className="text-[#9CA3AF] max-w-2xl leading-relaxed">
-              This section behaves like a high-fidelity dashboard concept for pilots. It shows how Sharwi could surface activation, governance, and directional business signal for sponsors.
+              Real-time view of what your team is publishing, what is verified, and what is generating pipeline.
+              Everything your leadership needs to see the impact of employee visibility in one place.
             </p>
           </div>
 
@@ -284,7 +280,7 @@ export function EnterpriseDemoSection({
             className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.35)]"
             style={{ background: "#FF6A00" }}
           >
-            Request Pilot Demo
+            Request a Demo
             <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
@@ -368,11 +364,11 @@ export function EnterpriseDemoSection({
               <div className="rounded-2xl p-5" style={{ background: "rgba(255,106,0,0.06)", border: "1px solid rgba(255,106,0,0.18)" }}>
                 <div className="flex items-center gap-2 mb-3">
                   <BriefcaseBusiness size={16} className="text-[#FF6A00]" />
-                  <p className="text-white font-semibold">Pilot thesis</p>
+                  <p className="text-white font-semibold">Company overview</p>
                 </div>
                 <p className="text-sm text-[#D1D5DB] leading-relaxed">
-                  Sharwi is being evaluated as infrastructure for trust distribution, proof-backed visibility,
-                  governance, and directional CAC efficiency.
+                  How Sharwi is working across this organization: verified content, governance controls,
+                  and business impact in one view.
                 </p>
               </div>
             </div>
@@ -400,7 +396,7 @@ export function EnterpriseDemoSection({
           <GlassCard hoverEffect={false}>
             <div className="flex items-center justify-between gap-4 mb-6">
               <div>
-                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00] mb-2">Pilot Coverage</p>
+                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00] mb-2">Coverage</p>
                 <h3 className="font-display text-2xl font-bold text-white">Proof to visibility chain</h3>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -556,7 +552,7 @@ export function EnterpriseDemoSection({
               <div className="rounded-2xl p-4" style={{ background: "rgba(255,106,0,0.05)", border: "1px solid rgba(255,106,0,0.14)" }}>
                 <p className="text-sm text-[#D1D5DB] leading-relaxed">
                   Attribution here means CRM-linked and modeled influence from employee content touchpoints.
-                  It helps validate the pilot story quickly, without promising finance-grade precision.
+                  It shows how employee visibility contributes to pipeline in a way leadership can actually use.
                 </p>
               </div>
             </GlassCard>

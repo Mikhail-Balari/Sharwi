@@ -21,7 +21,7 @@ const problems = [
   },
   {
     icon: LineChart,
-    title: "Internal sponsors still struggle to prove ROI",
+    title: "Leadership still struggles to prove ROI",
     text: "Impressions are easy to count. Business impact is much harder to defend without the right measurement layer.",
   },
 ]
@@ -39,7 +39,7 @@ export function ProblemSection() {
           </h2>
           <p className="mt-5 text-lg leading-8 text-slate-300">
             That fragmentation is why strong professionals stay invisible, employee advocacy stalls,
-            and corporate sponsors struggle to justify the spend. Sharwi connects the full system.
+            and leadership teams struggle to justify the spend. Sharwi connects the full system.
           </p>
         </div>
 
