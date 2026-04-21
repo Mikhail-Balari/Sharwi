@@ -23,7 +23,7 @@ const glassStyleActive = {
   backdropFilter: "blur(20px) saturate(1.3)",
   WebkitBackdropFilter: "blur(20px) saturate(1.3)",
   boxShadow: `
-    0 0 0 1.5px rgba(255,106,0,1),
+    0 0 0 1.5px rgba(222,80,21,1),
     inset 0 1.5px 0 rgba(255,180,60,0.70),
     inset 1.5px 0 0 rgba(255,140,30,0.45),
     inset 0 -2px 16px rgba(0,0,0,0.7),
@@ -47,14 +47,14 @@ export function AudienceSelector() {
     <section className="py-20" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
 
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#FF6A00] text-center mb-3">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#DE5015] text-center mb-3">
           TWO LAYERS. ONE PLATFORM.
         </p>
         <h2
           className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3"
           style={{ letterSpacing: "-0.03em" }}
         >
-          How do you want to use <span style={{ color: "#FF6A00" }}>Sharwi</span>?
+          How do you want to use <span style={{ color: "#DE5015" }}>Sharwi</span>?
         </h2>
         <p className="text-[#9CA3AF] text-center max-w-xl mx-auto mb-12">
           Sharwi works on two levels simultaneously — for the people doing the work,
@@ -76,11 +76,11 @@ export function AudienceSelector() {
             {highlightLine}
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,106,0,0.15)" }}>
-                <Briefcase size={22} className="text-[#FF6A00]" />
+                style={{ background: "rgba(222,80,21,0.15)" }}>
+                <Briefcase size={22} className="text-[#DE5015]" />
               </div>
               <div>
-                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-[#DE5015]">Personal Layer</span>
                 <h3 className="font-display text-xl font-bold text-white">{"I'm a professional"}</h3>
               </div>
             </div>
@@ -90,7 +90,7 @@ export function AudienceSelector() {
               <span className="text-white font-medium">verified professional visibility</span>{" "}
               that follows you throughout your career.
             </p>
-            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
+            <span className="inline-flex items-center gap-1.5 text-[#DE5015] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
               Explore as a Professional
               <ChevronRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
@@ -108,11 +108,11 @@ export function AudienceSelector() {
             {highlightLine}
             <div className="flex items-center gap-4 mb-4 relative z-10">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,106,0,0.15)" }}>
-                <Building2 size={22} className="text-[#FF6A00]" />
+                style={{ background: "rgba(222,80,21,0.15)" }}>
+                <Building2 size={22} className="text-[#DE5015]" />
               </div>
               <div>
-                <span className="text-xs font-semibold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-[#DE5015]">Enterprise Layer</span>
                 <h3 className="font-display text-xl font-bold text-white">I represent a company</h3>
               </div>
             </div>
@@ -122,7 +122,7 @@ export function AudienceSelector() {
               <span className="text-white font-medium">verified revenue-driving content</span>{" "}
               that reduces CAC and builds trust at scale.
             </p>
-            <span className="inline-flex items-center gap-1.5 text-[#FF6A00] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
+            <span className="inline-flex items-center gap-1.5 text-[#DE5015] text-sm font-semibold relative z-10 transition-all duration-200 group-hover:gap-2.5">
               Explore for Companies
               <ChevronRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
             </span>
@@ -140,15 +140,15 @@ export function AudienceSelector() {
           <div className="grid grid-cols-1 md:grid-cols-2">
 
             {/* Personal Layer — left */}
-            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(255,106,0,0.12)]">
+            <div className="p-7 border-b md:border-b-0 md:border-r border-[rgba(222,80,21,0.12)]">
               <div className="flex items-center gap-2 mb-4">
                 <span
                   className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-                  style={{ background: "#FF6A00" }}
+                  style={{ background: "#DE5015" }}
                 >
                   1
                 </span>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#DE5015]">Personal Layer</span>
               </div>
               <h4 className="font-display text-lg font-bold text-white mb-3">
                 The employee owns their reputation
@@ -162,7 +162,7 @@ export function AudienceSelector() {
                   "If your next company doesn't use Sharwi, you keep your history",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "rgba(255,106,0,0.5)" }} />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "rgba(222,80,21,0.5)" }} />
                     {item}
                   </li>
                 ))}
@@ -174,11 +174,11 @@ export function AudienceSelector() {
               <div className="flex items-center gap-2 mb-4">
                 <span
                   className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-                  style={{ background: "#FF6A00" }}
+                  style={{ background: "#DE5015" }}
                 >
                   2
                 </span>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#DE5015]">Enterprise Layer</span>
               </div>
               <h4 className="font-display text-lg font-bold text-white mb-3">
                 The company buys the infrastructure
@@ -192,7 +192,7 @@ export function AudienceSelector() {
                   "Dashboard: VVR, proof-backed rate, pipeline attribution",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#DE5015" }} />
                     {item}
                   </li>
                 ))}
@@ -201,12 +201,12 @@ export function AudienceSelector() {
           </div>
 
           {/* Bottom bar */}
-          <div className="px-7 py-4 border-t border-[rgba(255,106,0,0.10)]"
-            style={{ background: "rgba(255,106,0,0.04)" }}>
+          <div className="px-7 py-4 border-t border-[rgba(222,80,21,0.10)]"
+            style={{ background: "rgba(222,80,21,0.04)" }}>
             <p className="text-center text-sm text-[#9CA3AF]">
               <span className="text-white font-semibold">Aligned incentives:</span>{" "}
               The company gets measurable revenue impact. The professional builds portable reputation.{" "}
-              <span className="text-[#FF6A00]">Both win.</span>
+              <span className="text-[#DE5015]">Both win.</span>
             </p>
           </div>
         </div>
@@ -215,3 +215,5 @@ export function AudienceSelector() {
     </section>
   )
 }
+
+

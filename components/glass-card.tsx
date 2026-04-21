@@ -22,3 +22,5 @@ export function GlassCard({ children, className = "", hoverEffect = true }: Glas
     </div>
   )
 }
+
+

@@ -47,7 +47,7 @@ export function Header({ onRequestDemo }: { onRequestDemo: () => void }) {
               onClick={handleRequestDemo}
               data-cta="request-demo"
               data-cta-source="header_nav"
-              className="rounded-full bg-[#ff6a00] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(255,106,0,0.32)]"
+              className="rounded-full bg-[#DE5015] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(222,80,21,0.32)]"
             >
               {t("nav_request_demo")}
             </button>
@@ -84,7 +84,7 @@ export function Header({ onRequestDemo }: { onRequestDemo: () => void }) {
               }}
               data-cta="request-demo"
               data-cta-source="header_nav_mobile"
-              className="rounded-full bg-[#ff6a00] px-5 py-3 text-sm font-semibold text-white transition-all duration-300"
+              className="rounded-full bg-[#DE5015] px-5 py-3 text-sm font-semibold text-white transition-all duration-300"
             >
               {t("nav_request_demo")}
             </button>
@@ -94,3 +94,5 @@ export function Header({ onRequestDemo }: { onRequestDemo: () => void }) {
     </header>
   )
 }
+
+

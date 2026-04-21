@@ -109,15 +109,15 @@ export function UseCasesSection() {
             <GlassCard key={uc.title} className="flex flex-col text-center" hoverEffect>
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                style={{ background: "rgba(255,106,0,0.15)" }}
+                style={{ background: "rgba(222,80,21,0.15)" }}
               >
-                <uc.icon size={22} className="text-[#FF6A00]" />
+                <uc.icon size={22} className="text-[#DE5015]" />
               </div>
               <h3 className="font-display text-lg font-bold text-white mb-2">{uc.title}</h3>
               <p className="text-[#9CA3AF] text-sm leading-relaxed mb-4 flex-1">{uc.shortDesc}</p>
               <button
                 onClick={() => handleSeeExample(i, uc.title)}
-                className="group inline-flex items-center justify-center gap-1.5 text-[#FF6A00] text-sm font-medium hover:underline transition-all duration-200"
+                className="group inline-flex items-center justify-center gap-1.5 text-[#DE5015] text-sm font-medium hover:underline transition-all duration-200"
               >
                 See example
                 <ArrowRight size={14} className="transition-transform duration-200 group-hover:translate-x-1" />
@@ -141,3 +141,5 @@ export function UseCasesSection() {
     </section>
   )
 }
+
+

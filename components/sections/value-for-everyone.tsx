@@ -9,15 +9,15 @@ function ValueCard({ icon: Icon, title, desc }: { icon: typeof BarChart3; title:
       style={{
         background: "rgba(20,14,8,0.65)",
         backdropFilter: "blur(10px)",
-        border: "1px solid rgba(255,106,0,0.15)",
+        border: "1px solid rgba(222,80,21,0.15)",
         boxShadow: "0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,106,0,0.45)" }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,106,0,0.15)" }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(222,80,21,0.45)" }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(222,80,21,0.15)" }}
     >
       <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-        style={{ background: "rgba(255,106,0,0.2)" }}>
-        <Icon size={20} className="text-[#FF6A00]" />
+        style={{ background: "rgba(222,80,21,0.2)" }}>
+        <Icon size={20} className="text-[#DE5015]" />
       </div>
       <div>
         <h4 className="font-bold text-white text-sm mb-1">{title}</h4>
@@ -47,7 +47,7 @@ export function ValueForEveryone() {
       <div className="max-w-[1200px] mx-auto px-6">
 
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3 text-balance">
-          Value for <span className="text-[#FF6A00]">everyone.</span>
+          Value for <span className="text-[#DE5015]">everyone.</span>
         </h2>
         <p className="text-[#9CA3AF] text-center max-w-2xl mx-auto mb-4 leading-relaxed">
           Sharwi aligns incentives: companies get measurable revenue impact, employees get portable career capital.
@@ -56,9 +56,9 @@ export function ValueForEveryone() {
 
         {/* Alignment statement */}
         <div className="max-w-3xl mx-auto mb-14 rounded-xl px-6 py-4 text-center"
-          style={{ background: "rgba(255,106,0,0.06)", border: "1px solid rgba(255,106,0,0.18)" }}>
+          style={{ background: "rgba(222,80,21,0.06)", border: "1px solid rgba(222,80,21,0.18)" }}>
           <p className="text-sm text-[#D1D5DB]">
-            <span className="text-[#FF6A00] font-semibold">Traditional advocacy platforms</span> ask employees to share brand content — they resist.
+            <span className="text-[#DE5015] font-semibold">Traditional advocacy platforms</span> ask employees to share brand content — they resist.
             Sharwi generates content <em>from their own work</em> — they participate because it benefits them too.
           </p>
         </div>
@@ -68,9 +68,9 @@ export function ValueForEveryone() {
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold text-black"
-                style={{ background: "#FF6A00" }}>1</div>
+                style={{ background: "#DE5015" }}>1</div>
               <div>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Enterprise Layer</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#DE5015]">Enterprise Layer</span>
                 <div className="flex items-center gap-2 mt-0.5">
                   <Building2 size={16} className="text-white" />
                   <span className="font-bold text-white text-sm">For Organizations</span>
@@ -86,9 +86,9 @@ export function ValueForEveryone() {
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold"
-                style={{ background: "rgba(255,106,0,0.15)", color: "#FF6A00", border: "1px solid rgba(255,106,0,0.4)" }}>2</div>
+                style={{ background: "rgba(222,80,21,0.15)", color: "#DE5015", border: "1px solid rgba(222,80,21,0.4)" }}>2</div>
               <div>
-                <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">Personal Layer</span>
+                <span className="text-xs font-bold tracking-widest uppercase text-[#DE5015]">Personal Layer</span>
                 <div className="flex items-center gap-2 mt-0.5">
                   <User size={16} className="text-white" />
                   <span className="font-bold text-white text-sm">For Employees</span>
@@ -107,7 +107,7 @@ export function ValueForEveryone() {
             background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
             boxShadow: "0 0 0 1px rgba(255,90,10,0.35), inset 0 1px 0 rgba(255,160,40,0.20)",
           }}>
-          <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-3">WHAT HAPPENS WHEN AN EMPLOYEE LEAVES</p>
+          <p className="text-xs font-bold tracking-widest uppercase text-[#DE5015] mb-3">WHAT HAPPENS WHEN AN EMPLOYEE LEAVES</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div>
               <p className="font-semibold text-white mb-2">✓ Stays with the person</p>
@@ -132,3 +132,5 @@ export function ValueForEveryone() {
     </section>
   )
 }
+
+

@@ -31,17 +31,17 @@ export function ProblemSection() {
   ]
 
   return (
-    <section id="problem" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1240px] mx-auto px-6">
+    <section id="problem" className="landing-section">
+      <div className="section-wrapper">
         <ScrollReveal>
           <div className="max-w-3xl mx-auto text-center mb-14">
-            <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
+            <p className="section-eyebrow mb-4 text-center">
               {t("problem_label")}
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
+            <h2 className="section-title text-center">
               {t("problem_h2")}
             </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-300">
+            <p className="section-copy mx-auto mt-5 text-center">
               {t("problem_sub")}
             </p>
           </div>
@@ -53,12 +53,12 @@ export function ProblemSection() {
               <GlassCard className="glass-card h-full">
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: "rgba(255,106,0,0.14)" }}
+                  style={{ background: "rgba(222,80,21,0.14)" }}
                 >
-                  <problem.icon size={22} className="text-[#FF6A00]" />
+                  <problem.icon size={22} className="text-[#DE5015]" />
                 </div>
-                <h3 className="font-display text-xl font-bold text-white mb-3">{problem.title}</h3>
-                <p className="text-sm leading-7 text-slate-400">{problem.text}</p>
+                <h3 className="card-title mb-3">{problem.title}</h3>
+                <p className="card-copy">{problem.text}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
@@ -75,3 +75,5 @@ export function ProblemSection() {
     </section>
   )
 }
+
+

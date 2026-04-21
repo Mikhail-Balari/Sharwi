@@ -35,12 +35,12 @@ function SharwiLogoSVG() {
       width={60}
       height={60}
       aria-label="Sharwi"
-      style={{ filter: "drop-shadow(0 0 18px rgba(255,106,0,0.5))" }}
+      style={{ filter: "drop-shadow(0 0 18px rgba(222,80,21,0.5))" }}
     >
-      <path d="M48 138.326C55.6368 149.317 105.149 126.317 117.5 136.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-      <path d="M48 154.326C55.6368 165.317 105.149 142.317 117.5 152.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-      <path d="M48 170.326C55.6368 181.317 105.149 158.317 117.5 168.826" stroke="#FF6A00" strokeWidth="6" strokeLinecap="round"/>
-      <path d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z" stroke="#FF6A00" strokeWidth="18"/>
+      <path d="M48 138.326C55.6368 149.317 105.149 126.317 117.5 136.826" stroke="#DE5015" strokeWidth="6" strokeLinecap="round"/>
+      <path d="M48 154.326C55.6368 165.317 105.149 142.317 117.5 152.826" stroke="#DE5015" strokeWidth="6" strokeLinecap="round"/>
+      <path d="M48 170.326C55.6368 181.317 105.149 158.317 117.5 168.826" stroke="#DE5015" strokeWidth="6" strokeLinecap="round"/>
+      <path d="M93.4443 11.2529C98.7389 9.31033 102.495 9.82307 105.624 11.4473C109.153 13.2793 112.993 17.1281 116.814 23.7764C124.517 37.1754 130.109 58.312 133.942 82.8447C141.514 131.304 141.567 188.296 141.222 210.864H11.3232C14.1123 190.246 21.2996 144.673 34.9766 101.647C41.8658 79.9747 50.272 59.3694 60.3398 43.0322C70.5159 26.5196 81.6412 15.5837 93.4443 11.2529Z" stroke="#DE5015" strokeWidth="18"/>
     </svg>
   )
 }
@@ -55,7 +55,7 @@ export function WhySharwi() {
             {/* Title + logo inline */}
             <div className="flex items-center gap-4 mb-8">
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
-                Why <span className="text-[#FF6A00]">Sharwi</span> exists
+                Why <span className="text-[#DE5015]">Sharwi</span> exists
               </h2>
               <SharwiLogoSVG />
             </div>
@@ -84,9 +84,9 @@ export function WhySharwi() {
               <GlassCard key={c.title} className="text-center">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ background: "rgba(255,106,0,0.2)" }}
+                  style={{ background: "rgba(222,80,21,0.2)" }}
                 >
-                  <c.icon size={22} className="text-[#FF6A00]" />
+                  <c.icon size={22} className="text-[#DE5015]" />
                 </div>
                 <h3 className="font-display text-base font-bold text-white mb-2">
                   {c.title}
@@ -102,4 +102,6 @@ export function WhySharwi() {
     </section>
   )
 }
+
+
 

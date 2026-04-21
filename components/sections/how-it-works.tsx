@@ -40,17 +40,17 @@ export function HowItWorks() {
   ]
 
   return (
-    <section id="how-it-works" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1240px] mx-auto px-6">
+    <section id="how-it-works" className="landing-section">
+      <div className="section-wrapper">
         <ScrollReveal>
           <div className="max-w-3xl mb-14">
-            <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
+            <p className="section-eyebrow mb-4">
               {t("how_label")}
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
+            <h2 className="section-title">
               {t("how_h2")}
             </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-300">
+            <p className="section-copy mt-5">
               {t("how_sub")}
             </p>
           </div>
@@ -66,12 +66,12 @@ export function HowItWorks() {
                 <div className="relative z-10">
                   <div
                     className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6"
-                    style={{ background: "rgba(255,106,0,0.12)" }}
+                    style={{ background: "rgba(222,80,21,0.12)" }}
                   >
-                    <step.icon size={20} className="text-[#FF6A00]" />
+                    <step.icon size={20} className="text-[#DE5015]" />
                   </div>
-                  <h3 className="font-display text-xl font-bold text-white mb-3">{step.title}</h3>
-                  <p className="text-sm leading-7 text-slate-400">{step.desc}</p>
+                  <h3 className="card-title mb-3">{step.title}</h3>
+                  <p className="card-copy">{step.desc}</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -80,11 +80,37 @@ export function HowItWorks() {
 
         <div className="mt-8">
           <ScrollReveal delay={0.2}>
-            <div className="glass-dark rounded-[28px] p-7 max-w-[760px]">
-              <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
+            <div
+              style={{
+                maxWidth: "720px",
+                margin: "0 auto",
+                padding: "32px 40px",
+                background: "rgba(222,80,21,0.05)",
+                border: "1px solid rgba(222,80,21,0.15)",
+                borderRadius: "20px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "11px",
+                  letterSpacing: "0.2em",
+                  fontWeight: 600,
+                  color: "#DE5015",
+                  textTransform: "uppercase",
+                  marginBottom: "12px",
+                }}
+              >
                 {t("how_why_title")}
               </p>
-              <p className="text-lg leading-8 text-slate-200">
+              <p
+                style={{
+                  fontSize: "clamp(16px, 1.5vw, 18px)",
+                  fontWeight: 500,
+                  lineHeight: 1.75,
+                  color: "#CCC6BA",
+                  textAlign: "center",
+                }}
+              >
                 {t("how_why_body")}
               </p>
             </div>
@@ -94,3 +120,5 @@ export function HowItWorks() {
     </section>
   )
 }
+
+

@@ -1,7 +1,7 @@
 export function SharwiLogoIcon({
   className = "",
   size = 40,
-  color = "#FF6A00",
+  color = "#DE5015",
 }: {
   className?: string
   size?: number
@@ -41,3 +41,5 @@ export function SharwiLogoCombined({ className = "" }: { className?: string }) {
     </div>
   )
 }
+
+

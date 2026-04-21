@@ -204,7 +204,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
   }
 
   const inputClass =
-    "glass-input w-full px-4 py-3 rounded-xl text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#FF6A00]/50 transition-all"
+    "glass-input w-full px-4 py-3 rounded-xl text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#DE5015]/50 transition-all"
   const inputStyle = {}
 
   return (
@@ -348,8 +348,8 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
-              style={{ background: "#FF6A00" }}
+              className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(222,80,21,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ background: "#DE5015" }}
             >
               {isSubmitting ? t("modal_submit_loading") : t("modal_submit_idle")}
             </button>
@@ -389,8 +389,8 @@ export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
         </p>
         <button
           onClick={onClose}
-          className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)]"
-          style={{ background: "#FF6A00" }}
+          className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(222,80,21,0.4)]"
+          style={{ background: "#DE5015" }}
         >
           {t("modal_close")}
         </button>
@@ -435,7 +435,7 @@ export function UseCaseModal({
           <ul className="flex flex-col gap-2.5">
             {benefits.map((benefit, index) => (
               <li key={index} className="flex items-start gap-2.5 text-[#9CA3AF]">
-                <span className="mt-1.5 w-2 h-2 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
+                <span className="mt-1.5 w-2 h-2 rounded-full shrink-0" style={{ background: "#DE5015" }} />
                 {benefit}
               </li>
             ))}
@@ -443,7 +443,7 @@ export function UseCaseModal({
         </div>
         <button
           onClick={onClose}
-          className="w-full py-3 rounded-xl font-medium text-white transition-all duration-300 hover:scale-[1.02] hover:border-[#FF6A00]/50"
+          className="w-full py-3 rounded-xl font-medium text-white transition-all duration-300 hover:scale-[1.02] hover:border-[#DE5015]/50"
           style={{
             background: "rgba(255,255,255,0.06)",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -455,3 +455,5 @@ export function UseCaseModal({
     </Modal>
   )
 }
+
+

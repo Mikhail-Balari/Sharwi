@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --section-padding-y: clamp(64px, 8vw, 120px);
+  --section-padding-x: clamp(20px, 5vw, 80px);
+  --card-radius: clamp(12px, 1.5vw, 20px);
+  --content-max-width: 1280px;
+}
+
 @layer base {
   * {
     border-color: rgba(255, 255, 255, 0.08);
@@ -13,6 +20,8 @@
 
   body {
     min-height: 100vh;
+    max-width: 1920px;
+    margin: 0 auto;
     background-color: #000000;
     background-image:
       radial-gradient(
@@ -28,7 +37,60 @@
     background-attachment: fixed;
     color: #f5f7fb;
     position: relative;
+    font-size: 16px;
+    overflow-x: hidden;
   }
+}
+
+.landing-section {
+  padding: var(--section-padding-y) var(--section-padding-x);
+  position: relative;
+  z-index: 3;
+}
+
+.section-wrapper {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: #DE5015;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #FFFCF2;
+}
+
+.section-copy {
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 400;
+  line-height: 1.75;
+  color: #8A8480;
+  text-align: left;
+}
+
+.card-title {
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: #FFFCF2;
+}
+
+.card-copy {
+  font-size: clamp(13px, 1.2vw, 14px);
+  line-height: 1.65;
+  color: #8A8480;
+  text-align: left;
 }
 
 body::before {
@@ -53,7 +115,7 @@ body::after {
   z-index: 0;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05), transparent 35%),
-    radial-gradient(circle at 100% 100%, rgba(255, 106, 0, 0.08), transparent 28%);
+    radial-gradient(circle at 100% 100%, rgba(222, 80, 21, 0.08), transparent 28%);
 }
 
 main,
@@ -65,7 +127,7 @@ footer {
 }
 
 ::selection {
-  background: rgba(255, 106, 0, 0.28);
+  background: rgba(222, 80, 21, 0.28);
   color: #ffffff;
 }
 
@@ -143,3 +205,5 @@ iframe {
   outline: none;
   background: rgba(255, 252, 242, 0.06);
 }
+
+

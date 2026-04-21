@@ -11,21 +11,21 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
 
   return (
     <>
-      <section id="request-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-        <div className="max-w-[1240px] mx-auto px-6">
+      <section id="request-demo" className="landing-section">
+        <div className="section-wrapper">
           <ScrollReveal>
           <div
             className="glass-card-orange relative overflow-hidden rounded-[36px] px-8 py-10 sm:px-10 lg:px-12"
           >
             <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <div>
-                <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FFB47C] mb-4">
+                <p className="section-eyebrow mb-4">
                   {t("cta_label")}
                 </p>
-                <h2 className="font-display text-4xl sm:text-5xl font-bold text-white tracking-[-0.04em]">
+                <h2 className="section-title">
                   {t("cta_h2")}
                 </h2>
-                <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
+                <p className="section-copy mt-5 max-w-2xl">
                   {t("cta_body")}
                 </p>
                 <button
@@ -35,7 +35,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   }}
                   data-cta="request-demo"
                   data-cta-source="request_demo_section"
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.35)]"
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#DE5015] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(222,80,21,0.35)]"
                 >
                   {t("cta_button")}
                   <ArrowRight size={18} />
@@ -52,8 +52,8 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                     key={item.title}
                     className="glass-card rounded-[24px] border border-white/10 bg-white/[0.08] p-5"
                   >
-                    <p className="text-base font-semibold text-white">{item.title}</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-200">{item.body}</p>
+                    <p className="card-title">{item.title}</p>
+                    <p className="card-copy mt-2">{item.body}</p>
                   </div>
                 ))}
               </div>
@@ -64,7 +64,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
       </section>
 
       <footer id="footer" className="border-t border-white/10 py-10">
-        <div className="max-w-[1240px] mx-auto px-6 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="section-wrapper flex flex-col gap-6 px-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <SharwiLogoCombined />
             <p className="mt-4 max-w-xl text-sm leading-7 text-slate-400">
@@ -84,3 +84,5 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
     </>
   )
 }
+
+

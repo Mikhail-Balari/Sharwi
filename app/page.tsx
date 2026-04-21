@@ -7,6 +7,7 @@ import { ProblemSection } from "@/components/sections/problem"
 import { HowItWorks } from "@/components/sections/how-it-works"
 import { ForProfessionals } from "@/components/sections/for-professionals"
 import { ForCompanies } from "@/components/sections/for-companies"
+import { TechnologySection } from "@/components/sections/technology"
 import { EnterpriseDemoSection } from "@/components/sections/enterprise-demo"
 import { LiveDemoSection } from "@/components/sections/live-demo"
 import { MetricsSection } from "@/components/sections/metrics"
@@ -33,6 +34,7 @@ export default function Home() {
       <ForProfessionals onRequestDemo={openDemoModal} />
       <LiveDemoSection />
       <ForCompanies onRequestDemo={openDemoModal} />
+      <TechnologySection />
       <EnterpriseDemoSection onRequestDemo={openDemoModal} />
       <MetricsSection />
       <CtaFooter onRequestDemo={openDemoModal} />

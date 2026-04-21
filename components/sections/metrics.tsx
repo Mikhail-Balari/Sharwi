@@ -35,17 +35,17 @@ export function MetricsSection() {
   ]
 
   return (
-    <section id="roi-benchmark" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1240px] mx-auto px-6">
+    <section id="roi-benchmark" className="landing-section">
+      <div className="section-wrapper">
         <ScrollReveal>
           <div className="max-w-3xl mx-auto text-center mb-14">
-            <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
+            <p className="section-eyebrow mb-4 text-center">
               {t("metrics_label")}
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
+            <h2 className="section-title text-center">
               {t("metrics_h2")}
             </h2>
-            <p className="mt-5 text-lg leading-8 text-slate-300">
+            <p className="section-copy mx-auto mt-5 text-center">
               {t("metrics_sub")}
             </p>
           </div>
@@ -57,18 +57,18 @@ export function MetricsSection() {
               <GlassCard className="glass-card-orange h-full text-center">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ background: "rgba(255,106,0,0.2)" }}
+                  style={{ background: "rgba(222,80,21,0.2)" }}
                 >
-                  <metric.icon size={22} className="text-[#FF6A00]" />
+                  <metric.icon size={22} className="text-[#DE5015]" />
                 </div>
                 <p
-                  className="font-extrabold text-[#FF6A00] mb-2"
+                  className="font-extrabold text-[#DE5015] mb-2"
                   style={{ fontSize: "52px", lineHeight: "1" }}
                 >
                   {metric.stat}
                 </p>
-                <h3 className="font-bold text-white mb-2">{metric.title}</h3>
-                <p className="text-[#9CA3AF] text-sm leading-relaxed">{metric.desc}</p>
+                <h3 className="card-title mb-2 text-center">{metric.title}</h3>
+                <p className="card-copy text-center">{metric.desc}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
@@ -76,18 +76,18 @@ export function MetricsSection() {
 
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="glass-dark rounded-[28px] p-7">
-            <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
+            <p className="section-eyebrow mb-3">
               {t("metrics_how_title")}
             </p>
-            <p className="text-lg leading-8 text-slate-200">
+            <p className="section-copy">
               {t("metrics_how_body")}
             </p>
           </div>
           <div className="glass-dark rounded-[28px] p-7">
-            <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
+            <p className="section-eyebrow mb-3">
               {t("metrics_lead_title")}
             </p>
-            <p className="text-lg leading-8 text-slate-200">
+            <p className="section-copy">
               {t("metrics_lead_body")}
             </p>
           </div>
@@ -96,3 +96,5 @@ export function MetricsSection() {
     </section>
   )
 }
+
+

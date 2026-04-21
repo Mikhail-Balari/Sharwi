@@ -40,29 +40,28 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
   }
 
   return (
-    <section id="enterprise-layer" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="max-w-[1200px] mx-auto px-6">
+    <section id="enterprise-layer" className="landing-section">
+      <div className="section-wrapper">
         <ScrollReveal>
           <div className="flex items-center justify-center gap-2 mb-4">
             <span
               className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-              style={{ background: "#FF6A00" }}
+              style={{ background: "#DE5015" }}
             >
               2
             </span>
-            <span className="text-xs font-bold tracking-widest uppercase text-[#FF6A00]">
+            <span className="section-eyebrow">
               {t("comp_label")}
             </span>
           </div>
 
           <h2
-            className="font-display text-3xl sm:text-4xl font-bold text-center text-white mb-3 text-balance"
-            style={{ letterSpacing: "-0.03em" }}
+            className="section-title text-center text-balance"
           >
             {t("comp_h2_line1")}{" "}
-            <span style={{ color: "#FF6A00" }}>{t("comp_h2_highlight")}</span>
+            <span style={{ color: "#DE5015" }}>{t("comp_h2_highlight")}</span>
           </h2>
-          <p className="text-[#9CA3AF] text-center max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="section-copy mx-auto mb-12 max-w-2xl text-center">
             {t("comp_sub")}
           </p>
         </ScrollReveal>
@@ -70,15 +69,15 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {cards.map((card, i) => (
             <ScrollReveal key={card.title} delay={i * 0.08}>
-              <GlassCard className="glass-card h-full text-center">
+              <GlassCard className="glass-card h-full">
                 <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ background: "rgba(255,106,0,0.15)" }}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ background: "rgba(222,80,21,0.15)" }}
                 >
-                  <card.icon size={22} className="text-[#FF6A00]" />
+                  <card.icon size={22} className="text-[#DE5015]" />
                 </div>
-                <h3 className="font-display text-lg font-bold text-white mb-2">{card.title}</h3>
-                <p className="text-[#9CA3AF] text-sm leading-relaxed">{card.desc}</p>
+                <h3 className="card-title mb-2">{card.title}</h3>
+                <p className="card-copy">{card.desc}</p>
               </GlassCard>
             </ScrollReveal>
           ))}
@@ -86,19 +85,19 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
 
         <div className="glass-card-orange max-w-4xl mx-auto rounded-2xl overflow-hidden mb-10">
           <div className="px-7 pt-6 pb-2">
-            <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-1">
+            <p className="text-xs font-bold tracking-widest uppercase text-[#DE5015] mb-1">
               {t("comp_start_label")}
             </p>
             <p className="text-xs text-[#6B7280]">{t("comp_start_sub")}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[rgba(255,106,0,0.10)] py-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[rgba(222,80,21,0.10)] py-4">
             {[
               { stat: "100-250", label: t("comp_start_metric1_label") },
               { stat: "1", label: t("comp_start_metric2_label") },
               { stat: "8 weeks", label: t("comp_start_metric3_label") },
             ].map((metric) => (
               <div key={metric.label} className="text-center px-6 py-4">
-                <p className="font-extrabold text-[#FF6A00] mb-1" style={{ fontSize: "40px", lineHeight: "1" }}>
+                <p className="font-extrabold text-[#DE5015] mb-1" style={{ fontSize: "40px", lineHeight: "1" }}>
                   {metric.stat}
                 </p>
                 <p className="text-[#9CA3AF] text-xs leading-relaxed">{metric.label}</p>
@@ -106,8 +105,8 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
             ))}
           </div>
           <div
-            className="px-7 py-4 border-t border-[rgba(255,106,0,0.10)]"
-            style={{ background: "rgba(255,106,0,0.04)" }}
+            className="px-7 py-4 border-t border-[rgba(222,80,21,0.10)]"
+            style={{ background: "rgba(222,80,21,0.04)" }}
           >
             <p className="text-center text-xs text-[#6B7280]">{t("comp_start_footer")}</p>
           </div>
@@ -115,13 +114,13 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
           <div className="glass-dark rounded-2xl p-6">
-            <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-4">
+            <p className="text-xs font-bold tracking-widest uppercase text-[#DE5015] mb-4">
               {t("comp_company_gets_title")}
             </p>
             <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
               {companyWins.map((item) => (
                 <li key={item} className="flex items-start gap-2.5">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#FF6A00" }} />
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#DE5015" }} />
                   {item}
                 </li>
               ))}
@@ -129,7 +128,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
           </div>
 
           <div className="glass-dark rounded-2xl p-6">
-            <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-4">
+            <p className="text-xs font-bold tracking-widest uppercase text-[#DE5015] mb-4">
               {t("comp_employee_keeps_title")}
             </p>
             <ul className="flex flex-col gap-2.5 text-sm text-[#9CA3AF]">
@@ -137,7 +136,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
                 <li key={item} className="flex items-start gap-2.5">
                   <span
                     className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ background: "rgba(255,106,0,0.5)" }}
+                    style={{ background: "rgba(222,80,21,0.5)" }}
                   />
                   {item}
                 </li>
@@ -151,8 +150,8 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
             onClick={handleRequestDemo}
             data-cta="request-demo"
             data-cta-source="enterprise_layer"
-            className="px-7 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(255,106,0,0.4)]"
-            style={{ background: "#FF6A00" }}
+            className="px-7 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(222,80,21,0.4)]"
+            style={{ background: "#DE5015" }}
           >
             {t("comp_cta")}
           </button>
@@ -161,3 +160,5 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
     </section>
   )
 }
+
+
