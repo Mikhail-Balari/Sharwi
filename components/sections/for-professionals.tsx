@@ -1,29 +1,33 @@
 "use client"
 
-import { Award, Briefcase, Eye, Globe, Send, ShieldCheck } from "lucide-react"
+import { ArrowRight, Award, Eye, Globe, Infinity, Send, ShieldCheck, Sparkles } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import { GlassCard } from "../glass-card"
 import { trackForProfessionalsRequestDemo } from "@/lib/analytics"
-import { useI18n } from "@/lib/i18n"
+
+const secondaryBenefits = [
+  {
+    icon: Eye,
+    title: "Visibility from real work",
+    desc: "Turn work signals into public proof without manufacturing content from scratch.",
+  },
+  {
+    icon: Award,
+    title: "Credibility that compounds",
+    desc: "Every verified achievement strengthens the next opportunity, introduction, or role change.",
+  },
+  {
+    icon: Send,
+    title: "Publish with control",
+    desc: "AI drafts from evidence, but you approve, edit, or reject before anything goes live.",
+  },
+  {
+    icon: Globe,
+    title: "Useful beyond one company",
+    desc: "Sharwi works whether your employer uses it, whether you freelance, or whether you are between roles.",
+  },
+]
 
 export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void }) {
-  const { t } = useI18n()
-
-  const cards = [
-    { icon: Eye, title: t("prof_card1_title"), desc: t("prof_card1_body") },
-    { icon: Award, title: t("prof_card2_title"), desc: t("prof_card2_body") },
-    { icon: Send, title: t("prof_card3_title"), desc: t("prof_card3_body") },
-    { icon: Globe, title: t("prof_card4_title"), desc: t("prof_card4_body") },
-    { icon: ShieldCheck, title: t("prof_card5_title"), desc: t("prof_card5_body") },
-    { icon: Briefcase, title: t("prof_card6_title"), desc: t("prof_card6_body") },
-  ]
-
-  const experienceSteps = [
-    { step: "01", title: t("prof_step1_title"), desc: t("prof_step1_body") },
-    { step: "02", title: t("prof_step2_title"), desc: t("prof_step2_body") },
-    { step: "03", title: t("prof_step3_title"), desc: t("prof_step3_body") },
-  ]
-
   const handleRequestDemo = () => {
     trackForProfessionalsRequestDemo()
     onRequestDemo()
@@ -32,90 +36,164 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
   return (
     <section id="personal-layer" className="landing-section">
       <div className="section-wrapper">
-        <ScrollReveal direction="left">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span
-              className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold text-black"
-              style={{ background: "#DE5015" }}
-            >
-              1
-            </span>
-            <span className="section-eyebrow">
-              {t("prof_label")}
-            </span>
-          </div>
-
-          <h2
-            className="section-title text-center text-balance"
-          >
-            {t("prof_h2_line1")}{" "}
-            <span style={{ color: "#DE5015" }}>{t("prof_h2_highlight")}</span>
-          </h2>
-          <p className="section-copy mx-auto mb-4 max-w-2xl text-center">
-            {t("prof_sub")}
-          </p>
-
-          <div
-            className="glass-card-orange max-w-2xl mx-auto mb-12 rounded-xl px-6 py-4 text-center"
-          >
-            <p className="text-sm text-[#D1D5DB]">
-              <span className="text-[#DE5015] font-semibold">{t("prof_highlight_lead")}</span>
-              {" "}
-              {t("prof_highlight_body")}
+        <ScrollReveal>
+          <div className="mx-auto mb-14 max-w-[780px] text-center">
+            <p className="section-eyebrow mb-4 text-center">1&nbsp;&nbsp;Personal Layer</p>
+            <h2 className="section-title text-center">
+              Build a reputation that <span style={{ color: "#DE5015" }}>belongs to you.</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-[680px] text-center text-[16px] leading-[1.75] text-[#8A8480]">
+              Your work is already happening. Sharwi captures it, verifies it, and turns it into a professional identity that stays with you — regardless of where you work.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-          {cards.map((card, i) => (
-            <ScrollReveal key={card.title} delay={0.2 + i * 0.08} direction="right">
-              <GlassCard className="glass-card h-full">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: "rgba(222,80,21,0.15)" }}
-                >
-                  <card.icon size={22} className="text-[#DE5015]" />
-                </div>
-                <h3 className="card-title mb-2">{card.title}</h3>
-                <p className="card-copy">{card.desc}</p>
-              </GlassCard>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <ScrollReveal>
+            <div
+              className="relative h-full overflow-hidden rounded-[24px] p-9"
+              style={{
+                background: "rgba(222,80,21,0.06)",
+                border: "1px solid rgba(222,80,21,0.25)",
+              }}
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 120 120"
+                className="absolute -right-5 -top-5 h-[120px] w-[120px]"
+                style={{ opacity: 0.15 }}
+              >
+                <path
+                  d="M60 6 98 22 114 60 98 98 60 114 22 98 6 60 22 22Z"
+                  fill="none"
+                  stroke="#DE5015"
+                  strokeWidth="7"
+                />
+                <text x="60" y="65" textAnchor="middle" fill="#DE5015" fontSize="13" fontWeight="800">
+                  VERIFIED
+                </text>
+              </svg>
+              <ShieldCheck size={32} color="#DE5015" />
+              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
+                Sharwi Verified Badge
+              </h3>
+              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
+                How many people know you work well? How many actually value what you deliver? Those recognitions stay locked inside internal platforms — and disappear when you leave. The Sharwi Badge changes that. Every verified achievement becomes a permanent, portable proof of your capabilities.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {["Proof-backed", "Evidence-first", "Tamper-proof"].map((pill) => (
+                  <span
+                    key={pill}
+                    className="rounded-full px-[14px] py-[5px] text-[12px] font-semibold text-[#DE5015]"
+                    style={{
+                      backgroundColor: "rgba(222,80,21,0.08)",
+                      border: "1px solid rgba(222,80,21,0.20)",
+                    }}
+                  >
+                    {pill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.08}>
+            <div className="glass-card h-full rounded-[24px] p-9">
+              <Infinity size={32} color="#DE5015" />
+              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
+                Reputation That Travels With You
+              </h3>
+              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
+                Every time you change jobs, you start from zero — again. Your contributions get buried in closed systems nobody outside your company can see. Sharwi makes your professional track record portable. Your reputation belongs to you — not to your employer.
+              </p>
+              <div className="mt-6 grid gap-2">
+                {[
+                  ["You + Sharwi company", "Both you and your company use Sharwi → full sync, automatic evidence, full measurement.", "#2ECC71"],
+                  ["You + Non-Sharwi company", "Your company doesn't use Sharwi yet → you log work manually, keep your reputation growing.", "#DE5015"],
+                  ["Freelancer / Between jobs", "No employer needed → Sharwi works as your independent professional identity layer.", "#8A8480"],
+                ].map(([label, copy, color]) => (
+                  <div
+                    key={label}
+                    className="flex items-start gap-3 rounded-xl p-3"
+                    style={{
+                      backgroundColor: "rgba(255,252,242,0.03)",
+                      border: "1px solid rgba(255,252,242,0.06)",
+                    }}
+                  >
+                    <span
+                      className="shrink-0 rounded-full px-[10px] py-[3px] text-[10px] font-semibold"
+                      style={{
+                        backgroundColor:
+                          color === "#2ECC71"
+                            ? "rgba(46,204,113,0.10)"
+                            : color === "#DE5015"
+                              ? "rgba(222,80,21,0.10)"
+                              : "rgba(255,252,242,0.06)",
+                        color,
+                      }}
+                    >
+                      {label}
+                    </span>
+                    <p className="flex-1 text-[12px] leading-[1.5] text-[#8A8480]">{copy}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.16}>
+            <div className="glass-card h-full rounded-[24px] p-9">
+              <Sparkles size={32} color="#DE5015" />
+              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
+                Personal Branding Without the Effort
+              </h3>
+              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
+                Most professionals know they should build a presence online. Almost none do — because creating content takes time they don&apos;t have, and the blank page is terrifying. Sharwi turns what you already do into content that sounds like you, backed by evidence, ready to publish.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                {["Work", "Evidence", "Your voice"].map((step, index) => (
+                  <div key={step} className="flex items-center gap-3">
+                    <span
+                      className="rounded-full px-4 py-1.5 text-[12px] font-semibold text-[#DE5015]"
+                      style={{
+                        backgroundColor: "rgba(222,80,21,0.08)",
+                        border: "1px solid rgba(222,80,21,0.20)",
+                      }}
+                    >
+                      {step}
+                    </span>
+                    {index < 2 ? <ArrowRight size={14} color="#5C5955" /> : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {secondaryBenefits.map((benefit, index) => (
+            <ScrollReveal key={benefit.title} delay={index * 0.06}>
+              <div className="glass-card h-full p-6">
+                <benefit.icon size={22} color="#DE5015" />
+                <h3 className="mt-4 text-[16px] font-bold text-[#FFFCF2]">{benefit.title}</h3>
+                <p className="mt-2 text-[13px] leading-[1.65] text-[#8A8480]">{benefit.desc}</p>
+              </div>
             </ScrollReveal>
           ))}
         </div>
 
-        <div className="glass-dark max-w-3xl mx-auto rounded-2xl overflow-hidden mb-10">
-          <div className="px-7 pt-6 pb-2">
-            <p className="text-xs font-bold tracking-widest uppercase text-[#DE5015] mb-4">
-              {t("prof_experience_title")}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[rgba(222,80,21,0.10)]">
-            {experienceSteps.map((item) => (
-              <div key={item.step} className="px-7 py-5">
-                <span className="text-4xl font-extrabold text-[rgba(222,80,21,0.20)] block mb-2">
-                  {item.step}
-                </span>
-                <h4 className="font-bold text-white text-sm mb-1">{item.title}</h4>
-                <p className="text-[#9CA3AF] text-xs leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center">
+        <div className="mt-10 text-center">
           <button
             onClick={handleRequestDemo}
             data-cta="request-demo"
             data-cta-source="personal_layer"
-            className="px-7 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_24px_rgba(222,80,21,0.4)]"
-            style={{ background: "#DE5015" }}
+            className="inline-flex h-[52px] items-center justify-center rounded-full px-7 text-[15px] font-bold text-white transition-transform hover:-translate-y-0.5"
+            style={{ backgroundColor: "#DE5015", boxShadow: "0 8px 28px rgba(222,80,21,0.35)" }}
           >
-            {t("prof_cta")}
+            Request Demo →
           </button>
         </div>
       </div>
     </section>
   )
 }
-
-

@@ -1,6 +1,6 @@
 "use client"
 
-import { Globe, Target, TrendingUp, Users } from "lucide-react"
+import { DollarSign, Eye, Globe, Target, TrendingUp, Users } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { GlassCard } from "../glass-card"
 import { useI18n } from "@/lib/i18n"
@@ -33,6 +33,32 @@ export function MetricsSection() {
       desc: t("metrics_m4_body"),
     },
   ]
+  const impactCards = [
+    {
+      icon: TrendingUp,
+      value: "10x",
+      title: "Higher Engagement",
+      desc: "Employee posts drive significantly more engagement than brand accounts.",
+    },
+    {
+      icon: Users,
+      value: "561%",
+      title: "Extended Reach",
+      desc: "Messages shared by employees reach 561% further than brand channels.",
+    },
+    {
+      icon: Eye,
+      value: "8x",
+      title: "More Visibility",
+      desc: "Employee advocacy increases content visibility by 8x on average.",
+    },
+    {
+      icon: DollarSign,
+      value: "14%",
+      title: "Revenue Impact",
+      desc: "Companies with advocacy programs see 14% increase in revenue.",
+    },
+  ]
 
   return (
     <section id="roi-benchmark" className="landing-section">
@@ -47,6 +73,37 @@ export function MetricsSection() {
             </h2>
             <p className="section-copy mx-auto mt-5 text-center">
               {t("metrics_sub")}
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.08}>
+          <div className="mb-14">
+            <h3
+              className="mb-8 text-center"
+              style={{
+                fontSize: "clamp(26px, 2.8vw, 36px)",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              <span style={{ color: "#DE5015" }}>Measurable</span>
+              <span style={{ color: "#FFFCF2" }}> Business Impact</span>
+            </h3>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {impactCards.map((card) => (
+                <div key={card.title} className="glass-card h-full p-7 text-center">
+                  <card.icon size={28} className="mx-auto text-[#DE5015]" />
+                  <p className="mt-5 text-[52px] font-black leading-none text-[#DE5015]">
+                    {card.value}
+                  </p>
+                  <h4 className="mt-4 text-[16px] font-bold text-[#FFFCF2]">{card.title}</h4>
+                  <p className="mt-2 text-[13px] leading-[1.65] text-[#8A8480]">{card.desc}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-center text-[11px] text-[#5C5955]">
+              Source: Employee Advocacy Benchmark Report 2026
             </p>
           </div>
         </ScrollReveal>

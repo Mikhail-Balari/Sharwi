@@ -8,7 +8,7 @@ export function HeroLogo3D() {
       style={{
         position: "relative",
         width: "100%",
-        height: "clamp(360px, 42vw, 500px)",
+        height: "clamp(300px, 44vw, 560px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -23,8 +23,8 @@ export function HeroLogo3D() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute",
-          width: "min(320px, 72vw)",
-          height: "min(320px, 72vw)",
+          width: "min(380px, 78vw)",
+          height: "min(380px, 78vw)",
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(222,80,21,0.5) 0%, rgba(222,80,21,0.15) 40%, transparent 70%)",
@@ -38,8 +38,8 @@ export function HeroLogo3D() {
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         style={{
           position: "absolute",
-          width: "min(360px, 82vw)",
-          height: "min(360px, 82vw)",
+          width: "min(440px, 88vw)",
+          height: "min(440px, 88vw)",
           borderRadius: "50%",
           border: "1px solid rgba(222,80,21,0.18)",
           pointerEvents: "none",
@@ -51,8 +51,8 @@ export function HeroLogo3D() {
             top: "-5px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "10px",
-            height: "10px",
+          width: "11px",
+          height: "11px",
             borderRadius: "50%",
             backgroundColor: "#DE5015",
             boxShadow: "0 0 14px rgba(222,80,21,1), 0 0 28px rgba(222,80,21,0.5)",
@@ -65,8 +65,8 @@ export function HeroLogo3D() {
         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         style={{
           position: "absolute",
-          width: "min(280px, 64vw)",
-          height: "min(280px, 64vw)",
+          width: "min(340px, 70vw)",
+          height: "min(340px, 70vw)",
           borderRadius: "50%",
           border: "1px solid rgba(222,80,21,0.10)",
           pointerEvents: "none",
@@ -77,8 +77,8 @@ export function HeroLogo3D() {
             position: "absolute",
             bottom: "-4px",
             right: "25%",
-            width: "7px",
-            height: "7px",
+            width: "8px",
+            height: "8px",
             borderRadius: "50%",
             backgroundColor: "rgba(222,80,21,0.7)",
             boxShadow: "0 0 10px rgba(222,80,21,0.8)",
@@ -104,12 +104,12 @@ export function HeroLogo3D() {
         }}
       >
         <svg
-          width="160"
-          height="192"
+          width="180"
+          height="216"
           viewBox="0 0 121 173"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-[120px] w-[100px] md:h-[192px] md:w-[160px]"
+          className="h-[120px] w-[100px] md:h-[216px] md:w-[180px]"
         >
           <path
             d="M74.1611 7.57715C78.6979 5.94651 82.1321 6.30721 85.0186 7.72168C88.13 9.24642 91.3109 12.3532 94.3896 17.4395C100.602 27.7032 105.116 43.8572 108.238 62.6094C114.439 99.8472 114.687 144.172 114.44 163.356C114.419 165.038 113.061 166.5 111.086 166.5H11.1396C8.97867 166.5 7.60168 164.737 7.85938 162.926C10.3443 145.462 16.3007 109.949 27.3193 76.8486C32.8319 60.2889 39.5245 44.6029 47.5176 32.1514C55.5697 19.608 64.4864 11.0545 74.1611 7.57715Z"
@@ -144,14 +144,14 @@ export function HeroLogo3D() {
       </motion.div>
 
       {[
-        { top: "15%", left: "12%", size: 4, delay: 0, dur: 3 },
-        { top: "25%", left: "82%", size: 3, delay: 0.5, dur: 4 },
-        { top: "60%", left: "8%", size: 3, delay: 1, dur: 3.5 },
-        { top: "70%", left: "88%", size: 4, delay: 0.3, dur: 4.5 },
-        { top: "40%", left: "5%", size: 2, delay: 0.8, dur: 3 },
-        { top: "45%", left: "92%", size: 2, delay: 1.2, dur: 5 },
-        { top: "80%", left: "20%", size: 3, delay: 0.6, dur: 3.8 },
-        { top: "10%", left: "70%", size: 3, delay: 1.5, dur: 4.2 },
+        { top: "15%", left: "12%", size: 5, delay: 0, dur: 3 },
+        { top: "25%", left: "82%", size: 4, delay: 0.5, dur: 4 },
+        { top: "60%", left: "8%", size: 4, delay: 1, dur: 3.5 },
+        { top: "70%", left: "88%", size: 5, delay: 0.3, dur: 4.5 },
+        { top: "40%", left: "5%", size: 3, delay: 0.8, dur: 3 },
+        { top: "45%", left: "92%", size: 3, delay: 1.2, dur: 5 },
+        { top: "80%", left: "20%", size: 4, delay: 0.6, dur: 3.8 },
+        { top: "10%", left: "70%", size: 4, delay: 1.5, dur: 4.2 },
       ].map((p, i) => (
         <motion.div
           key={i}

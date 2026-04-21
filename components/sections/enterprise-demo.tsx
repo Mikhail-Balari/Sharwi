@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Area,
   AreaChart,
@@ -12,6 +12,7 @@ import {
   PieChart,
   ReferenceLine,
   ResponsiveContainer,
+  Sector,
   Tooltip,
   XAxis,
   YAxis,
@@ -58,9 +59,9 @@ const SCENARIOS = {
     vvrTrend: [26, 29, 31, 33, 36, 38, 41, 44],
     attribution: [
       { name: "Employee-sourced demos", value: 31, color: "#DE5015" },
-      { name: "Assisted pipeline touches", value: 42, color: "#FF8C00" },
-      { name: "Paid retargeting overlap", value: 17, color: "#FFB347" },
-      { name: "Direct / unattributed", value: 10, color: "#3D3A35" },
+      { name: "Assisted pipeline touches", value: 42, color: "#2ECC71" },
+      { name: "Paid retargeting overlap", value: 17, color: "#FB7185" },
+      { name: "Direct / unattributed", value: 10, color: "#5C5955" },
     ],
     proofFunnel: [
       {
@@ -132,9 +133,9 @@ const SCENARIOS = {
     vvrTrend: [31, 33, 36, 38, 41, 43, 46, 49],
     attribution: [
       { name: "Expert-sourced inquiries", value: 38, color: "#DE5015" },
-      { name: "Referral pipeline touches", value: 35, color: "#FF8C00" },
-      { name: "Event follow-up overlap", value: 18, color: "#FFB347" },
-      { name: "Direct / unattributed", value: 9, color: "#3D3A35" },
+      { name: "Referral pipeline touches", value: 35, color: "#2ECC71" },
+      { name: "Event follow-up overlap", value: 18, color: "#FB7185" },
+      { name: "Direct / unattributed", value: 9, color: "#5C5955" },
     ],
     proofFunnel: [
       {
@@ -206,9 +207,9 @@ const SCENARIOS = {
     vvrTrend: [21, 24, 26, 29, 31, 34, 37, 39],
     attribution: [
       { name: "Frontline-sourced leads", value: 27, color: "#DE5015" },
-      { name: "Partnership touchpoints", value: 39, color: "#FF8C00" },
-      { name: "Paid campaign overlap", value: 22, color: "#FFB347" },
-      { name: "Direct / unattributed", value: 12, color: "#3D3A35" },
+      { name: "Partnership touchpoints", value: 39, color: "#2ECC71" },
+      { name: "Paid campaign overlap", value: 22, color: "#FB7185" },
+      { name: "Direct / unattributed", value: 12, color: "#5C5955" },
     ],
     proofFunnel: [
       {
@@ -262,7 +263,7 @@ const SCENARIOS = {
 } as const
 
 const TIME_MULTIPLIERS: Record<TimeRange, number> = { "30d": 0.38, "90d": 1 }
-const funnelColors = ["#DE5015", "#E8621A", "#F08030", "#2ECC71"]
+const funnelColors = ["#DE5015", "#DE5015", "#DE5015", "#2ECC71"]
 
 const comparisonRows = [
   ["Content distribution", "yes", "yes", "yes", "yes"],
@@ -287,7 +288,7 @@ function StatusCell({
   const map = {
     yes: { label: "✓", color: "#2ECC71" },
     no: { label: "✕", color: "#FB7185" },
-    partial: { label: "Partial", color: "#FFB347" },
+    partial: { label: "Partial", color: "#DE5015" },
     full: { label: "✓ Full", color: "#2ECC71" },
   } as const
   const item = map[status as keyof typeof map]
@@ -335,7 +336,7 @@ function MetricCard({
       <div className="mb-5 flex items-center gap-2">
         <Icon size={16} color="#DE5015" />
         <div className="relative flex items-center gap-1">
-          <span className="text-[10px] font-semibold uppercase tracking-[1px] text-[#8A8480]">
+          <span className="text-[11px] font-semibold uppercase tracking-[1px] text-[#8A8480]">
             {label}
           </span>
           {tooltip && (
@@ -389,6 +390,70 @@ function MiniProgress({ value, color }: { value: number; color: string }) {
   )
 }
 
+function AnimatedTeamRow({
+  team,
+  mult,
+  selected,
+}: {
+  team: (typeof SCENARIOS)["saas"]["teams"][number]
+  mult: number
+  selected: boolean
+}) {
+  const employees = useAnimatedNumber(team.employees)
+  const posts = useAnimatedNumber(Math.round(team.posts * mult))
+  const proofRate = useAnimatedNumber(team.proofRate)
+  const vvr = useAnimatedNumber(team.vvr)
+  const leads = useAnimatedNumber(Math.round(team.leads * mult))
+
+  return (
+    <tr
+      className="border-b border-[#FFFCF2]/[0.04] transition-colors hover:bg-[#FFFCF2]/[0.02]"
+      style={{
+        background: selected ? "rgba(222,80,21,0.05)" : "transparent",
+        boxShadow: selected ? "inset 3px 0 0 #DE5015" : "none",
+      }}
+    >
+      <td
+        className="sticky left-0 z-10 px-4 py-4 font-semibold text-[#FFFCF2]"
+        style={{ background: selected ? "#0D0D0D" : "#050505" }}
+      >
+        {team.name}
+      </td>
+      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">{employees}</td>
+      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">{posts.toLocaleString()}</td>
+      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">
+        <MiniProgress value={proofRate} color="#DE5015" />
+      </td>
+      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">
+        <MiniProgress value={vvr} color={vvr > 40 ? "#2ECC71" : "#DE5015"} />
+      </td>
+      <td className="px-4 py-4 text-[13px] font-bold text-[#FFFCF2]">{leads}</td>
+    </tr>
+  )
+}
+
+function useAnimatedNumber(value: number, duration = 600) {
+  const [display, setDisplay] = useState(value)
+
+  useEffect(() => {
+    const start = Date.now()
+    const from = display
+    const to = value
+
+    const tick = () => {
+      const elapsed = Date.now() - start
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setDisplay(Math.round(from + (to - from) * eased))
+      if (progress < 1) requestAnimationFrame(tick)
+    }
+
+    requestAnimationFrame(tick)
+  }, [value])
+
+  return display
+}
+
 const tooltipStyle = {
   background: "#1A1815",
   border: "1px solid #2E2B27",
@@ -405,6 +470,8 @@ export function EnterpriseDemoSection({
   const [activeScenario, setActiveScenario] = useState<ScenarioKey>("saas")
   const [timeRange, setTimeRange] = useState<TimeRange>("90d")
   const [activeTeam, setActiveTeam] = useState<string>("all")
+  const [activeSlice, setActiveSlice] = useState<number | null>(null)
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
 
   const scenario = SCENARIOS[activeScenario]
   const mult = TIME_MULTIPLIERS[timeRange]
@@ -442,10 +509,32 @@ export function EnterpriseDemoSection({
     week: `W${index + 1}`,
     vvr: value,
   }))
+  const animatedActiveEmployees = useAnimatedNumber(activeEmployees)
+  const animatedPosts = useAnimatedNumber(posts)
+  const animatedLeads = useAnimatedNumber(leads)
+  const animatedProof = useAnimatedNumber(scenario.proofBackedRate)
+  const animatedVvr = useAnimatedNumber(scenario.vvr)
+  const animatedCac = useAnimatedNumber(scenario.cacReduction)
+  const animatedTotalsEmployees = useAnimatedNumber(totals.employees)
+  const animatedTotalsPosts = useAnimatedNumber(totals.posts)
+  const animatedTotalsLeads = useAnimatedNumber(totals.leads)
+  const activeAttribution = activeSlice === null ? null : scenario.attribution[activeSlice]
+  const attributionDescriptions: Record<string, string> = {
+    "Employee-sourced demos": "Leads that came directly from employee content",
+    "Assisted pipeline touches": "Deals with at least one employee content touchpoint",
+    "Paid retargeting overlap": "Prospects who also saw paid ads",
+    "Direct / unattributed": "Pipeline without a confirmed content touch",
+    "Expert-sourced inquiries": "Leads that came directly from employee content",
+    "Referral pipeline touches": "Deals with at least one employee content touchpoint",
+    "Event follow-up overlap": "Prospects who also saw paid ads",
+    "Frontline-sourced leads": "Leads that came directly from employee content",
+    "Partnership touchpoints": "Deals with at least one employee content touchpoint",
+    "Paid campaign overlap": "Prospects who also saw paid ads",
+  }
 
   return (
-    <section id="enterprise-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
-      <div className="mx-auto max-w-[1200px] px-6">
+    <section id="enterprise-demo" className="landing-section">
+      <div className="section-wrapper">
         <div className="mx-auto mb-12 max-w-[760px] text-center">
           <div className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-[#DE5015]">
             2&nbsp;&nbsp;Enterprise Layer
@@ -463,19 +552,18 @@ export function EnterpriseDemoSection({
           </p>
         </div>
 
-        <div className="mx-auto mb-3 grid max-w-[920px] grid-cols-2 overflow-hidden rounded-2xl border border-[#DE5015]/20 bg-[#0A0908]/70 md:grid-cols-4">
+        <div className="mx-auto mb-3 grid max-w-[760px] grid-cols-1 overflow-hidden rounded-2xl border border-[#DE5015]/20 bg-black/70 sm:grid-cols-3">
           {[
-            ["4×", "More leads vs traditional content"],
+            ["4×", "More leads"],
             ["−23%", "Average CAC reduction"],
-            ["92%", "Proof-backed rate in active pilots"],
-            ["8w", "Time to first measurable signal"],
+            ["92%", "Proof-backed rate"],
           ].map(([value, label], index) => (
             <div
               key={label}
               className="border-l border-[#DE5015]/30 px-5 py-5 text-center"
               style={{
                 borderRight:
-                  index < 3 ? "1px solid rgba(255,252,242,0.06)" : "0",
+                  index < 2 ? "1px solid rgba(255,252,242,0.06)" : "0",
               }}
             >
               <p className="text-[32px] font-extrabold leading-none text-[#DE5015]">{value}</p>
@@ -590,22 +678,22 @@ export function EnterpriseDemoSection({
             <MetricCard
               icon={Users}
               label="Active Employees"
-              value={`${activeEmployees} / ${scenario.totalEmployees}`}
+              value={`${animatedActiveEmployees} / ${scenario.totalEmployees}`}
               subtext="employees publishing verified content"
               trend={`+${activationRate}% activation rate`}
-              trendColor={activationRate > 40 ? "#2ECC71" : "#FFB347"}
+              trendColor={activationRate > 40 ? "#2ECC71" : "#DE5015"}
             />
             <MetricCard
               icon={FileText}
               label="Posts Generated"
-              value={posts.toLocaleString()}
+              value={animatedPosts.toLocaleString()}
               subtext="proof-backed posts in period"
-              trend={`${scenario.proofBackedRate}% have verified evidence`}
+              trend={`${animatedProof}% have verified evidence`}
             />
             <MetricCard
               icon={ChartBar}
               label="VVR"
-              value={`${scenario.vvr}%`}
+              value={`${animatedVvr}%`}
               subtext="Sharwi's North Star metric"
               trend="↑ +18pp since activation"
               tooltip="% of employees who published verified content at least once this period. Industry baseline: <15%. Sharwi target: >40%."
@@ -613,14 +701,14 @@ export function EnterpriseDemoSection({
             <MetricCard
               icon={Target}
               label="Leads Influenced"
-              value={`${leads}`}
+              value={`${animatedLeads}`}
               subtext="pipeline touches from employee content"
-              trend={`+${Math.round(leads * 0.31)} directly sourced`}
+              trend={`+${Math.round(animatedLeads * 0.31)} directly sourced`}
             />
             <MetricCard
               icon={TrendingDown}
               label="CAC Reduction"
-              value={`−${scenario.cacReduction}%`}
+              value={`−${animatedCac}%`}
               subtext="customer acquisition cost improvement"
               trend={`−${scenario.cplReduction}% CPL reduction`}
               valueColor="#2ECC71"
@@ -635,8 +723,8 @@ export function EnterpriseDemoSection({
                   ? "✓ No compliance incidents"
                   : "Legal review active"
               }
-              trendColor={scenario.governanceStatus === "healthy" ? "#2ECC71" : "#FFB347"}
-              valueColor={scenario.governanceStatus === "healthy" ? "#2ECC71" : "#FFB347"}
+              trendColor={scenario.governanceStatus === "healthy" ? "#2ECC71" : "#DE5015"}
+              valueColor={scenario.governanceStatus === "healthy" ? "#2ECC71" : "#DE5015"}
             />
           </div>
 
@@ -646,7 +734,7 @@ export function EnterpriseDemoSection({
                 Weekly posts generated
               </h3>
               <p className="mt-1 text-[11px] text-[#5C5955]">
-                Last 8 weeks · proof-backed only
+                Recent activity · proof-backed only
               </p>
               <div className="mt-5 h-[200px]">
                 <ResponsiveContainer width="100%" height={200}>
@@ -769,7 +857,13 @@ export function EnterpriseDemoSection({
               <p className="mt-1 text-[11px] text-[#5C5955]">
                 How employee content touches pipeline
               </p>
-              <div className="relative mx-auto mt-4 h-[220px] max-w-[280px]">
+              <div
+                className="relative mx-auto mt-4 h-[220px] max-w-[280px]"
+                onMouseMove={(event) => {
+                  const rect = event.currentTarget.getBoundingClientRect()
+                  setTooltipPos({ x: event.clientX - rect.left, y: event.clientY - rect.top })
+                }}
+              >
                 <ResponsiveContainer width="100%" height={220}>
                   <PieChart>
                     <Pie
@@ -780,13 +874,45 @@ export function EnterpriseDemoSection({
                       outerRadius={95}
                       dataKey="value"
                       paddingAngle={3}
+                      activeIndex={activeSlice ?? undefined}
+                      activeShape={(props: any) => (
+                        <Sector {...props} outerRadius={(props.outerRadius ?? 0) + 6} />
+                      )}
                     >
                       {scenario.attribution.map((entry, index) => (
-                        <Cell key={index} fill={entry.color} />
+                        <Cell
+                          key={index}
+                          fill={entry.color}
+                          onMouseEnter={() => setActiveSlice(index)}
+                          onMouseLeave={() => setActiveSlice(null)}
+                        />
                       ))}
                     </Pie>
                   </PieChart>
                 </ResponsiveContainer>
+                {activeAttribution ? (
+                  <div
+                    className="pointer-events-none absolute z-20"
+                    style={{
+                      left: Math.min(Math.max(tooltipPos.x - 80, 8), 170),
+                      top: Math.max(tooltipPos.y - 72, 8),
+                      backgroundColor: "#1A1815",
+                      border: "1px solid #DE5015",
+                      borderRadius: "10px",
+                      padding: "10px 14px",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+                      width: "210px",
+                    }}
+                  >
+                    <p className="text-[13px] font-bold text-[#FFFCF2]">{activeAttribution.name}</p>
+                    <p className="mt-1 text-[20px] font-black leading-none text-[#DE5015]">
+                      {activeAttribution.value}%
+                    </p>
+                    <p className="mt-2 text-[11px] leading-snug text-[#8A8480]">
+                      {attributionDescriptions[activeAttribution.name] ?? "Pipeline with an employee content signal"}
+                    </p>
+                  </div>
+                ) : null}
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
                   <p className="text-[22px] font-extrabold text-[#FFFCF2]">
                     {scenario.attribution[0].value}%
@@ -864,7 +990,7 @@ export function EnterpriseDemoSection({
                       <th
                         key={head}
                         className={`px-4 py-3 font-semibold ${
-                          index === 0 ? "sticky left-0 z-10 bg-[#15120f]" : ""
+                          index === 0 ? "sticky left-0 z-10 bg-black" : ""
                         }`}
                       >
                         {head}
@@ -873,44 +999,14 @@ export function EnterpriseDemoSection({
                   </tr>
                 </thead>
                 <tbody>
-                  {scenario.teams.map((team) => {
-                    const selected = activeTeam === team.name
-                    return (
-                      <tr
-                        key={team.name}
-                        className="border-b border-[#FFFCF2]/[0.04] transition-colors hover:bg-[#FFFCF2]/[0.02]"
-                        style={{
-                          background: selected ? "rgba(222,80,21,0.05)" : "transparent",
-                          boxShadow: selected ? "inset 3px 0 0 #DE5015" : "none",
-                        }}
-                      >
-                        <td
-                          className="sticky left-0 z-10 px-4 py-4 font-semibold text-[#FFFCF2]"
-                          style={{
-                            background: selected ? "#17100c" : "#0f0d0b",
-                          }}
-                        >
-                          {team.name}
-                        </td>
-                        <td className="px-4 py-4 text-[#CCC6BA]">{team.employees}</td>
-                        <td className="px-4 py-4 text-[#CCC6BA]">
-                          {Math.round(team.posts * mult).toLocaleString()}
-                        </td>
-                        <td className="px-4 py-4 text-[#CCC6BA]">
-                          <MiniProgress value={team.proofRate} color="#DE5015" />
-                        </td>
-                        <td className="px-4 py-4 text-[#CCC6BA]">
-                          <MiniProgress
-                            value={team.vvr}
-                            color={team.vvr > 40 ? "#2ECC71" : "#DE5015"}
-                          />
-                        </td>
-                        <td className="px-4 py-4 font-bold text-[#FFFCF2]">
-                          {Math.round(team.leads * mult)}
-                        </td>
-                      </tr>
-                    )
-                  })}
+                  {scenario.teams.map((team) => (
+                    <AnimatedTeamRow
+                      key={team.name}
+                      team={team}
+                      mult={mult}
+                      selected={activeTeam === team.name}
+                    />
+                  ))}
                 </tbody>
                 <tfoot>
                   <tr className="border-t border-[#DE5015]/[0.12] bg-[#DE5015]/[0.04] font-semibold">
@@ -920,9 +1016,9 @@ export function EnterpriseDemoSection({
                     >
                       Total
                     </td>
-                    <td className="px-4 py-4 text-[#CCC6BA]">{totals.employees}</td>
+                    <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">{animatedTotalsEmployees}</td>
                     <td className="px-4 py-4 text-[#CCC6BA]">
-                      {totals.posts.toLocaleString()}
+                      {animatedTotalsPosts.toLocaleString()}
                     </td>
                     <td className="px-4 py-4 text-[#CCC6BA]">
                       <MiniProgress value={avgProof} color="#DE5015" />
@@ -933,7 +1029,7 @@ export function EnterpriseDemoSection({
                         color={avgVvr > 40 ? "#2ECC71" : "#DE5015"}
                       />
                     </td>
-                    <td className="px-4 py-4 text-[#FFFCF2]">{totals.leads}</td>
+                    <td className="px-4 py-4 text-[13px] text-[#FFFCF2]">{animatedTotalsLeads}</td>
                   </tr>
                 </tfoot>
               </table>
@@ -968,7 +1064,7 @@ export function EnterpriseDemoSection({
             <p className="mt-3 max-w-[700px] text-[13px] leading-[1.7] text-[#8A8480]">
               Every proof-backed post creates a training signal: which work type, for which role,
               in which industry, generated which business outcome. No employee advocacy tool has
-              this. Sharwi builds it with every pilot.
+              this. It compounds with every company that uses Sharwi.
             </p>
             <div className="mt-7 grid gap-5 md:grid-cols-3">
               {[
@@ -1014,7 +1110,7 @@ export function EnterpriseDemoSection({
               The market amplifies content. Sharwi builds infrastructure.
             </p>
           </div>
-          <div className="overflow-x-auto rounded-3xl border border-[#FFFCF2]/[0.08] bg-[#0A0908]/90">
+          <div className="overflow-x-auto rounded-3xl border border-[#FFFCF2]/[0.08] bg-black/90">
             <table className="min-w-[880px] w-full border-collapse text-sm">
               <thead>
                 <tr className="border-b border-[#FFFCF2]/[0.08] text-left text-[#8A8480]">
@@ -1052,7 +1148,7 @@ export function EnterpriseDemoSection({
             </table>
           </div>
           <p className="mt-3 text-[11px] text-[#5C5955]">
-            Source: public product documentation. Last reviewed April 2025.
+            Source: public product documentation.
           </p>
         </div>
 
@@ -1075,7 +1171,7 @@ export function EnterpriseDemoSection({
               boxShadow: "0 8px 32px rgba(222,80,21,0.35)",
             }}
           >
-            Request a Pilot Demo →
+            Request a Demo →
           </button>
         </div>
       </div>

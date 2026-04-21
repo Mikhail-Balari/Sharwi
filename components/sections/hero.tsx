@@ -3,11 +3,8 @@
 import { ArrowRight } from "lucide-react"
 import { HeroLogo3D } from "@/components/hero-logo-3d"
 import { trackHeroRequestDemo, trackHeroSeeHowItWorks } from "@/lib/analytics"
-import { useI18n } from "@/lib/i18n"
 
 export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
-  const { t } = useI18n()
-
   const handleRequestDemo = () => {
     trackHeroRequestDemo()
     onRequestDemo()
@@ -16,69 +13,65 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
   return (
     <section
       id="top"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden bg-black"
       style={{
         minHeight: "100vh",
-        background: "transparent",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        paddingTop: "calc(var(--section-padding-y) + 64px)",
-        paddingBottom: "var(--section-padding-y)",
-        paddingLeft: "var(--section-padding-x)",
-        paddingRight: "var(--section-padding-x)",
-        position: "relative",
+        padding: "calc(var(--section-padding-y) + 64px) var(--section-padding-x) var(--section-padding-y)",
         zIndex: 3,
       }}
     >
-      <div className="section-wrapper grid min-h-[calc(100vh-180px)] items-center gap-8 md:grid-cols-[45fr_55fr] md:gap-10 lg:grid-cols-2 lg:gap-12">
+      <div className="section-wrapper grid min-h-[calc(100vh-190px)] items-center gap-8 md:grid-cols-2 lg:gap-14">
         <div className="order-2 text-center md:order-1 md:text-left">
           <div
-            className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 uppercase"
+            className="mb-7 inline-flex rounded-full uppercase"
             style={{
               fontSize: "11px",
-              letterSpacing: "0.2em",
               fontWeight: 600,
+              letterSpacing: "0.18em",
               color: "#DE5015",
+              backgroundColor: "rgba(222,80,21,0.08)",
+              border: "1px solid rgba(222,80,21,0.20)",
+              borderRadius: "100px",
+              padding: "6px 16px",
             }}
           >
-            <span className="inline-flex h-2 w-2 rounded-full bg-[#DE5015]" />
-            {t("hero_label")}
+            Trusted visibility infrastructure for modern teams
           </div>
 
           <h1
-            className="mt-7 font-display"
+            className="font-display"
             style={{
-              fontSize: "clamp(38px, 5.5vw, 72px)",
-              fontWeight: 800,
-              lineHeight: 1.05,
+              fontSize: "clamp(38px, 5.2vw, 68px)",
+              fontWeight: 900,
               letterSpacing: "-0.03em",
+              lineHeight: 1.05,
               color: "#FFFCF2",
             }}
           >
-            {t("hero_h1_line1")}
-            <span className="block text-[#DE5015]">{t("hero_h1_line2")}</span>
+            Real Work Deserves{" "}
+            <span style={{ color: "#DE5015" }}>Real Visibility.</span>
           </h1>
 
           <p
-            className="mx-auto mt-7 md:mx-0"
+            className="mx-auto mt-5 md:mx-0"
             style={{
-              maxWidth: "480px",
-              fontSize: "clamp(16px, 1.6vw, 18px)",
+              maxWidth: "460px",
+              fontSize: "clamp(16px, 1.5vw, 18px)",
+              fontWeight: 400,
               lineHeight: 1.7,
               color: "#8A8480",
-              fontWeight: 400,
-              textAlign: "inherit",
+              letterSpacing: "-0.01em",
             }}
           >
-            {t("hero_sub")}
+            Sharwi transforms everyday work into visible impact, for professionals and the organizations they power.
           </p>
 
-          <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row sm:flex-wrap md:justify-start">
+          <div className="mt-9 flex flex-wrap justify-center gap-4 md:justify-start">
             <button
               onClick={handleRequestDemo}
               data-cta="request-demo"
               data-cta-source="hero_primary"
-              className="group inline-flex items-center justify-center gap-2 text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(222,80,21,0.5)]"
+              className="group inline-flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(222,80,21,0.5)]"
               style={{
                 backgroundColor: "#DE5015",
                 borderRadius: "100px",
@@ -87,11 +80,12 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
                 paddingRight: "28px",
                 fontSize: "15px",
                 fontWeight: 700,
+                color: "#FFFFFF",
                 boxShadow: "0 8px 28px rgba(222,80,21,0.35)",
               }}
             >
-              {t("hero_cta_primary")}
-              <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
+              Request Demo
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </button>
 
             <a
@@ -111,12 +105,30 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
                 color: "#FFFCF2",
               }}
             >
-              {t("hero_cta_secondary")}
+              See how it works
             </a>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-[460px] grid-cols-3 gap-4 md:mx-0 md:flex md:max-w-none md:gap-8">
+            {[
+              ["4×", "more leads"],
+              ["−23%", "CAC reduction"],
+              ["92%", "proof-backed rate"],
+            ].map(([value, label], index) => (
+              <div
+                key={value}
+                className={index > 0 ? "md:border-l md:border-[#FFFCF2]/10 md:pl-8" : ""}
+              >
+                <p style={{ fontSize: "22px", fontWeight: 800, color: "#DE5015", lineHeight: 1 }}>
+                  {value}
+                </p>
+                <p className="mt-2 text-[12px] leading-snug text-[#5C5955]">{label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="order-1 flex min-h-[360px] items-center justify-center md:order-2 md:min-h-[500px]">
+        <div className="order-1 flex min-h-[300px] items-center justify-center md:order-2 md:min-h-[560px]">
           <HeroLogo3D />
         </div>
       </div>

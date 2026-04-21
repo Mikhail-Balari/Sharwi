@@ -110,35 +110,37 @@ export function LiveDemoSection() {
           <ScrollReveal
             direction="right"
             delay={0.15}
-            className="relative mx-auto w-[85vw] min-w-[280px] max-w-[320px] md:max-w-[360px] lg:w-[min(380px,42vw)] lg:max-w-[380px] 2xl:max-w-[400px]"
+            className="relative mx-auto w-[85vw] min-w-[280px] max-w-[320px] md:max-w-[360px] lg:w-[min(400px,40vw)] lg:max-w-[400px]"
           >
             <div className="absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-[44px] bg-[radial-gradient(circle_at_top,rgba(222,80,21,0.2),transparent_58%)] blur-3xl" />
             <div
-              className="glass-card relative mx-auto border border-white/12 backdrop-blur-xl"
+              className="relative mx-auto"
               style={{
-                borderRadius: "clamp(32px, 3vw, 44px)",
-                backgroundColor: "#0c1016",
-                padding: "clamp(10px, 1vw, 16px)",
-                boxShadow: "0 28px 80px rgba(0,0,0,0.6)",
+                borderRadius: "clamp(32px, 3vw, 42px)",
+                border: "1px solid rgba(255,255,255,0.10)",
+                backgroundColor: "#0A0A0A",
+                padding: "clamp(8px, 1vw, 14px)",
+                boxShadow:
+                  "0 32px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05)",
               }}
             >
               <div
                 className="mx-auto"
                 style={{
-                  width: "clamp(80px, 8vw, 144px)",
-                  height: "clamp(20px, 2vw, 28px)",
+                  width: "clamp(72px, 7vw, 120px)",
+                  height: "clamp(18px, 1.8vw, 26px)",
                   borderRadius: "100px",
-                  backgroundColor: "rgba(255,255,255,0.10)",
-                  marginBottom: "clamp(8px, 1vw, 16px)",
+                  backgroundColor: "rgba(255,255,255,0.08)",
+                  marginBottom: "clamp(6px, 0.8vw, 14px)",
                 }}
               />
               <div
                 className="relative overflow-hidden border border-white/10 bg-black"
                 style={{
-                  borderRadius: "clamp(24px, 2.5vw, 32px)",
+                  borderRadius: "clamp(22px, 2.2vw, 30px)",
+                  border: "1px solid rgba(255,255,255,0.06)",
                   aspectRatio: "390 / 760",
                   width: "100%",
-                  height: "auto",
                 }}
               >
                 <iframe
@@ -153,26 +155,13 @@ export function LiveDemoSection() {
                     backgroundColor: "#000000",
                   }}
                 />
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "60px",
-                    backgroundColor: "#000000",
-                    zIndex: 10,
-                    pointerEvents: "none",
-                  }}
-                />
               </div>
             </div>
-            <div className="mx-auto mt-6 grid max-w-[520px] gap-4 sm:grid-cols-3">
+            <div className="mx-auto mt-6 grid gap-3 sm:grid-cols-3">
               {[t("demo_pill1"), t("demo_pill2"), t("demo_pill3")].map((item) => (
                 <div
                   key={item}
-                  className="glass-card rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"
+                  className="glass-card flex h-12 items-center justify-center rounded-2xl px-3 text-center text-[13px] leading-[1.3] text-[#CCC6BA]"
                 >
                   {item}
                 </div>

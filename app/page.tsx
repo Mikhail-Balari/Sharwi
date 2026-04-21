@@ -5,6 +5,8 @@ import { Header } from "@/components/header"
 import { HeroSection } from "@/components/sections/hero"
 import { ProblemSection } from "@/components/sections/problem"
 import { HowItWorks } from "@/components/sections/how-it-works"
+import { ValueForEveryone } from "@/components/sections/value-for-everyone"
+import { UseCasesSection } from "@/components/sections/use-cases"
 import { ForProfessionals } from "@/components/sections/for-professionals"
 import { ForCompanies } from "@/components/sections/for-companies"
 import { TechnologySection } from "@/components/sections/technology"
@@ -31,10 +33,12 @@ export default function Home() {
       <HeroSection onRequestDemo={openDemoModal} />
       <ProblemSection />
       <HowItWorks />
+      <ValueForEveryone />
+      <TechnologySection />
+      <UseCasesSection onRequestDemo={openDemoModal} />
       <ForProfessionals onRequestDemo={openDemoModal} />
       <LiveDemoSection />
       <ForCompanies onRequestDemo={openDemoModal} />
-      <TechnologySection />
       <EnterpriseDemoSection onRequestDemo={openDemoModal} />
       <MetricsSection />
       <CtaFooter onRequestDemo={openDemoModal} />

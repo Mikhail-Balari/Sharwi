@@ -1,18 +1,13 @@
 import type { Metadata, Viewport } from "next"
-import { DM_Sans, Syne } from "next/font/google"
+import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
 import Script from "next/script"
 import { I18nProvider } from "@/lib/i18n"
 import "./globals.css"
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-})
-
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
@@ -31,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${syne.variable}`}>
+    <html lang="en" className={inter.variable}>
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4JFEK747YT"
