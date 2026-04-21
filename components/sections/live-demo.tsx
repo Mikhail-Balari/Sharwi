@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { ArrowRight } from "lucide-react"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import {
   trackCtaClick,
   trackMobileDemoInteraction,
@@ -46,7 +47,7 @@ export function LiveDemoSection() {
     <section id="mobile-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-          <div>
+          <ScrollReveal direction="left">
             <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
               {t("demo_label")}
             </p>
@@ -74,7 +75,7 @@ export function LiveDemoSection() {
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-5"
+                  className="glass-card rounded-2xl border border-white/10 bg-white/[0.04] p-5"
                 >
                   <p className="text-base font-semibold text-white">{item.title}</p>
                   <p className="mt-2 text-sm leading-7 text-slate-400">{item.body}</p>
@@ -104,11 +105,11 @@ export function LiveDemoSection() {
                 {t("demo_cta_secondary")}
               </a>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="relative mx-auto w-full max-w-[620px]">
+          <ScrollReveal direction="right" delay={0.15} className="relative mx-auto w-full max-w-[620px]">
             <div className="absolute inset-0 rounded-[44px] bg-[radial-gradient(circle_at_top,rgba(255,106,0,0.2),transparent_55%)] blur-3xl" />
-            <div className="relative mx-auto max-w-[430px] rounded-[42px] border border-white/12 bg-[#0a0f16]/82 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+            <div className="glass-card relative mx-auto max-w-[430px] rounded-[42px] border border-white/12 bg-[#0a0f16]/82 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
               <div className="mx-auto mb-4 h-7 w-36 rounded-full bg-white/10" />
               <div className="overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f16]/82 backdrop-blur-xl">
                 <iframe
@@ -123,13 +124,13 @@ export function LiveDemoSection() {
               {[t("demo_pill1"), t("demo_pill2"), t("demo_pill3")].map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"
+                  className="glass-card rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"
                 >
                   {item}
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

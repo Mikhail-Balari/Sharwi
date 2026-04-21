@@ -15,10 +15,12 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { CheckCircle } from "lucide-react-native";
 
 import { ShareModal } from "@/components/ShareModal";
 import { Text } from "@/components/ui/Text";
 import { BORDER_RADIUS, COLORS, TYPOGRAPHY } from "@/constants/theme";
+import { savePost } from "@/services/api/posts";
 
 type ToneOption = "Professional" | "Analytical" | "Executive";
 
@@ -131,11 +133,13 @@ export default function CreatePostScreen() {
   const [isEditing, setIsEditing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showSharedToast, setShowSharedToast] = useState(false);
   const [showEvidenceSheet, setShowEvidenceSheet] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
 
   const draftOpacity = useRef(new Animated.Value(0)).current;
   const draftTranslateY = useRef(new Animated.Value(12)).current;
+  const sharedToastOpacity = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
   const editInputRef = useRef<TextInput>(null);
 
@@ -232,6 +236,47 @@ export default function CreatePostScreen() {
     await Clipboard.setStringAsync(draftText);
     setCopySuccess(true);
     setTimeout(() => setCopySuccess(false), 2000);
+  };
+
+  const handlePublish = () => {
+    void savePost({
+      workInput: inputText,
+      generatedText: draftText,
+      tone: selectedTone,
+      evidenceChips,
+      status: "published",
+    });
+    setShowShareModal(true);
+  };
+
+  const resetCreateState = () => {
+    setInputText("");
+    setDraftText("");
+    setEvidenceChips(["#PR-2847", "Jira TKT-491", "metrics.pdf"]);
+    setSelectedTone("Professional");
+    setIsEditing(false);
+  };
+
+  const handleShared = () => {
+    setShowSharedToast(true);
+    sharedToastOpacity.setValue(0);
+
+    Animated.sequence([
+      Animated.timing(sharedToastOpacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.delay(2500),
+      Animated.timing(sharedToastOpacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setShowSharedToast(false);
+      resetCreateState();
+    });
   };
 
   const addEvidence = (chip: string) => {
@@ -487,7 +532,7 @@ export default function CreatePostScreen() {
                     </View>
 
                     <Pressable
-                      onPress={() => setShowShareModal(true)}
+                      onPress={handlePublish}
                       style={({ pressed }) => [
                         styles.publishButton,
                         pressed && styles.generateButtonPressed,
@@ -508,9 +553,30 @@ export default function CreatePostScreen() {
         <ShareModal
           visible={showShareModal}
           onClose={() => setShowShareModal(false)}
+          onShared={handleShared}
           mode="post"
           shareText={shareText}
         />
+
+        {showSharedToast ? (
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              styles.sharedToast,
+              {
+                opacity: sharedToastOpacity,
+              },
+            ]}
+          >
+            <CheckCircle size={18} color={COLORS.verifiedGreen} />
+            <View style={styles.sharedToastCopy}>
+              <Text style={styles.sharedToastTitle}>Post shared!</Text>
+              <Text style={styles.sharedToastSubtitle}>
+                It will appear in your Feed shortly.
+              </Text>
+            </View>
+          </Animated.View>
+        ) : null}
 
         <Modal
           visible={showEvidenceSheet}
@@ -1045,5 +1111,35 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.8,
     transform: [{ scale: 0.98 }],
+  },
+  sharedToast: {
+    position: "absolute",
+    bottom: 100,
+    left: 20,
+    right: 20,
+    backgroundColor: "rgba(46,204,113,0.15)",
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "rgba(46,204,113,0.3)",
+    padding: 14,
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+  },
+  sharedToastCopy: {
+    flex: 1,
+  },
+  sharedToastTitle: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 14,
+    fontWeight: "600",
+    color: COLORS.textPrimary,
+  },
+  sharedToastSubtitle: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 12,
+    fontWeight: "400",
+    color: COLORS.textTertiary,
+    marginTop: 2,
   },
 });

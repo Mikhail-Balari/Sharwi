@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Alert,
-  Animated,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -13,38 +12,42 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Briefcase, Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
 
 import { SharwiLogo } from "@/components/SharwiLogo";
-import { loginUser } from "@/services/api/auth";
+import { registerUser } from "@/services/api/auth";
 
-export default function Login() {
+export default function Register() {
   const insets = useSafeAreaInsets();
+  const [name, setName] = useState("");
+  const [headline, setHeadline] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [nameFocused, setNameFocused] = useState(false);
+  const [headlineFocused, setHeadlineFocused] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passFocused, setPassFocused] = useState(false);
-  const btnScale = useRef(new Animated.Value(1)).current;
 
-  const handleSignIn = async () => {
-    if (!email.trim() || !password.trim()) {
-      Alert.alert("Missing fields", "Please enter your email and password.");
+  const handleRegister = async () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      Alert.alert("Missing fields", "Please fill in all fields.");
       return;
     }
 
     setLoading(true);
 
     try {
-      await loginUser(email.trim(), password);
+      await registerUser({
+        email: email.trim(),
+        password,
+        fullName: name.trim(),
+        headline: headline.trim() || "Professional",
+      });
       router.replace("/(tabs)/feed");
     } catch (err: any) {
-      Alert.alert(
-        "Sign in failed",
-        err.message ?? "Please check your credentials and try again.",
-      );
+      Alert.alert("Registration failed", err.message ?? "Please try again.");
     } finally {
       setLoading(false);
     }
@@ -71,15 +74,42 @@ export default function Login() {
             <SharwiLogo size={52} color="#DE5015" />
           </View>
 
-          <Text style={styles.title}>Welcome back</Text>
-          <Text style={styles.subtitle}>Sign in to continue</Text>
+          <Text style={styles.title}>Create your account</Text>
+          <Text style={styles.subtitle}>Join Sharwi</Text>
 
-          <View
-            style={[
-              styles.inputWrap,
-              emailFocused && styles.inputWrapFocused,
-            ]}
-          >
+          <View style={[styles.inputWrap, nameFocused && styles.inputWrapFocused]}>
+            <User size={16} color="#5C5955" />
+            <TextInput
+              style={styles.input}
+              placeholder="Full name"
+              placeholderTextColor="#3A3735"
+              value={name}
+              onChangeText={setName}
+              autoCapitalize="words"
+              autoCorrect={false}
+              returnKeyType="next"
+              onFocus={() => setNameFocused(true)}
+              onBlur={() => setNameFocused(false)}
+            />
+          </View>
+
+          <View style={[styles.inputWrap, headlineFocused && styles.inputWrapFocused]}>
+            <Briefcase size={16} color="#5C5955" />
+            <TextInput
+              style={styles.input}
+              placeholder="e.g. Data Scientist, Sales Manager, Engineer"
+              placeholderTextColor="#3A3735"
+              value={headline}
+              onChangeText={setHeadline}
+              autoCapitalize="words"
+              autoCorrect={false}
+              returnKeyType="next"
+              onFocus={() => setHeadlineFocused(true)}
+              onBlur={() => setHeadlineFocused(false)}
+            />
+          </View>
+
+          <View style={[styles.inputWrap, emailFocused && styles.inputWrapFocused]}>
             <Mail size={16} color="#5C5955" />
             <TextInput
               style={styles.input}
@@ -105,7 +135,7 @@ export default function Login() {
           >
             <Lock size={16} color="#5C5955" />
             <TextInput
-              style={[styles.input, styles.passwordInput]}
+              style={styles.input}
               placeholder="Password"
               placeholderTextColor="#3A3735"
               value={password}
@@ -113,7 +143,7 @@ export default function Login() {
               secureTextEntry={!showPass}
               returnKeyType="done"
               onSubmitEditing={() => {
-                void handleSignIn();
+                void handleRegister();
               }}
               onFocus={() => setPassFocused(true)}
               onBlur={() => setPassFocused(false)}
@@ -127,43 +157,26 @@ export default function Login() {
             </TouchableOpacity>
           </View>
 
-          <Animated.View style={{ transform: [{ scale: btnScale }], marginBottom: 16 }}>
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={() => {
-                void handleSignIn();
-              }}
-              activeOpacity={0.88}
-              disabled={loading}
-            >
-              <Text style={styles.primaryButtonText}>
-                {loading ? "Signing in..." : "Sign In"}
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
-
-          <View style={styles.separator}>
-            <View style={styles.sepLine} />
-            <Text style={styles.sepText}>or</Text>
-            <View style={styles.sepLine} />
-          </View>
-
           <TouchableOpacity
-            style={styles.googleButton}
-            onPress={() => router.push("/register")}
+            style={styles.primaryButton}
+            onPress={() => {
+              void handleRegister();
+            }}
             activeOpacity={0.88}
+            disabled={loading}
           >
-            <MaterialCommunityIcons name="google" size={20} color="#FFFCF2" />
-            <Text style={styles.googleText}>Continue with Google</Text>
+            <Text style={styles.primaryButtonText}>
+              {loading ? "Creating account..." : "Create Account"}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.createRow}
-            onPress={() => router.push("/register")}
+            style={styles.signInRow}
+            onPress={() => router.push("/login")}
             activeOpacity={0.7}
           >
-            <Text style={styles.createBase}>Don&apos;t have an account? </Text>
-            <Text style={styles.createLink}>Create account</Text>
+            <Text style={styles.signInBase}>Already have an account? </Text>
+            <Text style={styles.signInLink}>Sign in</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -226,9 +239,6 @@ const styles = StyleSheet.create({
     color: "#FFFCF2",
     padding: 0,
   },
-  passwordInput: {
-    flex: 1,
-  },
   eyeButton: {
     padding: 4,
   },
@@ -243,6 +253,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 16,
     elevation: 8,
+    marginBottom: 32,
   },
   primaryButtonText: {
     fontSize: 17,
@@ -250,48 +261,16 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     letterSpacing: 0.2,
   },
-  separator: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 16,
-  },
-  sepLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: "#1E1C1A",
-  },
-  sepText: {
-    fontSize: 13,
-    color: "#5C5955",
-  },
-  googleButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
-    backgroundColor: "#1A1815",
-    borderRadius: 16,
-    height: 56,
-    borderWidth: 1,
-    borderColor: "#2E2B27",
-    marginBottom: 32,
-  },
-  googleText: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#FFFCF2",
-  },
-  createRow: {
+  signInRow: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
-  createBase: {
+  signInBase: {
     fontSize: 14,
     color: "#5C5955",
   },
-  createLink: {
+  signInLink: {
     fontSize: 14,
     fontWeight: "700",
     color: "#DE5015",

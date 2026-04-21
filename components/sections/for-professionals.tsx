@@ -61,6 +61,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
           >
             <p className="text-sm text-[#D1D5DB]">
               <span className="text-[#FF6A00] font-semibold">{t("prof_highlight_lead")}</span>
+              {" "}
               {t("prof_highlight_body")}
             </p>
           </div>
@@ -83,13 +84,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
           ))}
         </div>
 
-        <div
-          className="max-w-3xl mx-auto rounded-2xl overflow-hidden mb-10"
-          style={{
-            background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
-            boxShadow: "0 0 0 1px rgba(255,90,10,0.35), inset 0 1px 0 rgba(255,160,40,0.20)",
-          }}
-        >
+        <div className="glass-dark max-w-3xl mx-auto rounded-2xl overflow-hidden mb-10">
           <div className="px-7 pt-6 pb-2">
             <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-4">
               {t("prof_experience_title")}

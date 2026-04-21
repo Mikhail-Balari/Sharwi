@@ -84,13 +84,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
           ))}
         </div>
 
-        <div
-          className="max-w-4xl mx-auto rounded-2xl overflow-hidden mb-10"
-          style={{
-            background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
-            boxShadow: "0 0 0 1px rgba(255,90,10,0.35), inset 0 1px 0 rgba(255,160,40,0.20)",
-          }}
-        >
+        <div className="glass-card-orange max-w-4xl mx-auto rounded-2xl overflow-hidden mb-10">
           <div className="px-7 pt-6 pb-2">
             <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-1">
               {t("comp_start_label")}
@@ -120,13 +114,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
         </div>
 
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div
-            className="rounded-2xl p-6"
-            style={{
-              background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
-              boxShadow: "0 0 0 1px rgba(255,90,10,0.35)",
-            }}
-          >
+          <div className="glass-dark rounded-2xl p-6">
             <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-4">
               {t("comp_company_gets_title")}
             </p>
@@ -140,13 +128,7 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
             </ul>
           </div>
 
-          <div
-            className="rounded-2xl p-6"
-            style={{
-              background: "radial-gradient(ellipse at 15% 10%, rgba(100,30,0,0.18) 0%, rgba(3,1,0,0.92) 55%)",
-              boxShadow: "0 0 0 1px rgba(255,90,10,0.35)",
-            }}
-          >
+          <div className="glass-dark rounded-2xl p-6">
             <p className="text-xs font-bold tracking-widest uppercase text-[#FF6A00] mb-4">
               {t("comp_employee_keeps_title")}
             </p>

@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  Animated,
   FlatList,
   Modal,
   Pressable,
+  RefreshControl,
   Text as RNText,
   ScrollView,
   StyleSheet,
@@ -19,11 +21,10 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { Text } from "@/components/ui/Text";
 import { BORDER_RADIUS, COLORS, TYPOGRAPHY } from "@/constants/theme";
 import {
-  SHARWI_NOTIFICATIONS,
   SHARWI_POSTS,
-  SharwiNotification,
   SharwiPost,
 } from "@/services/feed-posts";
+import { getUserPosts } from "@/services/api/posts";
 
 type FeedFilter = "All" | "Published" | "Draft" | "Proof-backed";
 
@@ -44,28 +45,145 @@ const filterTextActiveStyles = {
 } as const;
 
 const notificationIcon = {
-  "trending-up": TrendingUp,
-  users: Users,
-  zap: Zap,
-  award: Award,
+  TrendingUp,
+  Users,
+  Zap,
+  Award,
 } as const;
+
+const NOTIFICATIONS = [
+  {
+    id: "1",
+    icon: "TrendingUp",
+    text: "Your last post reached 1.2K views",
+    time: "2 hours ago",
+    unread: true,
+  },
+  {
+    id: "2",
+    icon: "Users",
+    text: "3 new leads influenced by your content this week",
+    time: "Yesterday",
+    unread: true,
+  },
+  {
+    id: "3",
+    icon: "Zap",
+    text: "New work moment ready to turn into a post",
+    time: "2 days ago",
+    unread: false,
+  },
+  {
+    id: "4",
+    icon: "Award",
+    text: "Your reputation score increased to 87",
+    time: "1 week ago",
+    unread: false,
+  },
+] as const;
 
 export function WorkerFeedScreen() {
   const insets = useSafeAreaInsets();
+  const pulseOpacity = useRef(new Animated.Value(0.4)).current;
   const [activeFilter, setActiveFilter] = useState<FeedFilter>("All");
+  const [readNotifs, setReadNotifs] = useState<Set<string>>(new Set());
   const [showNotifications, setShowNotifications] = useState(false);
   const [sharePost, setSharePost] = useState<SharwiPost | null>(null);
+  const [posts, setPosts] = useState<SharwiPost[]>(SHARWI_POSTS);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const unreadCount = NOTIFICATIONS.filter(
+    (notification) => notification.unread && !readNotifs.has(notification.id),
+  ).length;
+
+  const loadPosts = async () => {
+    try {
+      const realPosts = await getUserPosts();
+
+      if (realPosts && realPosts.length > 0) {
+        const mapped = realPosts.map((p: any): SharwiPost => ({
+          id: String(p.id),
+          status: p.status,
+          featured: false,
+          title: String(p.workInput ?? p.generatedText ?? "Work moment").substring(0, 50),
+          excerpt: String(p.generatedText ?? "").substring(0, 120),
+          fullText: String(p.generatedText ?? ""),
+          evidence: p.evidenceChips ?? [],
+          date: p.createdAt
+            ? new Date(p.createdAt).toLocaleDateString("en", {
+                month: "short",
+                day: "numeric",
+              })
+            : "Today",
+          ctr: p.clickRate ? `${p.clickRate}%` : undefined,
+          leads: p.leadsInfluenced ?? undefined,
+          reach: p.reach ?? undefined,
+        }));
+
+        if (mapped.length > 0 && mapped[0].status === "published") {
+          mapped[0].featured = true;
+        }
+
+        setPosts(mapped.length > 0 ? mapped : SHARWI_POSTS);
+      } else {
+        setPosts(SHARWI_POSTS);
+      }
+    } catch {
+      setPosts(SHARWI_POSTS);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    void loadPosts();
+  }, []);
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseOpacity, {
+          toValue: 0.7,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseOpacity, {
+          toValue: 0.4,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+      ]),
+    );
+
+    if (isLoading) {
+      animation.start();
+    }
+
+    return () => animation.stop();
+  }, [isLoading, pulseOpacity]);
+
+  useEffect(() => {
+    if (!showNotifications) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setReadNotifs(new Set(NOTIFICATIONS.map((notification) => notification.id)));
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [showNotifications]);
 
   const filteredPosts = useMemo(() => {
     return activeFilter === "All"
-      ? SHARWI_POSTS
-      : SHARWI_POSTS.filter((post) => {
+      ? posts
+      : posts.filter((post) => {
           if (activeFilter === "Published") return post.status === "published";
           if (activeFilter === "Draft") return post.status === "draft";
           if (activeFilter === "Proof-backed") return post.status === "proof-backed";
           return true;
         });
-  }, [activeFilter]);
+  }, [activeFilter, posts]);
 
   const featuredPost = filteredPosts.find((post) => post.featured) ?? null;
   const visiblePosts = filteredPosts.filter((post) => post.id !== featuredPost?.id);
@@ -73,7 +191,7 @@ export function WorkerFeedScreen() {
   const openPost = (post: SharwiPost) => {
     router.push({
       pathname: "/post-detail",
-      params: { postId: post.id },
+      params: { post: JSON.stringify(post) },
     });
   };
 
@@ -206,6 +324,22 @@ export function WorkerFeedScreen() {
     </TouchableOpacity>
   );
 
+  const renderSkeleton = () => (
+    <View style={styles.skeletonList}>
+      {[0, 1, 2].map((item) => (
+        <Animated.View
+          key={item}
+          style={[styles.skeletonCard, { opacity: pulseOpacity }]}
+        >
+          <View style={styles.skeletonPill} />
+          <View style={styles.skeletonTitle} />
+          <View style={styles.skeletonLine} />
+          <View style={styles.skeletonLineShort} />
+        </Animated.View>
+      ))}
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <View style={styles.container}>
@@ -218,7 +352,13 @@ export function WorkerFeedScreen() {
           <Pressable onPress={() => setShowNotifications(true)} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.bellWrap}>
               <Bell color={COLORS.textTertiary} size={20} />
-              <View style={styles.notificationDot} />
+              {unreadCount > 0 ? (
+                <View style={styles.notificationBadge}>
+                  <Text style={styles.notificationBadgeText}>
+                    {unreadCount >= 10 ? "9+" : unreadCount}
+                  </Text>
+                </View>
+              ) : null}
             </View>
           </Pressable>
         </View>
@@ -252,16 +392,47 @@ export function WorkerFeedScreen() {
           </ScrollView>
         </View>
 
-        <FlatList
-          data={visiblePosts}
-          keyExtractor={(item) => item.id}
-          renderItem={renderCompactCard}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            featuredPost ? <View>{renderFeaturedCard()}</View> : null
-          }
-          contentContainerStyle={[styles.listContent, { paddingBottom: 100 + insets.bottom }]}
-        />
+        {isLoading ? (
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={[styles.listContent, { paddingBottom: 100 + insets.bottom }]}
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => {
+                  setIsLoading(true);
+                  void loadPosts();
+                }}
+                colors={[COLORS.accentOrange]}
+                tintColor={COLORS.accentOrange}
+              />
+            }
+          >
+            {renderSkeleton()}
+          </ScrollView>
+        ) : (
+          <FlatList
+            data={visiblePosts}
+            keyExtractor={(item) => item.id}
+            renderItem={renderCompactCard}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={
+              featuredPost ? <View>{renderFeaturedCard()}</View> : null
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => {
+                  setIsLoading(true);
+                  void loadPosts();
+                }}
+                colors={[COLORS.accentOrange]}
+                tintColor={COLORS.accentOrange}
+              />
+            }
+            contentContainerStyle={[styles.listContent, { paddingBottom: 100 + insets.bottom }]}
+          />
+        )}
 
         <Modal
           visible={showNotifications}
@@ -273,20 +444,46 @@ export function WorkerFeedScreen() {
           <View style={styles.sheetOverlay}>
             <View style={styles.notificationsSheet}>
               <View style={styles.handle} />
-              <Text style={styles.sheetTitle}>Notifications</Text>
+              <View style={styles.sheetHeader}>
+                <View>
+                  <Text style={styles.sheetTitle}>Notifications</Text>
+                  <Text
+                    style={[
+                      styles.sheetStatus,
+                      unreadCount > 0 && styles.sheetStatusUnread,
+                    ]}
+                  >
+                    {unreadCount > 0 ? `${unreadCount} new` : "All caught up"}
+                  </Text>
+                </View>
+
+                {unreadCount > 0 ? (
+                  <Pressable
+                    onPress={() =>
+                      setReadNotifs(new Set(NOTIFICATIONS.map((notification) => notification.id)))
+                    }
+                    style={({ pressed }) => pressed && styles.pressed}
+                  >
+                    <Text style={styles.markAllText}>Mark all as read</Text>
+                  </Pressable>
+                ) : null}
+              </View>
 
               <View style={styles.notificationsList}>
-                {SHARWI_NOTIFICATIONS.map((notification) => {
+                {NOTIFICATIONS.map((notification) => {
                   const Icon = notificationIcon[notification.icon];
+                  const unread = notification.unread && !readNotifs.has(notification.id);
 
                   return (
                     <View key={notification.id} style={styles.notificationRow}>
+                      {unread ? <View style={styles.notificationUnreadDot} /> : null}
+
                       <View style={styles.notificationAvatar}>
                         <Icon color={COLORS.accentOrange} size={18} />
                       </View>
 
                       <View style={styles.notificationCopy}>
-                        <Text style={styles.notificationTitle}>{notification.title}</Text>
+                        <Text style={styles.notificationTitle}>{notification.text}</Text>
                         <Text style={styles.notificationTime}>{notification.time}</Text>
                       </View>
                     </View>
@@ -346,14 +543,25 @@ const styles = StyleSheet.create({
     position: "relative",
     padding: 4,
   },
-  notificationDot: {
+  notificationBadge: {
     position: "absolute",
-    top: -2,
-    right: -2,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    top: -6,
+    right: -8,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
     backgroundColor: COLORS.accentOrange,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 4,
+  },
+  notificationBadgeText: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 9,
+    lineHeight: 11,
+    fontWeight: "700",
+    color: COLORS.white,
+    includeFontPadding: false,
   },
   filtersWrap: {
     paddingHorizontal: 20,
@@ -412,6 +620,44 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 20,
+  },
+  skeletonList: {
+    gap: 10,
+  },
+  skeletonCard: {
+    backgroundColor: COLORS.cardPrimary,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: COLORS.cardBorder,
+    padding: 16,
+    marginBottom: 10,
+  },
+  skeletonPill: {
+    width: 82,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: COLORS.cardSecondary,
+    marginBottom: 18,
+  },
+  skeletonTitle: {
+    width: "72%",
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: COLORS.cardSecondary,
+    marginBottom: 12,
+  },
+  skeletonLine: {
+    width: "100%",
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: COLORS.cardSecondary,
+    marginBottom: 8,
+  },
+  skeletonLineShort: {
+    width: "58%",
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: COLORS.cardSecondary,
   },
   featuredCard: {
     backgroundColor: COLORS.cardPrimary,
@@ -628,12 +874,34 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 24,
   },
+  sheetHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 20,
+    gap: 16,
+  },
   sheetTitle: {
     fontFamily: TYPOGRAPHY.fontFamily,
     fontSize: 18,
     fontWeight: "700",
     color: COLORS.textPrimary,
-    marginBottom: 20,
+  },
+  sheetStatus: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 12,
+    fontWeight: "600",
+    color: COLORS.textMuted,
+    marginTop: 4,
+  },
+  sheetStatusUnread: {
+    color: COLORS.accentOrange,
+  },
+  markAllText: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 12,
+    fontWeight: "600",
+    color: COLORS.accentOrange,
   },
   notificationsList: {
     marginBottom: 16,
@@ -644,6 +912,14 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.cardPrimary,
+    alignItems: "center",
+  },
+  notificationUnreadDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: COLORS.accentOrange,
+    marginRight: -4,
   },
   notificationAvatar: {
     width: 40,

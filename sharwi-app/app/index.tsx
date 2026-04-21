@@ -5,6 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { SharwiLogo } from "@/components/SharwiLogo";
+import { getStoredToken } from "@/services/api/auth";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -22,18 +23,24 @@ export default function SplashAnimated() {
   }, []);
 
   const navigateNext = async () => {
-    router.replace("/onboarding");
+    try {
+      const token = await getStoredToken();
 
-    // try {
-    //   const seen = await AsyncStorage.getItem("sharwi_onboarding_done");
-    //   if (seen === "true") {
-    //     router.replace("/login");
-    //   } else {
-    //     router.replace("/onboarding");
-    //   }
-    // } catch {
-    //   router.replace("/onboarding");
-    // }
+      if (token) {
+        router.replace("/(tabs)/feed");
+        return;
+      }
+
+      const seen = await AsyncStorage.getItem("sharwi_onboarding_done");
+
+      if (seen === "true") {
+        router.replace("/login");
+      } else {
+        router.replace("/onboarding");
+      }
+    } catch {
+      router.replace("/onboarding");
+    }
   };
 
   const runAnimation = () => {

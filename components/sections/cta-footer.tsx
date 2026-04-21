@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowRight } from "lucide-react"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { SharwiLogoCombined } from "../sharwi-logo"
 import { trackScheduleLiveDemo } from "@/lib/analytics"
 import { useI18n } from "@/lib/i18n"
@@ -12,12 +13,9 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
     <>
       <section id="request-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
         <div className="max-w-[1240px] mx-auto px-6">
+          <ScrollReveal>
           <div
-            className="relative overflow-hidden rounded-[36px] px-8 py-10 sm:px-10 lg:px-12"
-            style={{
-              background: "linear-gradient(145deg, rgba(255,106,0,0.14), rgba(13,17,24,0.96))",
-              border: "1px solid rgba(255,106,0,0.18)",
-            }}
+            className="glass-card-orange relative overflow-hidden rounded-[36px] px-8 py-10 sm:px-10 lg:px-12"
           >
             <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
               <div>
@@ -52,7 +50,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                 ].map((item) => (
                   <div
                     key={item.title}
-                    className="rounded-[24px] border border-white/10 bg-white/[0.08] p-5"
+                    className="glass-card rounded-[24px] border border-white/10 bg-white/[0.08] p-5"
                   >
                     <p className="text-base font-semibold text-white">{item.title}</p>
                     <p className="mt-2 text-sm leading-7 text-slate-200">{item.body}</p>
@@ -61,6 +59,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 

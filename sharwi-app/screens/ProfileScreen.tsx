@@ -1,10 +1,12 @@
 import { Fragment, useMemo, useState } from "react";
-import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ChevronRight,
   Globe,
   Lock,
+  LogOut,
   Share2,
   Users,
   X,
@@ -15,6 +17,7 @@ import { ShareModal } from "@/components/ShareModal";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { Text } from "@/components/ui/Text";
 import { COLORS, TYPOGRAPHY } from "@/constants/theme";
+import { logoutUser } from "@/services/api/auth";
 
 type ShareMode = "badge" | "profile";
 type StatKey = "moments" | "score" | "verified";
@@ -130,10 +133,34 @@ export function ProfileScreen() {
     });
   };
 
+  const handleLogout = async () => {
+    Alert.alert("Sign out", "Are you sure you want to sign out?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Sign out",
+        style: "destructive",
+        onPress: async () => {
+          await logoutUser();
+          await AsyncStorage.removeItem("sharwi_onboarding_done");
+          router.replace("/login");
+        },
+      },
+    ]);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <View style={styles.container}>
         <View style={styles.header}>
+          <Pressable
+            onPress={() => {
+              void handleLogout();
+            }}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <LogOut size={20} color={COLORS.textTertiary} />
+          </Pressable>
+
           <Pressable
             onPress={() => {
               setShareMode("profile");
@@ -393,6 +420,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     flexDirection: "row",
     justifyContent: "flex-end",
+    alignItems: "center",
+    gap: 16,
   },
   scrollContent: {
     paddingHorizontal: 20,

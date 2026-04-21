@@ -15,6 +15,7 @@ import {
   TrendingDown,
   Users,
 } from "lucide-react"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { GlassCard } from "../glass-card"
 import { trackCtaClick, trackEnterpriseDemoInteraction } from "@/lib/analytics"
 import { useI18n } from "@/lib/i18n"
@@ -253,41 +254,43 @@ export function EnterpriseDemoSection({
   return (
     <section id="enterprise-dashboard-demo" className="py-24" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10">
-          <div className="max-w-3xl">
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-[0.25em] uppercase text-[#FF6A00] mb-5"
-              style={{
-                background: "rgba(255,106,0,0.08)",
-                border: "1px solid rgba(255,106,0,0.18)",
-              }}
-            >
-              <Building2 size={14} />
-              {t("enterprise_label")}
+        <ScrollReveal direction="up">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10">
+            <div className="max-w-3xl">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-[0.25em] uppercase text-[#FF6A00] mb-5"
+                style={{
+                  background: "rgba(255,106,0,0.08)",
+                  border: "1px solid rgba(255,106,0,0.18)",
+                }}
+              >
+                <Building2 size={14} />
+                {t("enterprise_label")}
+              </div>
+              <h2
+                className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
+                style={{ letterSpacing: "-0.03em" }}
+              >
+                {t("enterprise_h2")}
+              </h2>
+              <p className="text-[#9CA3AF] max-w-2xl leading-relaxed">{t("enterprise_sub")}</p>
             </div>
-            <h2
-              className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
-              style={{ letterSpacing: "-0.03em" }}
-            >
-              {t("enterprise_h2")}
-            </h2>
-            <p className="text-[#9CA3AF] max-w-2xl leading-relaxed">{t("enterprise_sub")}</p>
-          </div>
 
-          <button
-            onClick={() => {
-              trackCtaClick("enterprise_demo_primary")
-              onRequestDemo()
-            }}
-            data-cta="request-demo"
-            data-cta-source="enterprise_dashboard"
-            className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.35)]"
-            style={{ background: "#FF6A00" }}
-          >
-            {t("enterprise_cta")}
-            <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
-          </button>
-        </div>
+            <button
+              onClick={() => {
+                trackCtaClick("enterprise_demo_primary")
+                onRequestDemo()
+              }}
+              data-cta="request-demo"
+              data-cta-source="enterprise_dashboard"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.35)]"
+              style={{ background: "#FF6A00" }}
+            >
+              {t("enterprise_cta")}
+              <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </button>
+          </div>
+        </ScrollReveal>
 
         <GlassCard className="mb-8" hoverEffect={false}>
           <div className="flex flex-col gap-6">
@@ -341,7 +344,7 @@ export function EnterpriseDemoSection({
             </div>
 
             <div className="grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
-              <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="glass-dark rounded-2xl p-5">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <p className="text-white font-semibold text-lg">{scenario.company}</p>
                   <span
@@ -365,7 +368,7 @@ export function EnterpriseDemoSection({
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: "rgba(255,106,0,0.06)", border: "1px solid rgba(255,106,0,0.18)" }}>
+              <div className="glass-card-orange rounded-2xl p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <BriefcaseBusiness size={16} className="text-[#FF6A00]" />
                   <p className="text-white font-semibold">{t("enterprise_overview_title")}</p>
@@ -378,7 +381,7 @@ export function EnterpriseDemoSection({
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
           {cards.map((card) => (
-            <GlassCard key={card.label} hoverEffect={false} className="min-h-[174px]">
+            <GlassCard key={card.label} hoverEffect={false} className="glass-card min-h-[174px]">
               <div className="flex items-start justify-between gap-4 mb-8">
                 <div>
                   <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#6B7280] mb-3">{card.label}</p>
@@ -422,7 +425,7 @@ export function EnterpriseDemoSection({
             </div>
 
             <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-              <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="glass-dark rounded-2xl p-5">
                 <p className="text-sm text-[#D1D5DB] leading-relaxed mb-5">{scenario.narratives[teamFilter]}</p>
                 <div className="space-y-4">
                   {proofFlow.map((step) => {
@@ -448,7 +451,7 @@ export function EnterpriseDemoSection({
                 </div>
               </div>
 
-              <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="glass-dark rounded-2xl p-5">
                 <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#6B7280] mb-4">{t("enterprise_breakdown_label")}</p>
                 <div className="space-y-4">
                   {visibleTeams.map((team) => {
@@ -457,7 +460,7 @@ export function EnterpriseDemoSection({
                     const proofRate = team.proofRate - (timeRange === "30d" ? 2 : 0)
                     const vvr = team.vvr - (timeRange === "30d" ? 3 : 0)
                     return (
-                      <div key={team.label}>
+                      <div key={team.label} className="glass-dark rounded-2xl p-3.5">
                         <div className="flex items-center justify-between gap-4 mb-2">
                           <div>
                             <p className="text-white font-medium">{team.label}</p>
@@ -520,7 +523,7 @@ export function EnterpriseDemoSection({
                   t("enterprise_governance_3"),
                   t("enterprise_governance_4"),
                 ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-2xl p-3.5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div key={item} className="glass-dark flex items-start gap-3 rounded-2xl p-3.5">
                     <ShieldCheck size={16} className="text-[#FF6A00] mt-0.5 shrink-0" />
                     <p className="text-sm text-[#D1D5DB] leading-relaxed">{item}</p>
                   </div>
@@ -552,7 +555,7 @@ export function EnterpriseDemoSection({
                   )
                 })}
               </div>
-              <div className="rounded-2xl p-4" style={{ background: "rgba(255,106,0,0.05)", border: "1px solid rgba(255,106,0,0.14)" }}>
+              <div className="glass-card-orange rounded-2xl p-4">
                 <p className="text-sm text-[#D1D5DB] leading-relaxed">{t("enterprise_attr_body")}</p>
               </div>
             </GlassCard>

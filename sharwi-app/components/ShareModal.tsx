@@ -17,6 +17,7 @@ import { COLORS, TYPOGRAPHY } from "@/constants/theme";
 interface ShareModalProps {
   visible: boolean;
   onClose: () => void;
+  onShared?: () => void;
   mode: "post" | "badge" | "profile";
   postText?: string;
   shareText?: string;
@@ -27,6 +28,7 @@ const PROFILE_URL = "https://sharwi.com/profile/mikhail-balari";
 export function ShareModal({
   visible,
   onClose,
+  onShared,
   mode,
   postText,
   shareText,
@@ -65,6 +67,7 @@ export function ShareModal({
     setCopyDone(true);
     setTimeout(() => {
       setCopyDone(false);
+      onShared?.();
       onClose();
     }, 1500);
   };
@@ -74,6 +77,7 @@ export function ShareModal({
       const supported = await Linking.canOpenURL(url);
       if (supported) {
         await Linking.openURL(url);
+        onShared?.();
         onClose();
         return;
       }
@@ -82,6 +86,7 @@ export function ShareModal({
     }
 
     await Clipboard.setStringAsync(current.shareText);
+    onShared?.();
     onClose();
   };
 
@@ -93,6 +98,7 @@ export function ShareModal({
       const supported = await Linking.canOpenURL(appUrl);
       if (supported) {
         await Linking.openURL(appUrl);
+        onShared?.();
         onClose();
         return;
       }
@@ -102,10 +108,12 @@ export function ShareModal({
 
     try {
       await Linking.openURL(webUrl);
+      onShared?.();
       onClose();
       return;
     } catch {
       await Clipboard.setStringAsync(current.shareText);
+      onShared?.();
       onClose();
     }
   };

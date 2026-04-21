@@ -1,197 +1,183 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
-import { SharwiLogoIcon } from "./sharwi-logo"
+import { motion } from "framer-motion"
 
 export function HeroLogo3D() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 500], [0, -80])
-  const opacity = useTransform(scrollY, [0, 400], [1, 0])
-  const scale = useTransform(scrollY, [0, 400], [1, 0.85])
-  const rotateY = useTransform(scrollY, [0, 800], [0, 25])
-
-  useEffect(() => {
-    const updateViewport = () => setIsMobile(window.innerWidth < 768)
-    updateViewport()
-    window.addEventListener("resize", updateViewport)
-    return () => window.removeEventListener("resize", updateViewport)
-  }, [])
-
-  const outerSize = isMobile ? 300 : 480
-  const orbitOne = isMobile ? 250 : 380
-  const orbitTwo = isMobile ? 210 : 320
-  const orbitThree = isMobile ? 280 : 440
-  const baseSize = isMobile ? 158 : 220
-  const logoSize = isMobile ? 72 : 96
-
   return (
-    <motion.div
-      ref={ref}
+    <div
       style={{
-        y,
-        opacity,
-        scale,
-        width: "100%",
-        height: "100%",
         position: "relative",
+        width: "100%",
+        height: "500px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        perspective: 1200,
+        perspective: "1000px",
       }}
     >
       <motion.div
         animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.15, 0.25, 0.15],
+          scale: [1, 1.15, 1],
+          opacity: [0.2, 0.35, 0.2],
         }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute",
-          width: outerSize,
-          height: outerSize,
+          width: "min(320px, 72vw)",
+          height: "min(320px, 72vw)",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(222,80,21,0.3) 0%, transparent 70%)",
-          filter: "blur(40px)",
+          background:
+            "radial-gradient(circle, rgba(222,80,21,0.5) 0%, rgba(222,80,21,0.15) 40%, transparent 70%)",
+          filter: "blur(30px)",
+          pointerEvents: "none",
         }}
       />
 
       <motion.div
         animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
         style={{
           position: "absolute",
-          width: orbitOne,
-          height: orbitOne,
+          width: "min(360px, 82vw)",
+          height: "min(360px, 82vw)",
           borderRadius: "50%",
-          border: "1px solid rgba(222,80,21,0.15)",
+          border: "1px solid rgba(222,80,21,0.18)",
+          pointerEvents: "none",
         }}
       >
         <div
           style={{
             position: "absolute",
-            top: "-4px",
+            top: "-5px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "8px",
-            height: "8px",
+            width: "10px",
+            height: "10px",
             borderRadius: "50%",
             backgroundColor: "#DE5015",
-            boxShadow: "0 0 12px rgba(222,80,21,0.8)",
+            boxShadow: "0 0 14px rgba(222,80,21,1), 0 0 28px rgba(222,80,21,0.5)",
           }}
         />
       </motion.div>
 
       <motion.div
         animate={{ rotate: -360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
         style={{
           position: "absolute",
-          width: orbitTwo,
-          height: orbitTwo,
+          width: "min(280px, 64vw)",
+          height: "min(280px, 64vw)",
           borderRadius: "50%",
           border: "1px solid rgba(222,80,21,0.10)",
-          transform: "rotateX(70deg)",
+          pointerEvents: "none",
         }}
       >
         <div
           style={{
             position: "absolute",
-            top: "-3px",
-            right: "30%",
-            width: "6px",
-            height: "6px",
+            bottom: "-4px",
+            right: "25%",
+            width: "7px",
+            height: "7px",
             borderRadius: "50%",
-            backgroundColor: "rgba(222,80,21,0.6)",
-            boxShadow: "0 0 8px rgba(222,80,21,0.6)",
+            backgroundColor: "rgba(222,80,21,0.7)",
+            boxShadow: "0 0 10px rgba(222,80,21,0.8)",
           }}
         />
       </motion.div>
-
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute",
-          width: orbitThree,
-          height: orbitThree,
-          borderRadius: "50%",
-          border: "0.5px solid rgba(255,252,242,0.05)",
-        }}
-      />
 
       <motion.div
         animate={{
-          boxShadow: [
-            "0 0 40px rgba(222,80,21,0.3), 0 0 80px rgba(222,80,21,0.1)",
-            "0 0 60px rgba(222,80,21,0.5), 0 0 120px rgba(222,80,21,0.2)",
-            "0 0 40px rgba(222,80,21,0.3), 0 0 80px rgba(222,80,21,0.1)",
-          ],
+          rotateY: [0, 12, 0, -12, 0],
+          y: [0, -8, 0, -8, 0],
         }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          rotateY: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+          y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+        }}
         style={{
-          rotateY,
           position: "relative",
-          width: baseSize,
-          height: baseSize,
-          borderRadius: "50%",
-          backgroundColor: "rgba(222,80,21,0.08)",
-          border: "1.5px solid rgba(222,80,21,0.4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          zIndex: 10,
           transformStyle: "preserve-3d",
+          filter:
+            "drop-shadow(0 0 20px rgba(222,80,21,0.6)) drop-shadow(0 0 40px rgba(222,80,21,0.3))",
         }}
       >
-        <motion.div
-          animate={{
-            rotateY: [0, 8, 0, -8, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{ transformStyle: "preserve-3d" }}
+        <svg
+          width="140"
+          height="168"
+          viewBox="0 0 121 173"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-[120px] w-[100px] md:h-[168px] md:w-[140px]"
         >
-          <SharwiLogoIcon size={logoSize} color="#FFFFFF" />
-        </motion.div>
+          <path
+            d="M74.1611 7.57715C78.6979 5.94651 82.1321 6.30721 85.0186 7.72168C88.13 9.24642 91.3109 12.3532 94.3896 17.4395C100.602 27.7032 105.116 43.8572 108.238 62.6094C114.439 99.8472 114.687 144.172 114.44 163.356C114.419 165.038 113.061 166.5 111.086 166.5H11.1396C8.97867 166.5 7.60168 164.737 7.85938 162.926C10.3443 145.462 16.3007 109.949 27.3193 76.8486C32.8319 60.2889 39.5245 44.6029 47.5176 32.1514C55.5697 19.608 64.4864 11.0545 74.1611 7.57715Z"
+            stroke="#DE5015"
+            strokeWidth="13"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M37 108.516C43.0435 117.45 82.2259 98.7551 92 107.297"
+            stroke="#DE5015"
+            strokeWidth="6"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <path
+            d="M37 122.516C43.0435 131.45 82.2259 112.755 92 121.297"
+            stroke="#DE5015"
+            strokeWidth="6"
+            strokeLinecap="round"
+            fill="none"
+          />
+          <path
+            d="M37 137.516C43.0435 146.45 82.2259 127.755 92 136.297"
+            stroke="#DE5015"
+            strokeWidth="6"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </svg>
       </motion.div>
 
-      {[...Array(6)].map((_, i) => (
+      {[
+        { top: "15%", left: "12%", size: 4, delay: 0, dur: 3 },
+        { top: "25%", left: "82%", size: 3, delay: 0.5, dur: 4 },
+        { top: "60%", left: "8%", size: 3, delay: 1, dur: 3.5 },
+        { top: "70%", left: "88%", size: 4, delay: 0.3, dur: 4.5 },
+        { top: "40%", left: "5%", size: 2, delay: 0.8, dur: 3 },
+        { top: "45%", left: "92%", size: 2, delay: 1.2, dur: 5 },
+        { top: "80%", left: "20%", size: 3, delay: 0.6, dur: 3.8 },
+        { top: "10%", left: "70%", size: 3, delay: 1.5, dur: 4.2 },
+      ].map((p, i) => (
         <motion.div
           key={i}
           animate={{
-            y: [0, -15, 0],
-            opacity: [0.4, 0.8, 0.4],
+            y: [0, -12, 0],
+            opacity: [0.4, 0.9, 0.4],
           }}
           transition={{
-            duration: 2 + i * 0.5,
+            duration: p.dur,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: i * 0.3,
+            delay: p.delay,
           }}
           style={{
             position: "absolute",
-            width: i % 2 === 0 ? "4px" : "3px",
-            height: i % 2 === 0 ? "4px" : "3px",
+            top: p.top,
+            left: p.left,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
             borderRadius: "50%",
             backgroundColor: "#DE5015",
-            top: `${20 + i * 12}%`,
-            left: i < 3 ? `${10 + i * 8}%` : `${70 + (i - 3) * 8}%`,
-            boxShadow: "0 0 6px rgba(222,80,21,0.8)",
+            boxShadow: `0 0 ${p.size * 3}px rgba(222,80,21,0.9)`,
+            pointerEvents: "none",
           }}
         />
       ))}
-    </motion.div>
+    </div>
   )
 }

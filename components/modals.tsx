@@ -204,11 +204,8 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
   }
 
   const inputClass =
-    "w-full px-4 py-3 rounded-xl text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#FF6A00]/50 transition-all"
-  const inputStyle = {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.1)",
-  }
+    "glass-input w-full px-4 py-3 rounded-xl text-white placeholder-[#6B7280] focus:outline-none focus:ring-1 focus:ring-[#FF6A00]/50 transition-all"
+  const inputStyle = {}
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="640px">

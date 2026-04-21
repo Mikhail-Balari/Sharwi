@@ -57,7 +57,7 @@ export default function Onboarding() {
       setCurrentIndex(next);
     } else {
       await AsyncStorage.setItem("sharwi_onboarding_done", "true");
-      router.replace("/login");
+      router.replace("/beta");
     }
   };
 
