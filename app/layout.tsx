@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { DM_Sans, Syne } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
 import Script from "next/script"
+import { I18nProvider } from "@/lib/i18n"
 import "./globals.css"
 
 const dmSans = DM_Sans({
@@ -49,7 +50,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="font-sans antialiased">
-        {children}
+        <I18nProvider>{children}</I18nProvider>
         <Analytics />
       </body>
     </html>

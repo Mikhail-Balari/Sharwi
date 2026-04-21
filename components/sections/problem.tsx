@@ -2,44 +2,45 @@
 
 import { EyeOff, LineChart, ShieldAlert, Users } from "lucide-react"
 import { GlassCard } from "../glass-card"
-
-const problems = [
-  {
-    icon: EyeOff,
-    title: "Important work stays invisible",
-    text: "Most of the value people create lives inside systems of work, not in public narratives.",
-  },
-  {
-    icon: Users,
-    title: "Advocacy depends on the loudest few",
-    text: "Programs break when visibility relies on confidence, spare time, or generic prompts.",
-  },
-  {
-    icon: ShieldAlert,
-    title: "AI without evidence lowers trust",
-    text: "Buyers, leaders, and compliance teams need proof, not polished claims detached from reality.",
-  },
-  {
-    icon: LineChart,
-    title: "Leadership still struggles to prove ROI",
-    text: "Impressions are easy to count. Business impact is much harder to defend without the right measurement layer.",
-  },
-]
+import { useI18n } from "@/lib/i18n"
 
 export function ProblemSection() {
+  const { t } = useI18n()
+  const problems = [
+    {
+      icon: EyeOff,
+      title: t("problem_card1_title"),
+      text: t("problem_card1_body"),
+    },
+    {
+      icon: Users,
+      title: t("problem_card2_title"),
+      text: t("problem_card2_body"),
+    },
+    {
+      icon: ShieldAlert,
+      title: t("problem_card3_title"),
+      text: t("problem_card3_body"),
+    },
+    {
+      icon: LineChart,
+      title: t("problem_card4_title"),
+      text: t("problem_card4_body"),
+    },
+  ]
+
   return (
     <section id="problem" className="py-24" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
-            Problem
+            {t("problem_label")}
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
-            Expertise, advocacy, and measurement are still treated as separate problems.
+            {t("problem_h2")}
           </h2>
           <p className="mt-5 text-lg leading-8 text-slate-300">
-            That fragmentation is why strong professionals stay invisible, employee advocacy stalls,
-            and leadership teams struggle to justify the spend. Sharwi connects the full system.
+            {t("problem_sub")}
           </p>
         </div>
 
@@ -66,8 +67,7 @@ export function ProblemSection() {
           }}
         >
           <p className="text-lg leading-8 text-slate-200">
-            Sharwi solves this as infrastructure: capture the work, attach the proof, draft the story,
-            keep human control, and measure the result across the Personal Layer and Enterprise Layer.
+            {t("problem_callout")}
           </p>
         </div>
       </div>

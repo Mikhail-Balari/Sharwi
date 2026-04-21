@@ -17,164 +17,24 @@ import {
 } from "lucide-react"
 import { GlassCard } from "../glass-card"
 import { trackCtaClick, trackEnterpriseDemoInteraction } from "@/lib/analytics"
+import { useI18n } from "@/lib/i18n"
 
 type ScenarioId = "scaleup" | "advisory" | "operations"
 type TimeRange = "30d" | "90d"
 type TeamFilter = "all" | "gtm" | "delivery" | "leadership"
+type ProofFlowKey =
+  | "enterprise_flow_captured"
+  | "enterprise_flow_proof"
+  | "enterprise_flow_approved"
+  | "enterprise_flow_visible"
 
 const rangeMultiplier: Record<TimeRange, number> = {
   "30d": 0.44,
   "90d": 1,
 }
 
-const scenarios = {
-  scaleup: {
-    label: "Series C SaaS",
-    company: "Northstar Cloud",
-    description:
-      "Sharwi connects product, GTM, and customer evidence into a proof-backed advocacy rollout for a scaling revenue team.",
-    stack: ["GitHub", "HubSpot", "LinkedIn"],
-    narratives: {
-      all: "Sharwi is converting product delivery proof into pipeline-facing visibility without asking employees to become marketers.",
-      gtm: "Revenue teams are using launch and customer proof to increase trusted reach around active deals.",
-      delivery: "Delivery teams can publish credible updates without exposing internal noise or rewriting work into marketing copy.",
-      leadership: "Leadership gets a directional view of governance, trusted visibility, and CAC efficiency from one operating layer.",
-    },
-    metrics: {
-      activeEmployees: 196,
-      postsGenerated: 1284,
-      proofBackedRate: 94,
-      vvr: 44,
-      leadsInfluenced: 192,
-      cacReduction: 24,
-      attributionSnapshot: 42,
-      governanceStatus: "Healthy",
-      governanceNote: "6 escalations, 0 compliance incidents",
-    },
-    proofFlow: [
-      { label: "Work signal captured", value: 95 },
-      { label: "Proof attached", value: 91 },
-      { label: "Approved", value: 82 },
-      { label: "Verified visibility", value: 44 },
-    ],
-    teams: [
-      { id: "gtm", label: "GTM", employees: 79, posts: 492, proofRate: 95, vvr: 48 },
-      { id: "delivery", label: "Delivery", employees: 64, posts: 396, proofRate: 93, vvr: 42 },
-      { id: "leadership", label: "Leadership", employees: 53, posts: 396, proofRate: 92, vvr: 39 },
-    ],
-    attribution: [
-      { label: "Employee-sourced demo requests", value: 31, tone: "#FF6A00" },
-      { label: "Assisted pipeline touchpoints", value: 42, tone: "#F59E0B" },
-      { label: "Paid retargeting overlap", value: 17, tone: "#FB7185" },
-      { label: "Direct / unattributed", value: 10, tone: "#6B7280" },
-    ],
-  },
-  advisory: {
-    label: "Advisory Firm",
-    company: "Aster Advisory Group",
-    description:
-      "Sharwi helps experts publish client-safe insights with governance controls while keeping an executive lens on trusted visibility.",
-    stack: ["CRM", "Knowledge Base", "LinkedIn"],
-    narratives: {
-      all: "This rollout is optimized for expert credibility, not raw content volume. Trust is coming from governed proof and consistent publishing.",
-      gtm: "Business development sees which expert posts are opening conversations, without claiming perfect funnel attribution.",
-      delivery: "Subject matter experts can share client-safe insights with approval guardrails and proof traceability.",
-      leadership: "Leadership gets account-level signal without turning reporting into a burden.",
-    },
-    metrics: {
-      activeEmployees: 118,
-      postsGenerated: 628,
-      proofBackedRate: 97,
-      vvr: 49,
-      leadsInfluenced: 101,
-      cacReduction: 17,
-      attributionSnapshot: 39,
-      governanceStatus: "Strict",
-      governanceNote: "Mandatory legal review on sensitive topics",
-    },
-    proofFlow: [
-      { label: "Work signal captured", value: 93 },
-      { label: "Proof attached", value: 97 },
-      { label: "Approved", value: 74 },
-      { label: "Verified visibility", value: 49 },
-    ],
-    teams: [
-      { id: "gtm", label: "Business Dev", employees: 29, posts: 176, proofRate: 96, vvr: 46 },
-      { id: "delivery", label: "Advisory", employees: 67, posts: 324, proofRate: 98, vvr: 50 },
-      { id: "leadership", label: "Partners", employees: 22, posts: 128, proofRate: 95, vvr: 53 },
-    ],
-    attribution: [
-      { label: "Employee-sourced meetings", value: 27, tone: "#FF6A00" },
-      { label: "Assisted expansion pipeline", value: 39, tone: "#F59E0B" },
-      { label: "Event / referral overlap", value: 22, tone: "#FB7185" },
-      { label: "Direct / unattributed", value: 12, tone: "#6B7280" },
-    ],
-  },
-  operations: {
-    label: "Distributed Ops",
-    company: "Relay Logistics",
-    description:
-      "Sharwi turns frontline and operational proof into visible trust signals for hiring, partnerships, and revenue teams without adding reporting burden.",
-    stack: ["ServiceNow", "Salesforce", "LinkedIn"],
-    narratives: {
-      all: "Distributed teams are using real operational proof to create buyer trust and recruiting credibility with lightweight governance.",
-      gtm: "Revenue teams are reusing verified field proof to warm late-stage accounts and reduce skepticism in complex deals.",
-      delivery: "Operational leaders can surface quality, uptime, and delivery proof without writing content from scratch.",
-      leadership: "Leadership sees how distributed trust signals support both pipeline and hiring narratives in one dashboard.",
-    },
-    metrics: {
-      activeEmployees: 238,
-      postsGenerated: 944,
-      proofBackedRate: 91,
-      vvr: 39,
-      leadsInfluenced: 141,
-      cacReduction: 14,
-      attributionSnapshot: 34,
-      governanceStatus: "Managed",
-      governanceNote: "12 escalations, 1 policy hold resolved",
-    },
-    proofFlow: [
-      { label: "Work signal captured", value: 92 },
-      { label: "Proof attached", value: 88 },
-      { label: "Approved", value: 77 },
-      { label: "Verified visibility", value: 39 },
-    ],
-    teams: [
-      { id: "gtm", label: "Revenue", employees: 63, posts: 252, proofRate: 92, vvr: 41 },
-      { id: "delivery", label: "Operations", employees: 133, posts: 496, proofRate: 90, vvr: 38 },
-      { id: "leadership", label: "Regional leads", employees: 42, posts: 196, proofRate: 90, vvr: 37 },
-    ],
-    attribution: [
-      { label: "Employee-sourced opportunities", value: 24, tone: "#FF6A00" },
-      { label: "Assisted pipeline touchpoints", value: 34, tone: "#F59E0B" },
-      { label: "Partner / referral overlap", value: 26, tone: "#FB7185" },
-      { label: "Direct / unattributed", value: 16, tone: "#6B7280" },
-    ],
-  },
-} as const
-
-const teamOptions: Array<{ id: TeamFilter; label: string }> = [
-  { id: "all", label: "Whole company" },
-  { id: "gtm", label: "Revenue / GTM" },
-  { id: "delivery", label: "Delivery / Ops" },
-  { id: "leadership", label: "Leadership" },
-]
-
 function scaleValue(value: number, timeRange: TimeRange) {
   return Math.round(value * rangeMultiplier[timeRange])
-}
-
-function metricNote(label: string) {
-  const notes: Record<string, string> = {
-    active: "Active this period",
-    posts: "Generated this period",
-    proof: "Claim-level proof attached before publish",
-    vvr: "Verified Visibility Rate in target audiences",
-    leads: "CRM-linked and modeled influenced demand",
-    cac: "Directional vs. previous channel mix",
-    attribution: "Share of influenced pipeline with employee touch",
-  }
-  return notes[label]
 }
 
 export function EnterpriseDemoSection({
@@ -182,63 +42,210 @@ export function EnterpriseDemoSection({
 }: {
   onRequestDemo: () => void
 }) {
+  const { t } = useI18n()
   const [scenarioId, setScenarioId] = useState<ScenarioId>("scaleup")
   const [timeRange, setTimeRange] = useState<TimeRange>("90d")
   const [teamFilter, setTeamFilter] = useState<TeamFilter>("all")
 
+  const scenarios = {
+    scaleup: {
+      label: t("enterprise_scenario_scaleup_label"),
+      company: t("enterprise_scenario_scaleup_company"),
+      description: t("enterprise_scenario_scaleup_description"),
+      stack: ["GitHub", "HubSpot", "LinkedIn"],
+      narratives: {
+        all: t("enterprise_scenario_scaleup_narrative_all"),
+        gtm: t("enterprise_scenario_scaleup_narrative_gtm"),
+        delivery: t("enterprise_scenario_scaleup_narrative_delivery"),
+        leadership: t("enterprise_scenario_scaleup_narrative_leadership"),
+      },
+      metrics: {
+        activeEmployees: 196,
+        postsGenerated: 1284,
+        proofBackedRate: 94,
+        vvr: 44,
+        leadsInfluenced: 192,
+        cacReduction: 24,
+        attributionSnapshot: 42,
+        governanceStatus: t("enterprise_scenario_scaleup_governance"),
+        governanceNote: t("enterprise_scenario_scaleup_governance_note"),
+      },
+      teams: [
+        { id: "gtm", label: t("enterprise_scenario_scaleup_team_gtm"), employees: 79, posts: 492, proofRate: 95, vvr: 48 },
+        { id: "delivery", label: t("enterprise_scenario_scaleup_team_delivery"), employees: 64, posts: 396, proofRate: 93, vvr: 42 },
+        { id: "leadership", label: t("enterprise_scenario_scaleup_team_leadership"), employees: 53, posts: 396, proofRate: 92, vvr: 39 },
+      ],
+      attribution: [
+        { label: t("enterprise_scenario_scaleup_attr_1"), value: 31, tone: "#FF6A00" },
+        { label: t("enterprise_scenario_scaleup_attr_2"), value: 42, tone: "#F59E0B" },
+        { label: t("enterprise_scenario_scaleup_attr_3"), value: 17, tone: "#FB7185" },
+        { label: t("enterprise_scenario_scaleup_attr_4"), value: 10, tone: "#6B7280" },
+      ],
+    },
+    advisory: {
+      label: t("enterprise_scenario_advisory_label"),
+      company: t("enterprise_scenario_advisory_company"),
+      description: t("enterprise_scenario_advisory_description"),
+      stack: ["CRM", "Knowledge Base", "LinkedIn"],
+      narratives: {
+        all: t("enterprise_scenario_advisory_narrative_all"),
+        gtm: t("enterprise_scenario_advisory_narrative_gtm"),
+        delivery: t("enterprise_scenario_advisory_narrative_delivery"),
+        leadership: t("enterprise_scenario_advisory_narrative_leadership"),
+      },
+      metrics: {
+        activeEmployees: 118,
+        postsGenerated: 628,
+        proofBackedRate: 97,
+        vvr: 49,
+        leadsInfluenced: 101,
+        cacReduction: 17,
+        attributionSnapshot: 39,
+        governanceStatus: t("enterprise_scenario_advisory_governance"),
+        governanceNote: t("enterprise_scenario_advisory_governance_note"),
+      },
+      teams: [
+        { id: "gtm", label: t("enterprise_scenario_advisory_team_gtm"), employees: 29, posts: 176, proofRate: 96, vvr: 46 },
+        { id: "delivery", label: t("enterprise_scenario_advisory_team_delivery"), employees: 67, posts: 324, proofRate: 98, vvr: 50 },
+        { id: "leadership", label: t("enterprise_scenario_advisory_team_leadership"), employees: 22, posts: 128, proofRate: 95, vvr: 53 },
+      ],
+      attribution: [
+        { label: t("enterprise_scenario_advisory_attr_1"), value: 27, tone: "#FF6A00" },
+        { label: t("enterprise_scenario_advisory_attr_2"), value: 39, tone: "#F59E0B" },
+        { label: t("enterprise_scenario_advisory_attr_3"), value: 22, tone: "#FB7185" },
+        { label: t("enterprise_scenario_advisory_attr_4"), value: 12, tone: "#6B7280" },
+      ],
+    },
+    operations: {
+      label: t("enterprise_scenario_operations_label"),
+      company: t("enterprise_scenario_operations_company"),
+      description: t("enterprise_scenario_operations_description"),
+      stack: ["ServiceNow", "Salesforce", "LinkedIn"],
+      narratives: {
+        all: t("enterprise_scenario_operations_narrative_all"),
+        gtm: t("enterprise_scenario_operations_narrative_gtm"),
+        delivery: t("enterprise_scenario_operations_narrative_delivery"),
+        leadership: t("enterprise_scenario_operations_narrative_leadership"),
+      },
+      metrics: {
+        activeEmployees: 238,
+        postsGenerated: 944,
+        proofBackedRate: 91,
+        vvr: 39,
+        leadsInfluenced: 141,
+        cacReduction: 14,
+        attributionSnapshot: 34,
+        governanceStatus: t("enterprise_scenario_operations_governance"),
+        governanceNote: t("enterprise_scenario_operations_governance_note"),
+      },
+      teams: [
+        { id: "gtm", label: t("enterprise_scenario_operations_team_gtm"), employees: 63, posts: 252, proofRate: 92, vvr: 41 },
+        { id: "delivery", label: t("enterprise_scenario_operations_team_delivery"), employees: 133, posts: 496, proofRate: 90, vvr: 38 },
+        { id: "leadership", label: t("enterprise_scenario_operations_team_leadership"), employees: 42, posts: 196, proofRate: 90, vvr: 37 },
+      ],
+      attribution: [
+        { label: t("enterprise_scenario_operations_attr_1"), value: 24, tone: "#FF6A00" },
+        { label: t("enterprise_scenario_operations_attr_2"), value: 34, tone: "#F59E0B" },
+        { label: t("enterprise_scenario_operations_attr_3"), value: 26, tone: "#FB7185" },
+        { label: t("enterprise_scenario_operations_attr_4"), value: 16, tone: "#6B7280" },
+      ],
+    },
+  } as const
+
+  const teamOptions: Array<{ id: TeamFilter; label: string }> = [
+    { id: "all", label: t("enterprise_filter_all") },
+    { id: "gtm", label: t("enterprise_filter_gtm") },
+    { id: "delivery", label: t("enterprise_filter_delivery") },
+    { id: "leadership", label: t("enterprise_filter_leadership") },
+  ]
+
+  const proofFlowBase: Array<{ key: ProofFlowKey; value: number }> = [
+    { key: "enterprise_flow_captured", value: 95 },
+    { key: "enterprise_flow_proof", value: 91 },
+    { key: "enterprise_flow_approved", value: 82 },
+    { key: "enterprise_flow_visible", value: 44 },
+  ]
+
   const scenario = scenarios[scenarioId]
+  const proofFlow: Array<{ key: ProofFlowKey; value: number }> =
+    scenarioId === "scaleup"
+      ? proofFlowBase
+      : scenarioId === "advisory"
+        ? [
+            { key: "enterprise_flow_captured", value: 93 },
+            { key: "enterprise_flow_proof", value: 97 },
+            { key: "enterprise_flow_approved", value: 74 },
+            { key: "enterprise_flow_visible", value: 49 },
+          ]
+        : [
+            { key: "enterprise_flow_captured", value: 92 },
+            { key: "enterprise_flow_proof", value: 88 },
+            { key: "enterprise_flow_approved", value: 77 },
+            { key: "enterprise_flow_visible", value: 39 },
+          ]
+
   const visibleTeams =
     teamFilter === "all"
       ? scenario.teams
       : scenario.teams.filter((team) => team.id === teamFilter)
 
+  const noteMap = {
+    active: t("enterprise_note_active"),
+    posts: t("enterprise_note_posts"),
+    proof: t("enterprise_note_proof"),
+    vvr: t("enterprise_note_vvr"),
+    leads: t("enterprise_note_leads"),
+    cac: t("enterprise_note_cac"),
+    attribution: t("enterprise_note_attribution"),
+  }
+
   const cards = [
     {
-      label: "Active Employees",
+      label: t("enterprise_card_active"),
       value: scaleValue(scenario.metrics.activeEmployees, timeRange).toString(),
-      note: metricNote("active"),
+      note: noteMap.active,
       icon: Users,
     },
     {
-      label: "Posts Generated",
+      label: t("enterprise_card_posts"),
       value: scaleValue(scenario.metrics.postsGenerated, timeRange).toLocaleString(),
-      note: metricNote("posts"),
+      note: noteMap.posts,
       icon: Sparkles,
     },
     {
-      label: "Proof-backed Rate",
+      label: t("enterprise_card_proof"),
       value: `${scenario.metrics.proofBackedRate - (timeRange === "30d" ? 2 : 0)}%`,
-      note: metricNote("proof"),
+      note: noteMap.proof,
       icon: BadgeCheck,
     },
     {
-      label: "Verified Visibility Rate (VVR)",
+      label: t("enterprise_card_vvr"),
       value: `${scenario.metrics.vvr - (timeRange === "30d" ? 3 : 0)}%`,
-      note: metricNote("vvr"),
+      note: noteMap.vvr,
       icon: Gauge,
     },
     {
-      label: "Leads Influenced",
+      label: t("enterprise_card_leads"),
       value: scaleValue(scenario.metrics.leadsInfluenced, timeRange).toString(),
-      note: metricNote("leads"),
+      note: noteMap.leads,
       icon: Target,
     },
     {
-      label: "CAC Reduction",
+      label: t("enterprise_card_cac"),
       value: `${scenario.metrics.cacReduction - (timeRange === "30d" ? 6 : 0)}%`,
-      note: metricNote("cac"),
+      note: noteMap.cac,
       icon: TrendingDown,
     },
     {
-      label: "Governance Status",
+      label: t("enterprise_card_governance"),
       value: scenario.metrics.governanceStatus,
       note: scenario.metrics.governanceNote,
       icon: ShieldCheck,
     },
     {
-      label: "Attribution Snapshot",
+      label: t("enterprise_card_attribution"),
       value: `${scenario.metrics.attributionSnapshot - (timeRange === "30d" ? 5 : 0)}%`,
-      note: metricNote("attribution"),
+      note: noteMap.attribution,
       icon: ChartColumn,
     },
   ]
@@ -256,18 +263,15 @@ export function EnterpriseDemoSection({
               }}
             >
               <Building2 size={14} />
-              Enterprise Dashboard Demo
+              {t("enterprise_label")}
             </div>
             <h2
               className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
               style={{ letterSpacing: "-0.03em" }}
             >
-              The command center for verified employee visibility.
+              {t("enterprise_h2")}
             </h2>
-            <p className="text-[#9CA3AF] max-w-2xl leading-relaxed">
-              Real-time view of what your team is publishing, what is verified, and what is generating pipeline.
-              Everything your leadership needs to see the impact of employee visibility in one place.
-            </p>
+            <p className="text-[#9CA3AF] max-w-2xl leading-relaxed">{t("enterprise_sub")}</p>
           </div>
 
           <button
@@ -280,7 +284,7 @@ export function EnterpriseDemoSection({
             className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.35)]"
             style={{ background: "#FF6A00" }}
           >
-            Request a Demo
+            {t("enterprise_cta")}
             <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
@@ -290,7 +294,7 @@ export function EnterpriseDemoSection({
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-xs font-bold tracking-[0.25em] uppercase text-[#FF6A00] mb-2">
-                  Demo Account
+                  {t("enterprise_demo_account")}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {(Object.entries(scenarios) as Array<[ScenarioId, (typeof scenarios)[ScenarioId]]>).map(
@@ -330,7 +334,7 @@ export function EnterpriseDemoSection({
                       color: timeRange === range ? "#FFF7ED" : "#9CA3AF",
                     }}
                   >
-                    Last {range === "30d" ? "30 days" : "90 days"}
+                    {range === "30d" ? t("enterprise_range_30d") : t("enterprise_range_90d")}
                   </button>
                 ))}
               </div>
@@ -364,12 +368,9 @@ export function EnterpriseDemoSection({
               <div className="rounded-2xl p-5" style={{ background: "rgba(255,106,0,0.06)", border: "1px solid rgba(255,106,0,0.18)" }}>
                 <div className="flex items-center gap-2 mb-3">
                   <BriefcaseBusiness size={16} className="text-[#FF6A00]" />
-                  <p className="text-white font-semibold">Company overview</p>
+                  <p className="text-white font-semibold">{t("enterprise_overview_title")}</p>
                 </div>
-                <p className="text-sm text-[#D1D5DB] leading-relaxed">
-                  How Sharwi is working across this organization: verified content, governance controls,
-                  and business impact in one view.
-                </p>
+                <p className="text-sm text-[#D1D5DB] leading-relaxed">{t("enterprise_overview_body")}</p>
               </div>
             </div>
           </div>
@@ -396,8 +397,8 @@ export function EnterpriseDemoSection({
           <GlassCard hoverEffect={false}>
             <div className="flex items-center justify-between gap-4 mb-6">
               <div>
-                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00] mb-2">Coverage</p>
-                <h3 className="font-display text-2xl font-bold text-white">Proof to visibility chain</h3>
+                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00] mb-2">{t("enterprise_coverage_label")}</p>
+                <h3 className="font-display text-2xl font-bold text-white">{t("enterprise_coverage_title")}</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {teamOptions.map((option) => (
@@ -424,12 +425,12 @@ export function EnterpriseDemoSection({
               <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <p className="text-sm text-[#D1D5DB] leading-relaxed mb-5">{scenario.narratives[teamFilter]}</p>
                 <div className="space-y-4">
-                  {scenario.proofFlow.map((step) => {
+                  {proofFlow.map((step) => {
                     const value = Math.max(step.value - (timeRange === "30d" ? 3 : 0), 18)
                     return (
-                      <div key={step.label}>
+                      <div key={step.key}>
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-[#D1D5DB]">{step.label}</span>
+                          <span className="text-sm text-[#D1D5DB]">{t(step.key)}</span>
                           <span className="text-sm font-semibold text-white">{value}%</span>
                         </div>
                         <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
@@ -448,7 +449,7 @@ export function EnterpriseDemoSection({
               </div>
 
               <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#6B7280] mb-4">Active team breakdown</p>
+                <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#6B7280] mb-4">{t("enterprise_breakdown_label")}</p>
                 <div className="space-y-4">
                   {visibleTeams.map((team) => {
                     const employees = scaleValue(team.employees, timeRange)
@@ -460,16 +461,18 @@ export function EnterpriseDemoSection({
                         <div className="flex items-center justify-between gap-4 mb-2">
                           <div>
                             <p className="text-white font-medium">{team.label}</p>
-                            <p className="text-xs text-[#9CA3AF]">{employees} active employees • {posts} posts generated</p>
+                            <p className="text-xs text-[#9CA3AF]">
+                              {employees} {t("enterprise_breakdown_active_posts")} - {posts} {t("enterprise_breakdown_posts_generated")}
+                            </p>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-semibold text-white">{proofRate}% proof-backed</p>
-                            <p className="text-xs text-[#9CA3AF]">{vvr}% VVR</p>
+                            <p className="text-sm font-semibold text-white">{proofRate}% {t("enterprise_breakdown_proof")}</p>
+                            <p className="text-xs text-[#9CA3AF]">{vvr}% {t("enterprise_breakdown_vvr")}</p>
                           </div>
                         </div>
                         <div className="grid grid-cols-[1fr_1fr] gap-3">
                           <div>
-                            <p className="text-[11px] uppercase tracking-[0.2em] text-[#6B7280] mb-1">Proof-backed</p>
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-[#6B7280] mb-1">{t("enterprise_breakdown_proof")}</p>
                             <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
                               <div
                                 className="h-full rounded-full"
@@ -481,7 +484,7 @@ export function EnterpriseDemoSection({
                             </div>
                           </div>
                           <div>
-                            <p className="text-[11px] uppercase tracking-[0.2em] text-[#6B7280] mb-1">VVR</p>
+                            <p className="text-[11px] uppercase tracking-[0.2em] text-[#6B7280] mb-1">{t("enterprise_breakdown_vvr")}</p>
                             <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
                               <div
                                 className="h-full rounded-full"
@@ -506,16 +509,16 @@ export function EnterpriseDemoSection({
               <div className="flex items-center gap-2 mb-5">
                 <GitBranch size={16} className="text-[#FF6A00]" />
                 <div>
-                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00]">Governance Status</p>
-                  <h3 className="font-display text-xl font-bold text-white mt-1">Policy guardrails are visible</h3>
+                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00]">{t("enterprise_governance_label")}</p>
+                  <h3 className="font-display text-xl font-bold text-white mt-1">{t("enterprise_governance_title")}</h3>
                 </div>
               </div>
               <div className="space-y-3">
                 {[
-                  "Proof required before publishing claims tied to customer or product outcomes.",
-                  "Manager and legal escalation only when topic risk crosses threshold.",
-                  "Audit trail retained per post, proof source, approver, and status.",
-                  "Employee keeps final publish control while the company keeps governance visibility.",
+                  t("enterprise_governance_1"),
+                  t("enterprise_governance_2"),
+                  t("enterprise_governance_3"),
+                  t("enterprise_governance_4"),
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3 rounded-2xl p-3.5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
                     <ShieldCheck size={16} className="text-[#FF6A00] mt-0.5 shrink-0" />
@@ -529,8 +532,8 @@ export function EnterpriseDemoSection({
               <div className="flex items-center gap-2 mb-5">
                 <ChartColumn size={16} className="text-[#FF6A00]" />
                 <div>
-                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00]">Attribution Snapshot</p>
-                  <h3 className="font-display text-xl font-bold text-white mt-1">Directional, not perfect</h3>
+                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-[#FF6A00]">{t("enterprise_attr_label")}</p>
+                  <h3 className="font-display text-xl font-bold text-white mt-1">{t("enterprise_attr_title")}</h3>
                 </div>
               </div>
               <div className="space-y-4 mb-5">
@@ -550,10 +553,7 @@ export function EnterpriseDemoSection({
                 })}
               </div>
               <div className="rounded-2xl p-4" style={{ background: "rgba(255,106,0,0.05)", border: "1px solid rgba(255,106,0,0.14)" }}>
-                <p className="text-sm text-[#D1D5DB] leading-relaxed">
-                  Attribution here means CRM-linked and modeled influence from employee content touchpoints.
-                  It shows how employee visibility contributes to pipeline in a way leadership can actually use.
-                </p>
+                <p className="text-sm text-[#D1D5DB] leading-relaxed">{t("enterprise_attr_body")}</p>
               </div>
             </GlassCard>
           </div>
@@ -562,3 +562,4 @@ export function EnterpriseDemoSection({
     </section>
   )
 }
+

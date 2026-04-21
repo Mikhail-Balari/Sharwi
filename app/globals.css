@@ -13,10 +13,19 @@
 
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(circle at top left, rgba(255, 106, 0, 0.18), transparent 34%),
-      radial-gradient(circle at 85% 10%, rgba(82, 130, 255, 0.12), transparent 28%),
-      linear-gradient(180deg, #06090f 0%, #0a1018 45%, #06090f 100%);
+    background-color: #000000;
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 50% -10%,
+        rgba(222, 80, 21, 0.12),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 80% 60%,
+        rgba(222, 80, 21, 0.05),
+        transparent
+      );
+    background-attachment: fixed;
     color: #f5f7fb;
     position: relative;
   }
@@ -67,4 +76,70 @@ iframe::-webkit-scrollbar {
 iframe {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ─── GLASSMORPHISM SYSTEM ─── */
+
+.glass-card {
+  background: rgba(255, 252, 242, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 252, 242, 0.08);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 252, 242, 0.05);
+  border-color: rgba(222, 80, 21, 0.25);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(222, 80, 21, 0.1);
+}
+
+.glass-card-orange {
+  background: rgba(222, 80, 21, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(222, 80, 21, 0.2);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.glass-card-orange:hover {
+  background: rgba(222, 80, 21, 0.1);
+  border-color: rgba(222, 80, 21, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(222, 80, 21, 0.15);
+}
+
+.glass-nav {
+  background: rgba(10, 9, 8, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 252, 242, 0.06);
+}
+
+.glass-dark {
+  background: rgba(15, 14, 13, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 252, 242, 0.06);
+  border-radius: 16px;
+}
+
+.glass-input {
+  background: rgba(255, 252, 242, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 252, 242, 0.1);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: rgba(222, 80, 21, 0.5);
+  outline: none;
+  background: rgba(255, 252, 242, 0.06);
 }

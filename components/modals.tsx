@@ -8,6 +8,7 @@ import {
   trackDemoFormSubmit,
   trackDemoSuccess,
 } from "@/lib/analytics"
+import { useI18n } from "@/lib/i18n"
 
 interface ModalProps {
   isOpen: boolean
@@ -17,6 +18,7 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, children, maxWidth = "580px" }: ModalProps) {
+  const { t } = useI18n()
   const handleEsc = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
@@ -60,7 +62,7 @@ export function Modal({ isOpen, onClose, children, maxWidth = "580px" }: ModalPr
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 text-[#9CA3AF] hover:text-white transition-colors"
-          aria-label="Close"
+          aria-label={t("modal_close")}
         >
           <X size={20} />
         </button>
@@ -76,38 +78,8 @@ interface RequestDemoModalProps {
   onSuccess: () => void
 }
 
-const roles = [
-  "Founder / CEO",
-  "Advisor",
-  "Marketing",
-  "Revenue / GTM",
-  "People / Talent",
-  "Operations",
-  "Data / Analytics",
-  "Digital Transformation",
-  "Other",
-]
-
-const companySizes = [
-  "Solo / team",
-  "1-50",
-  "51-200",
-  "201-1,000",
-  "1,001-5,000",
-  "5,000+",
-]
-
-const problems = [
-  "Proof-backed employee advocacy",
-  "Governance and approvals",
-  "Visibility into trusted reach",
-  "Directional CAC improvement",
-  "Attribution clarity",
-  "Executive reporting",
-  "Product overview",
-]
-
 export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModalProps) {
+  const { t } = useI18n()
   const [formData, setFormData] = useState({
     fullName: "",
     company: "",
@@ -121,6 +93,37 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [hasStarted, setHasStarted] = useState(false)
+
+  const roles = [
+    t("modal_role_founder"),
+    t("modal_role_advisor"),
+    t("modal_role_marketing"),
+    t("modal_role_revenue"),
+    t("modal_role_people"),
+    t("modal_role_operations"),
+    t("modal_role_data"),
+    t("modal_role_transformation"),
+    t("modal_role_other"),
+  ]
+
+  const companySizes = [
+    t("modal_size_solo"),
+    "1-50",
+    "51-200",
+    "201-1,000",
+    "1,001-5,000",
+    "5,000+",
+  ]
+
+  const problems = [
+    t("modal_problem_advocacy"),
+    t("modal_problem_governance"),
+    t("modal_problem_visibility"),
+    t("modal_problem_cac"),
+    t("modal_problem_attribution"),
+    t("modal_problem_reporting"),
+    t("modal_problem_overview"),
+  ]
 
   useEffect(() => {
     if (!isOpen) {
@@ -142,14 +145,14 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
   const validate = () => {
     const nextErrors: Record<string, string> = {}
 
-    if (!formData.fullName.trim()) nextErrors.fullName = "Full name is required"
-    if (!formData.company.trim()) nextErrors.company = "Company is required"
-    if (!formData.role) nextErrors.role = "Role is required"
-    if (!formData.workEmail.trim()) nextErrors.workEmail = "Work email is required"
+    if (!formData.fullName.trim()) nextErrors.fullName = t("modal_error_full_name")
+    if (!formData.company.trim()) nextErrors.company = t("modal_error_company")
+    if (!formData.role) nextErrors.role = t("modal_error_role")
+    if (!formData.workEmail.trim()) nextErrors.workEmail = t("modal_error_email")
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail))
-      nextErrors.workEmail = "Enter a valid email"
-    if (!formData.companySize) nextErrors.companySize = "Company size is required"
-    if (!formData.problemToSolve) nextErrors.problemToSolve = "Choose the main problem to solve"
+      nextErrors.workEmail = t("modal_error_email_valid")
+    if (!formData.companySize) nextErrors.companySize = t("modal_error_company_size")
+    if (!formData.problemToSolve) nextErrors.problemToSolve = t("modal_error_problem")
 
     setErrors(nextErrors)
     return Object.keys(nextErrors).length === 0
@@ -173,7 +176,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
     })
 
     if (!result.success) {
-      setSubmitError("We couldn't save the request right now. Please try again.")
+      setSubmitError(t("modal_error_submit"))
       setIsSubmitting(false)
       return
     }
@@ -212,10 +215,10 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
       <div className="p-8">
         <div className="mb-6">
           <h2 className="font-display text-2xl font-bold text-white mb-2">
-            Request a Sharwi demo
+            {t("modal_request_title")}
           </h2>
           <p className="text-[#9CA3AF] leading-relaxed">
-            Tell us about your team and the visibility problem you want to solve, and we&apos;ll tailor the walkthrough.
+            {t("modal_request_body")}
           </p>
         </div>
 
@@ -223,7 +226,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
           <div className="md:col-span-1">
             <input
               type="text"
-              placeholder="Full name *"
+              placeholder={t("modal_full_name")}
               value={formData.fullName}
               onFocus={markStarted}
               onChange={(e) => updateField("fullName", e.target.value)}
@@ -236,7 +239,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
           <div className="md:col-span-1">
             <input
               type="text"
-              placeholder="Company *"
+              placeholder={t("modal_company")}
               value={formData.company}
               onFocus={markStarted}
               onChange={(e) => updateField("company", e.target.value)}
@@ -258,7 +261,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               }}
             >
               <option value="" disabled>
-                Role *
+                {t("modal_role")}
               </option>
               {roles.map((role) => (
                 <option key={role} value={role} className="bg-[#1A1A1A] text-white">
@@ -272,7 +275,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
           <div className="md:col-span-1">
             <input
               type="email"
-              placeholder="Work email *"
+              placeholder={t("modal_email")}
               value={formData.workEmail}
               onFocus={markStarted}
               onChange={(e) => updateField("workEmail", e.target.value)}
@@ -294,7 +297,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               }}
             >
               <option value="" disabled>
-                Company or team size *
+                {t("modal_company_size")}
               </option>
               {companySizes.map((size) => (
                 <option key={size} value={size} className="bg-[#1A1A1A] text-white">
@@ -317,7 +320,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               }}
             >
               <option value="" disabled>
-                Problem to solve *
+                {t("modal_problem")}
               </option>
               {problems.map((problem) => (
                 <option key={problem} value={problem} className="bg-[#1A1A1A] text-white">
@@ -330,7 +333,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
 
           <div className="md:col-span-2">
             <textarea
-              placeholder="Optional notes"
+              placeholder={t("modal_notes")}
               value={formData.notes}
               onFocus={markStarted}
               onChange={(e) => updateField("notes", e.target.value)}
@@ -351,7 +354,7 @@ export function RequestDemoModal({ isOpen, onClose, onSuccess }: RequestDemoModa
               className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ background: "#FF6A00" }}
             >
-              {isSubmitting ? "Sending..." : "Request Demo"}
+              {isSubmitting ? t("modal_submit_loading") : t("modal_submit_idle")}
             </button>
           </div>
         </form>
@@ -366,6 +369,8 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
+  const { t } = useI18n()
+
   useEffect(() => {
     if (isOpen) {
       trackDemoSuccess()
@@ -381,16 +386,16 @@ export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
         >
           <CheckCircle size={32} className="text-green-400" />
         </div>
-        <h2 className="font-display text-2xl font-bold text-white mb-2">Demo request received</h2>
+        <h2 className="font-display text-2xl font-bold text-white mb-2">{t("modal_success_title")}</h2>
         <p className="text-[#9CA3AF] mb-6">
-          We&apos;ll use this context to tailor the next Sharwi enterprise walkthrough.
+          {t("modal_success_body")}
         </p>
         <button
           onClick={onClose}
           className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_24px_rgba(255,106,0,0.4)]"
           style={{ background: "#FF6A00" }}
         >
-          Close
+          {t("modal_close")}
         </button>
       </div>
     </Modal>
@@ -414,6 +419,8 @@ export function UseCaseModal({
   examplePost,
   benefits,
 }: UseCaseModalProps) {
+  const { t } = useI18n()
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-8">
@@ -423,11 +430,11 @@ export function UseCaseModal({
           className="rounded-xl p-5 mb-6"
           style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <p className="text-sm font-bold text-white mb-2">Example Post</p>
+          <p className="text-sm font-bold text-white mb-2">{t("use_case_example_post")}</p>
           <p className="text-[#D1D5DB] italic leading-relaxed">{`"${examplePost}"`}</p>
         </div>
         <div className="mb-6">
-          <p className="font-bold text-white mb-3">Key Benefits</p>
+          <p className="font-bold text-white mb-3">{t("use_case_key_benefits")}</p>
           <ul className="flex flex-col gap-2.5">
             {benefits.map((benefit, index) => (
               <li key={index} className="flex items-start gap-2.5 text-[#9CA3AF]">
@@ -445,7 +452,7 @@ export function UseCaseModal({
             border: "1px solid rgba(255,255,255,0.12)",
           }}
         >
-          Close
+          {t("modal_close")}
         </button>
       </div>
     </Modal>

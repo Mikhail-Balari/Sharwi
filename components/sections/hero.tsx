@@ -1,28 +1,49 @@
 "use client"
 
 import { ArrowRight, BarChart3, ShieldCheck, Sparkles } from "lucide-react"
+import { HeroLogo3D } from "@/components/hero-logo-3d"
 import { SharwiLogoIcon } from "../sharwi-logo"
 import { trackHeroRequestDemo, trackHeroSeeHowItWorks } from "@/lib/analytics"
-
-const heroSignals = [
-  {
-    label: "Product model",
-    value: "Personal Layer + Enterprise Layer",
-    icon: Sparkles,
-  },
-  {
-    label: "Workflow",
-    value: "Capture to evidence to draft to control to impact",
-    icon: ShieldCheck,
-  },
-  {
-    label: "Time to results",
-    value: "Built to deliver impact in weeks, not quarters",
-    icon: BarChart3,
-  },
-]
+import { useI18n } from "@/lib/i18n"
 
 export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
+  const { t } = useI18n()
+  const heroSignals = [
+    {
+      label: t("hero_signal1_label"),
+      value: t("hero_signal1_value"),
+      icon: Sparkles,
+    },
+    {
+      label: t("hero_signal2_label"),
+      value: t("hero_signal2_value"),
+      icon: ShieldCheck,
+    },
+    {
+      label: t("hero_signal3_label"),
+      value: t("hero_signal3_value"),
+      icon: BarChart3,
+    },
+  ]
+
+  const heroSteps = [
+    {
+      step: "01",
+      title: t("hero_panel_step1_title"),
+      body: t("hero_panel_step1_body"),
+    },
+    {
+      step: "02",
+      title: t("hero_panel_step2_title"),
+      body: t("hero_panel_step2_body"),
+    },
+    {
+      step: "03",
+      title: t("hero_panel_step3_title"),
+      body: t("hero_panel_step3_body"),
+    },
+  ]
+
   const handleRequestDemo = () => {
     trackHeroRequestDemo()
     onRequestDemo()
@@ -39,20 +60,16 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
         <div>
           <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-300">
             <span className="inline-flex h-2 w-2 rounded-full bg-[#ff6a00]" />
-            Trusted visibility infrastructure for modern teams
+            {t("hero_label")}
           </div>
 
           <h1 className="mt-7 font-display text-5xl font-bold leading-[0.94] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
-            Turn real work into
-            <span className="block text-[#ff8d3a]">
-              visible reputation and measurable business impact.
-            </span>
+            {t("hero_h1_line1")}
+            <span className="block text-[#ff8d3a]">{t("hero_h1_line2")}</span>
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-            Sharwi is infrastructure, not another content tool. It captures real work,
-            keeps evidence attached, drafts with AI, leaves humans in control, and gives
-            companies a clearer way to measure trusted visibility.
+            {t("hero_sub")}
           </p>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -62,7 +79,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
               data-cta-source="hero_primary"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.35)]"
             >
-              Request Demo
+              {t("hero_cta_primary")}
               <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-1" />
             </button>
 
@@ -72,7 +89,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
               data-cta="see-how-it-works"
               className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-[#ff6a00]/40 hover:bg-white/[0.08]"
             >
-              See the Product Loop
+              {t("hero_cta_secondary")}
             </a>
           </div>
 
@@ -94,40 +111,38 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
 
         <div className="relative">
           <div className="absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_top_right,rgba(255,106,0,0.18),transparent_55%)] blur-3xl" />
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f16]/82 p-6 shadow-[0_28px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+          <div
+            className="relative flex items-center justify-center"
+            style={{
+              width: "100%",
+              height: "500px",
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <HeroLogo3D />
+          </div>
+
+          <div className="glass-card relative overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f16]/82 p-6 shadow-[0_28px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl">
             <div className="flex items-center justify-between border-b border-white/10 pb-5">
               <div className="flex items-center gap-4">
                 <div className="rounded-2xl border border-[#ff6a00]/25 bg-[#ff6a00]/10 p-3">
                   <SharwiLogoIcon size={26} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">Sharwi infrastructure loop</p>
-                  <p className="text-sm text-slate-400">Proof-backed reputation for people and companies</p>
+                  <p className="text-sm font-semibold text-white">{t("hero_panel_title")}</p>
+                  <p className="text-sm text-slate-400">{t("hero_panel_sub")}</p>
                 </div>
               </div>
               <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300">
-                Live product
+                {t("hero_panel_badge")}
               </div>
             </div>
 
             <div className="mt-6 space-y-4">
-              {[
-                {
-                  step: "01",
-                  title: "Capture work",
-                  body: "Pull signal from commits, documents, tickets, CRM notes, launches, and wins.",
-                },
-                {
-                  step: "02",
-                  title: "Attach evidence",
-                  body: "Keep source material, approvals, and proof tied to each story candidate.",
-                },
-                {
-                  step: "03",
-                  title: "Draft with AI, publish with humans",
-                  body: "Sharwi drafts the narrative, but the professional or reviewer still controls what goes out.",
-                },
-              ].map((item) => (
+              {heroSteps.map((item) => (
                 <div key={item.step} className="rounded-[26px] border border-white/8 bg-white/[0.03] p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -143,18 +158,18 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-[24px] border border-white/8 bg-white/[0.03] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Personal outcome
+                  {t("hero_panel_outcome1_label")}
                 </p>
                 <p className="mt-3 text-lg font-semibold leading-7 text-white">
-                  Visible reputation built from real contribution, not performance.
+                  {t("hero_panel_outcome1_body")}
                 </p>
               </div>
               <div className="rounded-[24px] border border-white/8 bg-white/[0.03] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  Enterprise outcome
+                  {t("hero_panel_outcome2_label")}
                 </p>
                 <p className="mt-3 text-lg font-semibold leading-7 text-white">
-                  Trusted employee visibility tied to governance and measurable impact.
+                  {t("hero_panel_outcome2_body")}
                 </p>
               </div>
             </div>

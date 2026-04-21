@@ -7,10 +7,13 @@ import {
   trackMobileDemoInteraction,
   trackTryDemoLive,
 } from "@/lib/analytics"
+import { useI18n } from "@/lib/i18n"
 
 const mobileDemoUrl = "https://sharwi-527721ed.base44.app"
 
 export function LiveDemoSection() {
+  const { t } = useI18n()
+
   useEffect(() => {
     let interactionTracked = false
 
@@ -45,30 +48,28 @@ export function LiveDemoSection() {
         <div className="grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
           <div>
             <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
-              Embedded Mobile Demo
+              {t("demo_label")}
             </p>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
-              Show the product experience where Sharwi starts: in the hands of the professional.
+              {t("demo_h2")}
             </h2>
             <p className="mt-5 text-lg leading-8 text-slate-300">
-              This is Sharwi&apos;s Personal Layer. The professional logs what they worked on,
-              selects a tone, and gets a proof-backed draft in seconds. They review it, edit if needed,
-              and publish. That is the full loop and it happens directly from their phone.
+              {t("demo_body")}
             </p>
 
             <div className="grid gap-4 mt-8">
               {[
                 {
-                  title: "Capture in seconds",
-                  body: "Log work fast or pull it from connected systems.",
+                  title: t("demo_info1_title"),
+                  body: t("demo_info1_body"),
                 },
                 {
-                  title: "Keep the evidence attached",
-                  body: "The story stays grounded in source material and context.",
+                  title: t("demo_info2_title"),
+                  body: t("demo_info2_body"),
                 },
                 {
-                  title: "Approve before anything goes out",
-                  body: "Human control is preserved even when AI drafts the first version.",
+                  title: t("demo_info3_title"),
+                  body: t("demo_info3_body"),
                 },
               ].map((item) => (
                 <div
@@ -90,7 +91,7 @@ export function LiveDemoSection() {
                 data-cta="open-mobile-demo"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6a00] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,106,0,0.35)]"
               >
-                Try the app
+                {t("demo_cta_primary")}
                 <ArrowRight size={18} />
               </a>
               <a
@@ -100,7 +101,7 @@ export function LiveDemoSection() {
                 data-cta-source="mobile_demo"
                 className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.05] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-[#ff6a00]/40 hover:bg-white/[0.08]"
               >
-                Request Guided Demo
+                {t("demo_cta_secondary")}
               </a>
             </div>
           </div>
@@ -113,17 +114,13 @@ export function LiveDemoSection() {
                 <iframe
                   src={mobileDemoUrl}
                   scrolling="no"
-                  title="Sharwi Mobile App Demo"
+                  title={t("demo_iframe_title")}
                   className="h-[760px] w-full bg-[#0a0f16]/82"
                 />
               </div>
             </div>
             <div className="mx-auto mt-6 grid max-w-[520px] gap-4 sm:grid-cols-3">
-              {[
-                "Log work in seconds",
-                "AI draft with evidence",
-                "You approve before anything goes out",
-              ].map((item) => (
+              {[t("demo_pill1"), t("demo_pill2"), t("demo_pill3")].map((item) => (
                 <div
                   key={item}
                   className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-sm text-slate-300"

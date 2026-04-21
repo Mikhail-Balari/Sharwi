@@ -2,48 +2,49 @@
 
 import { Globe, Target, TrendingUp, Users } from "lucide-react"
 import { GlassCard } from "../glass-card"
-
-const metrics = [
-  {
-    icon: Users,
-    stat: "5.6x",
-    title: "Reach multiplier",
-    desc: "More reach than brand-only distribution when employees share verified expertise in their own voice.",
-  },
-  {
-    icon: TrendingUp,
-    stat: "2x",
-    title: "Conversion lift",
-    desc: "Higher conversion rate when pipeline contacts have been exposed to verified employee content before outreach.",
-  },
-  {
-    icon: Target,
-    stat: "30-50%",
-    title: "CPL reduction",
-    desc: "Lower cost per lead when employee visibility is part of the acquisition mix because trust reduces friction in the funnel.",
-  },
-  {
-    icon: Globe,
-    stat: "8 weeks",
-    title: "Time to results",
-    desc: "Most teams see meaningful activation, governance coverage, and first business signals within 8 weeks of deployment.",
-  },
-]
+import { useI18n } from "@/lib/i18n"
 
 export function MetricsSection() {
+  const { t } = useI18n()
+  const metrics = [
+    {
+      icon: Users,
+      stat: "5.6x",
+      title: t("metrics_m1_label"),
+      desc: t("metrics_m1_body"),
+    },
+    {
+      icon: TrendingUp,
+      stat: "2x",
+      title: t("metrics_m2_label"),
+      desc: t("metrics_m2_body"),
+    },
+    {
+      icon: Target,
+      stat: "30-50%",
+      title: t("metrics_m3_label"),
+      desc: t("metrics_m3_body"),
+    },
+    {
+      icon: Globe,
+      stat: "8 weeks",
+      title: t("metrics_m4_label"),
+      desc: t("metrics_m4_body"),
+    },
+  ]
+
   return (
     <section id="roi-benchmark" className="py-24" style={{ position: "relative", zIndex: 3 }}>
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-xs font-semibold tracking-[0.28em] uppercase text-[#FF8C00] mb-4">
-            Results
+            {t("metrics_label")}
           </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-[-0.04em]">
-            The numbers that move when employee visibility works.
+            {t("metrics_h2")}
           </h2>
           <p className="mt-5 text-lg leading-8 text-slate-300">
-            Companies using proof-backed employee advocacy consistently see these results.
-            Sharwi is built to make them reproducible and measurable, not left to chance.
+            {t("metrics_sub")}
           </p>
         </div>
 
@@ -74,11 +75,10 @@ export function MetricsSection() {
             style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
           >
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
-              How Sharwi works
+              {t("metrics_how_title")}
             </p>
             <p className="text-lg leading-8 text-slate-200">
-              Sharwi connects work capture, proof-backed publishing, and trusted reach into a single loop.
-              Every post generates a signal. Every signal improves the next cycle. The business impact compounds.
+              {t("metrics_how_body")}
             </p>
           </div>
           <div
@@ -89,11 +89,10 @@ export function MetricsSection() {
             }}
           >
             <p className="text-xs font-semibold tracking-[0.24em] uppercase text-[#FF8C00] mb-3">
-              For leadership
+              {t("metrics_lead_title")}
             </p>
             <p className="text-lg leading-8 text-slate-200">
-              Sharwi gives leadership a cleaner narrative than &quot;we should post more.&quot;
-              It gives them infrastructure, governance, and a measurement model so employee visibility becomes a channel, not a campaign.
+              {t("metrics_lead_body")}
             </p>
           </div>
         </div>
