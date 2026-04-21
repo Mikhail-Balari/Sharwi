@@ -107,14 +107,14 @@ export function LiveDemoSection() {
 
           <div className="relative mx-auto w-full max-w-[620px]">
             <div className="absolute inset-0 rounded-[44px] bg-[radial-gradient(circle_at_top,rgba(255,106,0,0.2),transparent_55%)] blur-3xl" />
-            <div className="relative mx-auto max-w-[430px] rounded-[42px] border border-white/12 bg-[#0c1016]/95 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.5)]">
+            <div className="relative mx-auto max-w-[430px] rounded-[42px] border border-white/12 bg-[#0a0f16]/82 p-4 shadow-[0_28px_120px_rgba(0,0,0,0.5)] backdrop-blur-xl">
               <div className="mx-auto mb-4 h-7 w-36 rounded-full bg-white/10" />
-              <div className="overflow-hidden rounded-[32px] border border-white/10 bg-black">
+              <div className="overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f16]/82 backdrop-blur-xl">
                 <iframe
                   src={mobileDemoUrl}
                   scrolling="no"
                   title="Sharwi Mobile App Demo"
-                  className="h-[760px] w-full bg-black"
+                  className="h-[760px] w-full bg-[#0a0f16]/82"
                 />
               </div>
             </div>

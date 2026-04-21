@@ -94,7 +94,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
 
         <div className="relative">
           <div className="absolute inset-0 rounded-[32px] bg-[radial-gradient(circle_at_top_right,rgba(255,106,0,0.18),transparent_55%)] blur-3xl" />
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#0d1118]/92 p-6 shadow-[0_28px_120px_rgba(0,0,0,0.42)]">
+          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[#0a0f16]/82 p-6 shadow-[0_28px_120px_rgba(0,0,0,0.42)] backdrop-blur-xl">
             <div className="flex items-center justify-between border-b border-white/10 pb-5">
               <div className="flex items-center gap-4">
                 <div className="rounded-2xl border border-[#ff6a00]/25 bg-[#ff6a00]/10 p-3">

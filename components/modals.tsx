@@ -51,8 +51,10 @@ export function Modal({ isOpen, onClose, children, maxWidth = "580px" }: ModalPr
         className="relative w-full rounded-2xl overflow-y-auto max-h-[90vh]"
         style={{
           maxWidth,
-          background: "rgba(20,20,20,0.95)",
-          border: "1px solid rgba(255,106,0,0.3)",
+          background: "rgba(10,15,22,0.9)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          backdropFilter: "blur(20px)",
+          boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
         }}
       >
         <button
