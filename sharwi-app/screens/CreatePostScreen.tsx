@@ -21,6 +21,7 @@ import { ShareModal } from "@/components/ShareModal";
 import { Text } from "@/components/ui/Text";
 import { BORDER_RADIUS, COLORS, TYPOGRAPHY } from "@/constants/theme";
 import { savePost } from "@/services/api/posts";
+import { isDemoMode } from "@/services/demo-mode";
 
 type ToneOption = "Professional" | "Analytical" | "Executive";
 
@@ -239,13 +240,16 @@ export default function CreatePostScreen() {
   };
 
   const handlePublish = () => {
-    void savePost({
-      workInput: inputText,
-      generatedText: draftText,
-      tone: selectedTone,
-      evidenceChips,
-      status: "published",
-    });
+    if (!isDemoMode()) {
+      void savePost({
+        workInput: inputText,
+        generatedText: draftText,
+        tone: selectedTone,
+        evidenceChips,
+        status: "published",
+      });
+    }
+
     setShowShareModal(true);
   };
 

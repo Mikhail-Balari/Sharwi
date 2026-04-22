@@ -25,6 +25,7 @@ import {
   SharwiPost,
 } from "@/services/feed-posts";
 import { getUserPosts } from "@/services/api/posts";
+import { isDemoMode } from "@/services/demo-mode";
 
 type FeedFilter = "All" | "Published" | "Draft" | "Proof-backed";
 
@@ -84,19 +85,26 @@ const NOTIFICATIONS = [
 
 export function WorkerFeedScreen() {
   const insets = useSafeAreaInsets();
+  const demoMode = isDemoMode();
   const pulseOpacity = useRef(new Animated.Value(0.4)).current;
   const [activeFilter, setActiveFilter] = useState<FeedFilter>("All");
   const [readNotifs, setReadNotifs] = useState<Set<string>>(new Set());
   const [showNotifications, setShowNotifications] = useState(false);
   const [sharePost, setSharePost] = useState<SharwiPost | null>(null);
   const [posts, setPosts] = useState<SharwiPost[]>(SHARWI_POSTS);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!demoMode);
 
   const unreadCount = NOTIFICATIONS.filter(
     (notification) => notification.unread && !readNotifs.has(notification.id),
   ).length;
 
   const loadPosts = async () => {
+    if (demoMode) {
+      setPosts(SHARWI_POSTS);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const realPosts = await getUserPosts();
 

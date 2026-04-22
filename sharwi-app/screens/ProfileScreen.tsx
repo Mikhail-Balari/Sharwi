@@ -18,6 +18,7 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { Text } from "@/components/ui/Text";
 import { COLORS, TYPOGRAPHY } from "@/constants/theme";
 import { logoutUser } from "@/services/api/auth";
+import { DEMO_USER, isDemoMode } from "@/services/demo-mode";
 
 type ShareMode = "badge" | "profile";
 type StatKey = "moments" | "score" | "verified";
@@ -115,6 +116,14 @@ const previousCareer = {
 };
 
 export function ProfileScreen() {
+  const demoMode = isDemoMode();
+  const profileUser = demoMode
+    ? DEMO_USER
+    : {
+        fullName: "Mikhail Balari",
+        role: "Business Data Scientist",
+        headline: "Manager - Data & AI",
+      };
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareMode, setShareMode] = useState<ShareMode>("profile");
   const [showStatInfo, setShowStatInfo] = useState<StatKey | null>(null);
@@ -152,14 +161,20 @@ export function ProfileScreen() {
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Pressable
-            onPress={() => {
-              void handleLogout();
-            }}
-            style={({ pressed }) => pressed && styles.pressed}
-          >
-            <LogOut size={20} color={COLORS.textTertiary} />
-          </Pressable>
+          {demoMode ? (
+            <View style={styles.demoBadge}>
+              <Text style={styles.demoBadgeText}>DEMO MODE</Text>
+            </View>
+          ) : (
+            <Pressable
+              onPress={() => {
+                void handleLogout();
+              }}
+              style={({ pressed }) => pressed && styles.pressed}
+            >
+              <LogOut size={20} color={COLORS.textTertiary} />
+            </Pressable>
+          )}
 
           <Pressable
             onPress={() => {
@@ -183,9 +198,9 @@ export function ProfileScreen() {
               </View>
 
               <View style={styles.identityBlock}>
-                <Text style={styles.name}>Mikhail Balari</Text>
-                <Text style={styles.role}>Business Data Scientist</Text>
-                <Text style={styles.roleMeta}>Manager · Data & AI</Text>
+                <Text style={styles.name}>{profileUser.fullName}</Text>
+                <Text style={styles.role}>{profileUser.role}</Text>
+                <Text style={styles.roleMeta}>{profileUser.headline}</Text>
 
                 <View style={styles.opportunityChip}>
                   <Text style={styles.opportunityText}>Open to opportunities</Text>
@@ -422,6 +437,20 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     gap: 16,
+  },
+  demoBadge: {
+    backgroundColor: "rgba(222,80,21,0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(222,80,21,0.25)",
+    borderRadius: 100,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+  },
+  demoBadgeText: {
+    fontFamily: TYPOGRAPHY.fontFamily,
+    fontSize: 10,
+    fontWeight: "600",
+    color: COLORS.accentOrange,
   },
   scrollContent: {
     paddingHorizontal: 20,

@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { SharwiLogo } from "@/components/SharwiLogo";
 import { getStoredToken } from "@/services/api/auth";
+import { isDemoMode } from "@/services/demo-mode";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -23,6 +24,18 @@ export default function SplashAnimated() {
   }, []);
 
   const navigateNext = async () => {
+    if (isDemoMode()) {
+      const seen = await AsyncStorage.getItem("sharwi_onboarding_done");
+
+      if (seen === "true") {
+        router.replace("/(tabs)/feed");
+      } else {
+        router.replace("/onboarding");
+      }
+
+      return;
+    }
+
     try {
       const token = await getStoredToken();
 

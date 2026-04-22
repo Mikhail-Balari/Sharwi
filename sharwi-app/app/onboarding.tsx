@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { SharwiLogo } from "@/components/SharwiLogo";
+import { isDemoMode } from "@/services/demo-mode";
 
 const { width } = Dimensions.get("window");
 
@@ -57,7 +58,11 @@ export default function Onboarding() {
       setCurrentIndex(next);
     } else {
       await AsyncStorage.setItem("sharwi_onboarding_done", "true");
-      router.replace("/beta");
+      if (isDemoMode()) {
+        router.replace("/(tabs)/feed");
+      } else {
+        router.replace("/beta");
+      }
     }
   };
 

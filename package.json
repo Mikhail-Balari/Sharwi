@@ -7,12 +7,13 @@
     "sharwi-backend"
   ],
   "scripts": {
+    "build:demo": "node scripts/build-demo.mjs",
     "dev": "next dev",
     "dev:landing": "next dev",
     "dev:mobile": "npm --workspace sharwi-app run start -- --port 8083 --clear",
     "dev:mobile:tunnel": "npm --workspace sharwi-app run start -- --port 8083 --tunnel --clear",
     "dev:backend": "npm --workspace sharwi-backend run dev",
-    "build": "next build",
+    "build": "npm run build:demo && next build",
     "build:landing": "next build",
     "build:backend": "npm --workspace sharwi-backend run build",
     "typecheck:mobile": "npm --workspace sharwi-app run typecheck",

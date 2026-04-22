@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ArrowRight } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import {
@@ -10,13 +10,25 @@ import {
 } from "@/lib/analytics"
 import { useI18n } from "@/lib/i18n"
 
-const mobileDemoUrl = "https://sharwi-527721ed.base44.app"
+const DEMO_URL = "/app/"
+const FALLBACK_URL = "https://sharwi-527721ed.base44.app"
 
 export function LiveDemoSection() {
   const { t } = useI18n()
+  const [useFallback, setUseFallback] = useState(false)
+  const activeDemoUrl = useFallback ? FALLBACK_URL : DEMO_URL
 
   useEffect(() => {
     let interactionTracked = false
+    let cancelled = false
+
+    fetch(DEMO_URL, { method: "HEAD" })
+      .then((response) => {
+        if (!cancelled && !response.ok) setUseFallback(true)
+      })
+      .catch(() => {
+        if (!cancelled) setUseFallback(true)
+      })
 
     const markInteraction = (source: string) => {
       if (interactionTracked) return
@@ -38,6 +50,7 @@ export function LiveDemoSection() {
     window.addEventListener("blur", handleBlur)
 
     return () => {
+      cancelled = true
       window.removeEventListener("message", handleMessage)
       window.removeEventListener("blur", handleBlur)
     }
@@ -60,7 +73,7 @@ export function LiveDemoSection() {
 
             <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap mt-8">
               <a
-                href={mobileDemoUrl}
+                href={activeDemoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={trackTryDemoLive}
@@ -104,9 +117,10 @@ export function LiveDemoSection() {
               }}
             >
                 <iframe
-                  src={mobileDemoUrl}
+                  src={useFallback ? FALLBACK_URL : DEMO_URL}
                   title="Sharwi App Demo"
                   scrolling="no"
+                  onError={() => setUseFallback(true)}
                   style={{
                     width: "100%",
                     height: "100%",

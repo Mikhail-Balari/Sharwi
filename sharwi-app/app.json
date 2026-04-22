@@ -4,6 +4,7 @@
     "slug": "sharwi-app",
     "scheme": "sharwi",
     "version": "0.1.0",
+    "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "splash": {
