@@ -19,7 +19,7 @@
     },
     "web": {
       "publicPath": "/app/",
-      "output": "static",
+      "output": "single",
       "bundler": "metro"
     },
     "plugins": [

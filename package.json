@@ -13,7 +13,7 @@
     "dev:mobile": "npm --workspace sharwi-app run start -- --port 8083 --clear",
     "dev:mobile:tunnel": "npm --workspace sharwi-app run start -- --port 8083 --tunnel --clear",
     "dev:backend": "npm --workspace sharwi-backend run dev",
-    "build": "npm run build:demo && next build",
+    "build": "next build",
     "build:landing": "next build",
     "build:backend": "npm --workspace sharwi-backend run build",
     "typecheck:mobile": "npm --workspace sharwi-app run typecheck",
