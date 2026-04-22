@@ -128,7 +128,15 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
           </div>
         </div>
 
-        <div className="order-1 flex min-h-[300px] items-center justify-center md:order-2 md:min-h-[560px]">
+        <div
+          className="order-1 flex min-h-[300px] items-center justify-center md:order-2 md:min-h-[560px]"
+          style={{
+            background: "transparent",
+            backgroundColor: "transparent",
+            border: "none",
+            boxShadow: "none",
+          }}
+        >
           <HeroLogo3D />
         </div>
       </div>

@@ -17,16 +17,27 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
           <div
             className="glass-card-orange relative overflow-hidden rounded-[36px] px-8 py-10 sm:px-10 lg:px-12"
           >
-            <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
-              <div>
-                <p className="section-eyebrow mb-4">
+            <div className="text-center">
+                <p className="section-eyebrow mb-4 text-center">
                   {t("cta_label")}
                 </p>
-                <h2 className="section-title">
+                <h2 className="section-title text-center">
                   {t("cta_h2")}
                 </h2>
-                <p className="section-copy mt-5 max-w-2xl">
+                <p className="section-copy mx-auto mt-5 max-w-2xl text-center">
                   {t("cta_body")}
+                </p>
+                <p
+                  style={{
+                    fontSize: "clamp(15px, 1.4vw, 17px)",
+                    color: "#8A8480",
+                    lineHeight: 1.75,
+                    maxWidth: "560px",
+                    margin: "16px auto 32px",
+                    textAlign: "center",
+                  }}
+                >
+                  Whether you lead marketing, revenue, or people — Sharwi gives your organization a system to turn employee expertise into measurable business impact. One platform. Two layers. Results you can defend to leadership.
                 </p>
                 <button
                   onClick={() => {
@@ -35,28 +46,11 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   }}
                   data-cta="request-demo"
                   data-cta-source="request_demo_section"
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[#DE5015] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(222,80,21,0.35)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#DE5015] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(222,80,21,0.35)]"
                 >
-                  {t("cta_button")}
+                  Request Demo
                   <ArrowRight size={18} />
                 </button>
-              </div>
-
-              <div className="grid gap-4">
-                {[
-                  { title: t("cta_card1_title"), body: t("cta_card1_body") },
-                  { title: t("cta_card2_title"), body: t("cta_card2_body") },
-                  { title: t("cta_card3_title"), body: t("cta_card3_body") },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="glass-card rounded-[24px] border border-white/10 bg-white/[0.08] p-5"
-                  >
-                    <p className="card-title">{item.title}</p>
-                    <p className="card-copy mt-2">{item.body}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
           </ScrollReveal>

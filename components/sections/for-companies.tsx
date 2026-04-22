@@ -79,10 +79,10 @@ export function ForCompanies({ onRequestDemo }: { onRequestDemo: () => void }) {
       <div className="section-wrapper">
         <ScrollReveal>
           <div className="mx-auto mb-12 max-w-[820px] text-center">
-            <p className="section-eyebrow mb-4 text-center">2&nbsp;&nbsp;Enterprise Layer</p>
+            <p className="section-eyebrow mb-4 text-center">Enterprise Layer</p>
             <h2 className="section-title text-center">
               The infrastructure that turns your team&apos;s work into{" "}
-              <span style={{ color: "#DE5015" }}>measurable pipeline.</span>
+              <span style={{ color: "#DE5015" }}>measurable pipeline</span>
             </h2>
             <p className="mx-auto mt-5 max-w-[720px] text-center text-[16px] leading-[1.75] text-[#8A8480]">
               Stop asking employees to post more. Give them infrastructure that makes it automatic, verified, and tied to business results.

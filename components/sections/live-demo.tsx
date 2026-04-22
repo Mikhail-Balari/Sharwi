@@ -49,7 +49,7 @@ export function LiveDemoSection() {
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-[60px] 2xl:gap-[80px]">
           <ScrollReveal direction="left">
             <p className="section-eyebrow mb-4">
-              {t("demo_label")}
+              PERSONAL LAYER · LIVE DEMO
             </p>
             <h2 className="section-title">
               {t("demo_h2")}
@@ -57,31 +57,6 @@ export function LiveDemoSection() {
             <p className="section-copy mt-5">
               {t("demo_body")}
             </p>
-
-            <div className="grid gap-4 mt-8">
-              {[
-                {
-                  title: t("demo_info1_title"),
-                  body: t("demo_info1_body"),
-                },
-                {
-                  title: t("demo_info2_title"),
-                  body: t("demo_info2_body"),
-                },
-                {
-                  title: t("demo_info3_title"),
-                  body: t("demo_info3_body"),
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className="glass-card rounded-2xl border border-white/10 bg-white/[0.04] p-5"
-                >
-                  <p className="card-title">{item.title}</p>
-                  <p className="card-copy mt-2">{item.body}</p>
-                </div>
-              ))}
-            </div>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap mt-8">
               <a
@@ -110,62 +85,34 @@ export function LiveDemoSection() {
           <ScrollReveal
             direction="right"
             delay={0.15}
-            className="relative mx-auto w-[85vw] min-w-[280px] max-w-[320px] md:max-w-[360px] lg:w-[min(400px,40vw)] lg:max-w-[400px]"
+            className="relative mx-auto w-full"
           >
             <div className="absolute left-1/2 top-1/2 h-[110%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-[44px] bg-[radial-gradient(circle_at_top,rgba(222,80,21,0.2),transparent_58%)] blur-3xl" />
             <div
               className="relative mx-auto"
               style={{
-                borderRadius: "clamp(32px, 3vw, 42px)",
-                border: "1px solid rgba(255,255,255,0.10)",
-                backgroundColor: "#0A0A0A",
-                padding: "clamp(8px, 1vw, 14px)",
-                boxShadow:
-                  "0 32px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05)",
+                maxWidth: "clamp(280px, 38vw, 390px)",
+                width: "100%",
+                margin: "0 auto",
+                borderRadius: "16px",
+                overflow: "hidden",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 24px 80px rgba(0,0,0,0.6)",
+                aspectRatio: "390 / 780",
+                position: "relative",
               }}
             >
-              <div
-                className="mx-auto"
-                style={{
-                  width: "clamp(72px, 7vw, 120px)",
-                  height: "clamp(18px, 1.8vw, 26px)",
-                  borderRadius: "100px",
-                  backgroundColor: "rgba(255,255,255,0.08)",
-                  marginBottom: "clamp(6px, 0.8vw, 14px)",
-                }}
-              />
-              <div
-                className="relative overflow-hidden border border-white/10 bg-black"
-                style={{
-                  borderRadius: "clamp(22px, 2.2vw, 30px)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  aspectRatio: "390 / 760",
-                  width: "100%",
-                }}
-              >
                 <iframe
                   src={mobileDemoUrl}
-                  scrolling="no"
-                  title={t("demo_iframe_title")}
+                  title="Sharwi App Demo"
                   style={{
                     width: "100%",
                     height: "100%",
                     border: "none",
                     display: "block",
-                    backgroundColor: "#000000",
                   }}
+                  allow="clipboard-read; clipboard-write"
                 />
-              </div>
-            </div>
-            <div className="mx-auto mt-6 grid gap-3 sm:grid-cols-3">
-              {[t("demo_pill1"), t("demo_pill2"), t("demo_pill3")].map((item) => (
-                <div
-                  key={item}
-                  className="glass-card flex h-12 items-center justify-center rounded-2xl px-3 text-center text-[13px] leading-[1.3] text-[#CCC6BA]"
-                >
-                  {item}
-                </div>
-              ))}
             </div>
           </ScrollReveal>
         </div>

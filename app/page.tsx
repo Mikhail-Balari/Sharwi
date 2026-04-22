@@ -40,7 +40,7 @@ export default function Home() {
       <LiveDemoSection />
       <ForCompanies onRequestDemo={openDemoModal} />
       <EnterpriseDemoSection onRequestDemo={openDemoModal} />
-      <MetricsSection />
+      <MetricsSection onRequestDemo={openDemoModal} />
       <CtaFooter onRequestDemo={openDemoModal} />
 
       <RequestDemoModal

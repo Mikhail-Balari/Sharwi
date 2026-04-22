@@ -158,19 +158,34 @@ export function UseCasesSection({ onRequestDemo }: { onRequestDemo: () => void }
 
       {activeUseCase ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "rgba(0,0,0,0.80)",
+            backdropFilter: "blur(8px)",
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "clamp(16px, 3vw, 40px)",
+            overflowY: "auto",
+          }}
           onClick={(event) => {
             if (event.target === event.currentTarget) setActive(null)
           }}
         >
           <div
-            className="relative max-h-[90vh] w-[90vw] max-w-[540px] overflow-y-auto"
+            className="modal-scroll"
             style={{
               backgroundColor: "#0D0D0D",
               border: "1px solid rgba(255,252,242,0.10)",
               borderRadius: "24px",
-              padding: "36px",
+              padding: "clamp(24px, 3vw, 36px)",
+              width: "100%",
+              maxWidth: "540px",
+              maxHeight: "calc(100vh - 80px)",
+              overflowY: "auto",
+              position: "relative",
             }}
           >
             <button

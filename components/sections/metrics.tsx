@@ -4,8 +4,9 @@ import { DollarSign, Eye, Globe, Target, TrendingUp, Users } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { GlassCard } from "../glass-card"
 import { useI18n } from "@/lib/i18n"
+import { trackCtaClick } from "@/lib/analytics"
 
-export function MetricsSection() {
+export function MetricsSection({ onRequestDemo }: { onRequestDemo: () => void }) {
   const { t } = useI18n()
   const metrics = [
     {
@@ -22,7 +23,7 @@ export function MetricsSection() {
     },
     {
       icon: Target,
-      stat: "30-50%",
+      stat: "30–50%",
       title: t("metrics_m3_label"),
       desc: t("metrics_m3_body"),
     },
@@ -77,8 +78,35 @@ export function MetricsSection() {
           </div>
         </ScrollReveal>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {metrics.map((metric, i) => (
+            <ScrollReveal key={metric.title} delay={i * 0.12}>
+              <GlassCard className="glass-card-orange h-full text-center">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  style={{ background: "rgba(222,80,21,0.2)" }}
+                >
+                  <metric.icon size={22} className="text-[#DE5015]" />
+                </div>
+                <p
+                  className="font-extrabold text-[#DE5015] mb-2"
+                  style={{
+                    fontSize: metric.stat === "30–50%" ? "clamp(36px, 4.5vw, 52px)" : "clamp(40px, 5vw, 56px)",
+                    lineHeight: metric.stat === "30–50%" ? 1.1 : 1,
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  {metric.stat}
+                </p>
+                <h3 className="card-title mb-2 text-center">{metric.title}</h3>
+                <p className="card-copy text-center">{metric.desc}</p>
+              </GlassCard>
+            </ScrollReveal>
+          ))}
+        </div>
+
         <ScrollReveal delay={0.08}>
-          <div className="mb-14">
+          <div className="mt-14">
             <h3
               className="mb-8 text-center"
               style={{
@@ -108,47 +136,29 @@ export function MetricsSection() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {metrics.map((metric, i) => (
-            <ScrollReveal key={metric.title} delay={i * 0.12}>
-              <GlassCard className="glass-card-orange h-full text-center">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ background: "rgba(222,80,21,0.2)" }}
-                >
-                  <metric.icon size={22} className="text-[#DE5015]" />
-                </div>
-                <p
-                  className="font-extrabold text-[#DE5015] mb-2"
-                  style={{ fontSize: "52px", lineHeight: "1" }}
-                >
-                  {metric.stat}
-                </p>
-                <h3 className="card-title mb-2 text-center">{metric.title}</h3>
-                <p className="card-copy text-center">{metric.desc}</p>
-              </GlassCard>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="glass-dark rounded-[28px] p-7">
-            <p className="section-eyebrow mb-3">
-              {t("metrics_how_title")}
+        <ScrollReveal delay={0.16}>
+          <div className="mt-14 rounded-[20px] border border-[#DE5015]/20 bg-[#DE5015]/[0.06] p-10 text-center">
+            <h3 className="text-[28px] font-extrabold tracking-[-0.8px] text-[#FFFCF2]">
+              Ready to see your numbers here?
+            </h3>
+            <p className="mx-auto mt-3 max-w-[520px] text-[15px] leading-relaxed text-[#8A8480]">
+              Book a 30-minute session. We&apos;ll map your team size, current stack, and advocacy baseline to show you what Sharwi would surface.
             </p>
-            <p className="section-copy">
-              {t("metrics_how_body")}
-            </p>
+            <button
+              onClick={() => {
+                trackCtaClick("metrics_ready_cta")
+                onRequestDemo()
+              }}
+              className="mt-6 h-[52px] rounded-full px-8 text-[15px] font-bold text-white transition-transform hover:scale-[1.03]"
+              style={{
+                backgroundColor: "#DE5015",
+                boxShadow: "0 8px 32px rgba(222,80,21,0.35)",
+              }}
+            >
+              Request a Demo →
+            </button>
           </div>
-          <div className="glass-dark rounded-[28px] p-7">
-            <p className="section-eyebrow mb-3">
-              {t("metrics_lead_title")}
-            </p>
-            <p className="section-copy">
-              {t("metrics_lead_body")}
-            </p>
-          </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

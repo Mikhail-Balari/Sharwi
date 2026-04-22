@@ -48,8 +48,8 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
           </div>
         </ScrollReveal>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <ScrollReveal>
+        <div className="grid items-stretch gap-6 lg:grid-cols-3">
+          <ScrollReveal className="h-full">
             <div
               className="relative h-full overflow-hidden rounded-[24px] p-9"
               style={{
@@ -74,10 +74,23 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                 </text>
               </svg>
               <ShieldCheck size={32} color="#DE5015" />
-              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
+              <h3
+                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
+                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
+              >
                 Sharwi Verified Badge
               </h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
+              <p
+                className="mt-3 text-[#8A8480]"
+                style={{
+                  fontSize: "14px",
+                  lineHeight: 1.65,
+                  display: "-webkit-box",
+                  WebkitLineClamp: 5,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
                 How many people know you work well? How many actually value what you deliver? Those recognitions stay locked inside internal platforms — and disappear when you leave. The Sharwi Badge changes that. Every verified achievement becomes a permanent, portable proof of your capabilities.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
@@ -97,11 +110,14 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.08}>
+          <ScrollReveal delay={0.08} className="h-full">
             <div className="glass-card h-full rounded-[24px] p-9">
               <Infinity size={32} color="#DE5015" />
-              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
-                Reputation That Travels With You
+              <h3
+                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
+                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
+              >
+                Portable Reputation
               </h3>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
                 Every time you change jobs, you start from zero — again. Your contributions get buried in closed systems nobody outside your company can see. Sharwi makes your professional track record portable. Your reputation belongs to you — not to your employer.
@@ -114,14 +130,16 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                 ].map(([label, copy, color]) => (
                   <div
                     key={label}
-                    className="flex items-start gap-3 rounded-xl p-3"
+                    className="flex items-start rounded-xl"
                     style={{
                       backgroundColor: "rgba(255,252,242,0.03)",
                       border: "1px solid rgba(255,252,242,0.06)",
+                      gap: "8px",
+                      padding: "10px 14px",
                     }}
                   >
                     <span
-                      className="shrink-0 rounded-full px-[10px] py-[3px] text-[10px] font-semibold"
+                      className="shrink-0 whitespace-nowrap rounded-full px-[10px] py-[3px] text-[10px] font-bold"
                       style={{
                         backgroundColor:
                           color === "#2ECC71"
@@ -134,18 +152,21 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                     >
                       {label}
                     </span>
-                    <p className="flex-1 text-[12px] leading-[1.5] text-[#8A8480]">{copy}</p>
+                    <p className="flex-1 text-[13px] leading-[1.6] text-[#8A8480]">{copy}</p>
                   </div>
                 ))}
               </div>
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.16}>
+          <ScrollReveal delay={0.16} className="h-full">
             <div className="glass-card h-full rounded-[24px] p-9">
               <Sparkles size={32} color="#DE5015" />
-              <h3 className="mt-4 text-[22px] font-extrabold text-[#FFFCF2]">
-                Personal Branding Without the Effort
+              <h3
+                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
+                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
+              >
+                Your Brand, Automated
               </h3>
               <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
                 Most professionals know they should build a presence online. Almost none do — because creating content takes time they don&apos;t have, and the blank page is terrifying. Sharwi turns what you already do into content that sounds like you, backed by evidence, ready to publish.

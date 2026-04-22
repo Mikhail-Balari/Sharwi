@@ -13,6 +13,8 @@ export function HeroLogo3D() {
         alignItems: "center",
         justifyContent: "center",
         perspective: "1000px",
+        background: "transparent",
+        backgroundColor: "transparent",
       }}
     >
       <motion.div

@@ -30,7 +30,6 @@ import {
   Users,
 } from "lucide-react"
 import {
-  trackCtaClick,
   trackEnterpriseDemoInteraction,
 } from "@/lib/analytics"
 
@@ -299,9 +298,10 @@ function StatusCell({
       style={{
         color: item.color,
         background: highlight ? "rgba(222,80,21,0.05)" : "transparent",
+        textAlign: "center",
       }}
     >
-      <span className="font-semibold">{item.label}</span>
+      <span className="inline-flex w-full items-center justify-center font-semibold">{item.label}</span>
     </td>
   )
 }
@@ -432,6 +432,54 @@ function AnimatedTeamRow({
   )
 }
 
+function ExpandedTeamView({
+  team,
+  mult,
+}: {
+  team: (typeof SCENARIOS)["saas"]["teams"][number]
+  mult: number
+}) {
+  const employees = useAnimatedNumber(team.employees)
+  const posts = useAnimatedNumber(Math.round(team.posts * mult))
+  const proofRate = useAnimatedNumber(team.proofRate)
+  const vvr = useAnimatedNumber(team.vvr)
+  const leads = useAnimatedNumber(Math.round(team.leads * mult))
+  const vvrColor = vvr >= 40 ? "#2ECC71" : "#DE5015"
+
+  return (
+    <div className="mt-5 rounded-2xl border border-[#FFFCF2]/[0.08] bg-[#FFFCF2]/[0.03] p-5 opacity-100 transition-opacity duration-250">
+      <div>
+        <h4 className="text-[18px] font-extrabold text-[#FFFCF2]">{team.name}</h4>
+        <p className="mt-1 text-[13px] text-[#8A8480]">{employees} active employees</p>
+      </div>
+      <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <div className="rounded-2xl border border-[#FFFCF2]/[0.06] bg-black/20 p-5">
+          <p className="text-[32px] font-black leading-none text-[#FFFCF2]">{posts.toLocaleString()}</p>
+          <p className="mt-2 text-[12px] text-[#8A8480]">Posts generated</p>
+        </div>
+        <div className="rounded-2xl border border-[#FFFCF2]/[0.06] bg-black/20 p-5">
+          <p className="text-[32px] font-black leading-none text-[#DE5015]">{proofRate}%</p>
+          <p className="mt-2 text-[12px] text-[#8A8480]">Proof-backed rate</p>
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#FFFCF2]/[0.08]">
+            <div className="h-full rounded-full bg-[#DE5015]" style={{ width: `${proofRate}%` }} />
+          </div>
+        </div>
+        <div className="rounded-2xl border border-[#FFFCF2]/[0.06] bg-black/20 p-5">
+          <p className="text-[32px] font-black leading-none" style={{ color: vvrColor }}>{vvr}%</p>
+          <p className="mt-2 text-[12px] text-[#8A8480]">Verified Visibility Rate</p>
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#FFFCF2]/[0.08]">
+            <div className="h-full rounded-full" style={{ width: `${vvr}%`, backgroundColor: vvrColor }} />
+          </div>
+        </div>
+        <div className="rounded-2xl border border-[#FFFCF2]/[0.06] bg-black/20 p-5">
+          <p className="text-[32px] font-black leading-none text-[#FFFCF2]">{leads}</p>
+          <p className="mt-2 text-[12px] text-[#8A8480]">Leads influenced</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function useAnimatedNumber(value: number, duration = 600) {
   const [display, setDisplay] = useState(value)
 
@@ -519,17 +567,15 @@ export function EnterpriseDemoSection({
   const animatedTotalsPosts = useAnimatedNumber(totals.posts)
   const animatedTotalsLeads = useAnimatedNumber(totals.leads)
   const activeAttribution = activeSlice === null ? null : scenario.attribution[activeSlice]
-  const attributionDescriptions: Record<string, string> = {
-    "Employee-sourced demos": "Leads that came directly from employee content",
-    "Assisted pipeline touches": "Deals with at least one employee content touchpoint",
-    "Paid retargeting overlap": "Prospects who also saw paid ads",
-    "Direct / unattributed": "Pipeline without a confirmed content touch",
-    "Expert-sourced inquiries": "Leads that came directly from employee content",
-    "Referral pipeline touches": "Deals with at least one employee content touchpoint",
-    "Event follow-up overlap": "Prospects who also saw paid ads",
-    "Frontline-sourced leads": "Leads that came directly from employee content",
-    "Partnership touchpoints": "Deals with at least one employee content touchpoint",
-    "Paid campaign overlap": "Prospects who also saw paid ads",
+  const selectedTeam = activeTeam === "all" ? null : scenario.teams.find((team) => team.name === activeTeam)
+  const getSliceDescription = (index: number) => {
+    const descriptions = [
+      "Leads that came directly from employee content",
+      "Deals with at least one employee content touchpoint",
+      "Prospects who also saw paid ads",
+      "Pipeline without a confirmed content touch",
+    ]
+    return descriptions[index] ?? ""
   }
 
   return (
@@ -537,7 +583,7 @@ export function EnterpriseDemoSection({
       <div className="section-wrapper">
         <div className="mx-auto mb-12 max-w-[760px] text-center">
           <div className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-[#DE5015]">
-            2&nbsp;&nbsp;Enterprise Layer
+            Enterprise Dashboard
           </div>
           <h2
             className="font-display text-3xl font-extrabold text-[#FFFCF2] sm:text-4xl lg:text-5xl"
@@ -858,23 +904,24 @@ export function EnterpriseDemoSection({
                 How employee content touches pipeline
               </p>
               <div
-                className="relative mx-auto mt-4 h-[220px] max-w-[280px]"
+                className="relative mx-auto mt-4 h-[240px] max-w-[300px]"
                 onMouseMove={(event) => {
                   const rect = event.currentTarget.getBoundingClientRect()
                   setTooltipPos({ x: event.clientX - rect.left, y: event.clientY - rect.top })
                 }}
               >
-                <ResponsiveContainer width="100%" height={220}>
+                <ResponsiveContainer width="100%" height={240}>
                   <PieChart>
                     <Pie
                       data={scenario.attribution}
                       cx="50%"
                       cy="50%"
-                      innerRadius={65}
-                      outerRadius={95}
+                      innerRadius={70}
+                      outerRadius={108}
                       dataKey="value"
                       paddingAngle={3}
                       activeIndex={activeSlice ?? undefined}
+                      onMouseLeave={() => setActiveSlice(null)}
                       activeShape={(props: any) => (
                         <Sector {...props} outerRadius={(props.outerRadius ?? 0) + 6} />
                       )}
@@ -900,24 +947,26 @@ export function EnterpriseDemoSection({
                       border: "1px solid #DE5015",
                       borderRadius: "10px",
                       padding: "10px 14px",
+                      pointerEvents: "none",
                       boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+                      minWidth: "180px",
                       width: "210px",
                     }}
                   >
                     <p className="text-[13px] font-bold text-[#FFFCF2]">{activeAttribution.name}</p>
-                    <p className="mt-1 text-[20px] font-black leading-none text-[#DE5015]">
+                    <p className="mt-1 text-[22px] font-black leading-none text-[#DE5015]">
                       {activeAttribution.value}%
                     </p>
-                    <p className="mt-2 text-[11px] leading-snug text-[#8A8480]">
-                      {attributionDescriptions[activeAttribution.name] ?? "Pipeline with an employee content signal"}
+                    <p className="mt-1 text-[12px] leading-snug text-[#8A8480]">
+                      {getSliceDescription(activeSlice ?? 0)}
                     </p>
                   </div>
                 ) : null}
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <p className="text-[22px] font-extrabold text-[#FFFCF2]">
+                  <p className="text-[20px] font-extrabold text-[#FFFCF2]">
                     {scenario.attribution[0].value}%
                   </p>
-                  <p className="text-[10px] uppercase tracking-[0.12em] text-[#8A8480]">
+                  <p className="text-[9px] uppercase tracking-[0.08em] text-[#8A8480]">
                     employee-sourced
                   </p>
                 </div>
@@ -975,65 +1024,70 @@ export function EnterpriseDemoSection({
               </div>
             </div>
 
-            <div className="mt-5 overflow-x-auto">
-              <table className="min-w-[820px] w-full border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[#FFFCF2]/[0.06] bg-[#FFFCF2]/[0.04] text-xs uppercase tracking-[0.12em] text-[#8A8480]">
-                    {[
-                      "Team",
-                      "Active employees",
-                      "Posts",
-                      "Proof rate",
-                      "VVR",
-                      "Leads influenced",
-                    ].map((head, index) => (
-                      <th
-                        key={head}
-                        className={`px-4 py-3 font-semibold ${
-                          index === 0 ? "sticky left-0 z-10 bg-black" : ""
-                        }`}
-                      >
-                        {head}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {scenario.teams.map((team) => (
-                    <AnimatedTeamRow
-                      key={team.name}
-                      team={team}
-                      mult={mult}
-                      selected={activeTeam === team.name}
-                    />
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr className="border-t border-[#DE5015]/[0.12] bg-[#DE5015]/[0.04] font-semibold">
-                    <td
-                      className="sticky left-0 z-10 px-4 py-4 text-[#FFFCF2]"
-                      style={{ background: "#160f0b" }}
-                    >
-                      Total
-                    </td>
-                    <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">{animatedTotalsEmployees}</td>
-                    <td className="px-4 py-4 text-[#CCC6BA]">
-                      {animatedTotalsPosts.toLocaleString()}
-                    </td>
-                    <td className="px-4 py-4 text-[#CCC6BA]">
-                      <MiniProgress value={avgProof} color="#DE5015" />
-                    </td>
-                    <td className="px-4 py-4 text-[#CCC6BA]">
-                      <MiniProgress
-                        value={avgVvr}
-                        color={avgVvr > 40 ? "#2ECC71" : "#DE5015"}
+            {selectedTeam ? (
+              <ExpandedTeamView team={selectedTeam} mult={mult} />
+            ) : (
+              <div className="mt-5 overflow-x-auto opacity-100 transition-opacity duration-250">
+                <table className="min-w-[820px] w-full border-collapse text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-[#FFFCF2]/[0.06] bg-[#FFFCF2]/[0.04] text-xs uppercase tracking-[0.12em] text-[#8A8480]">
+                      {[
+                        "Team",
+                        "Active employees",
+                        "Posts",
+                        "Proof rate",
+                        "VVR",
+                        "Leads influenced",
+                      ].map((head, index) => (
+                        <th
+                          key={head}
+                          className={`px-4 py-3 font-bold ${
+                            index === 0 ? "sticky left-0 z-10 bg-black" : ""
+                          }`}
+                          style={{ fontSize: "12px" }}
+                        >
+                          {head}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scenario.teams.map((team) => (
+                      <AnimatedTeamRow
+                        key={team.name}
+                        team={team}
+                        mult={mult}
+                        selected={activeTeam === team.name}
                       />
-                    </td>
-                    <td className="px-4 py-4 text-[13px] text-[#FFFCF2]">{animatedTotalsLeads}</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr className="border-t border-[#DE5015]/[0.12] bg-[#DE5015]/[0.04] font-semibold">
+                      <td
+                        className="sticky left-0 z-10 px-4 py-4 text-[#FFFCF2]"
+                        style={{ background: "#000000" }}
+                      >
+                        Total
+                      </td>
+                      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">{animatedTotalsEmployees}</td>
+                      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">
+                        {animatedTotalsPosts.toLocaleString()}
+                      </td>
+                      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">
+                        <MiniProgress value={avgProof} color="#DE5015" />
+                      </td>
+                      <td className="px-4 py-4 text-[13px] text-[#CCC6BA]">
+                        <MiniProgress
+                          value={avgVvr}
+                          color={avgVvr > 40 ? "#2ECC71" : "#DE5015"}
+                        />
+                      </td>
+                      <td className="px-4 py-4 text-[13px] text-[#FFFCF2]">{animatedTotalsLeads}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            )}
           </div>
 
           <div
@@ -1123,6 +1177,9 @@ export function EnterpriseDemoSection({
                           head === "Sharwi" ? "rgba(222,80,21,0.08)" : "transparent",
                         borderTop: head === "Sharwi" ? "2px solid #DE5015" : "0",
                         color: head === "Sharwi" ? "#DE5015" : "#8A8480",
+                        fontWeight: head === "Sharwi" ? 800 : 600,
+                        fontSize: head === "Sharwi" ? "15px" : undefined,
+                        textAlign: "center",
                       }}
                     >
                       {head}
@@ -1152,28 +1209,6 @@ export function EnterpriseDemoSection({
           </p>
         </div>
 
-        <div className="mt-14 rounded-[20px] border border-[#DE5015]/20 bg-[#DE5015]/[0.06] p-10 text-center">
-          <h3 className="text-[28px] font-extrabold tracking-[-0.8px] text-[#FFFCF2]">
-            Ready to see your numbers here?
-          </h3>
-          <p className="mx-auto mt-3 max-w-[520px] text-[15px] leading-relaxed text-[#8A8480]">
-            Book a 30-minute session. We&apos;ll map your team size, current stack, and advocacy
-            baseline to show you what Sharwi would surface.
-          </p>
-          <button
-            onClick={() => {
-              trackCtaClick("enterprise_dashboard_bottom_cta")
-              onRequestDemo()
-            }}
-            className="mt-6 h-[52px] rounded-full px-8 text-[15px] font-bold text-white transition-transform hover:scale-[1.03]"
-            style={{
-              backgroundColor: "#DE5015",
-              boxShadow: "0 8px 32px rgba(222,80,21,0.35)",
-            }}
-          >
-            Request a Demo →
-          </button>
-        </div>
       </div>
     </section>
   )
