@@ -17,6 +17,11 @@
     "android": {
       "package": "com.sharwi.app"
     },
+    "web": {
+      "publicPath": "/app/",
+      "output": "static",
+      "bundler": "metro"
+    },
     "plugins": [
       "expo-router",
       "expo-secure-store"
