@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Award, Eye, Globe, Infinity, Send, ShieldCheck, Sparkles } from "lucide-react"
+import { ArrowRight, Award, Eye, Globe, Send, ShieldCheck, Sparkles } from "lucide-react"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { trackForProfessionalsRequestDemo } from "@/lib/analytics"
 
@@ -27,6 +27,119 @@ const secondaryBenefits = [
   },
 ]
 
+const mainCards = [
+  {
+    icon: ShieldCheck,
+    title: "Sharwi Verified Badge",
+    copy:
+      "How many people know you work well? Those recognitions stay locked inside internal platforms — and disappear when you leave. The Sharwi Badge changes that.",
+    featured: false,
+    footer: (
+      <div className="mt-auto flex flex-wrap gap-2 pt-5">
+        {["Proof-backed", "Evidence-first", "Tamper-proof"].map((pill) => (
+          <span
+            key={pill}
+            className="rounded-full px-3 py-1 text-[11px] font-semibold text-[#DE5015]"
+            style={{
+              backgroundColor: "rgba(222,80,21,0.08)",
+              border: "1px solid rgba(222,80,21,0.20)",
+            }}
+          >
+            {pill}
+          </span>
+        ))}
+      </div>
+    ),
+  },
+  {
+    icon: Globe,
+    title: "Portable Reputation",
+    copy:
+      "Every time you change jobs, you start from zero. Your work gets buried in systems nobody outside your company can see. Sharwi makes your professional track record yours — permanently.",
+    featured: true,
+    footer: (
+      <p className="mt-auto pt-5 text-[12px] font-semibold text-[#DE5015]">
+        Works in 3 scenarios →
+      </p>
+    ),
+  },
+  {
+    icon: Sparkles,
+    title: "Your Brand, Automated",
+    copy:
+      "Most professionals know they should build a presence online. Almost none do — because the blank page is terrifying. Sharwi turns what you already do into content that sounds like you, backed by evidence.",
+    featured: false,
+    footer: (
+      <div className="mt-auto flex flex-wrap items-center gap-2 pt-5">
+        {["Work", "Evidence", "Your voice"].map((step, index) => (
+          <div key={step} className="flex items-center gap-2">
+            <span
+              className="rounded-full px-3 py-1 text-[11px] font-semibold text-[#DE5015]"
+              style={{
+                backgroundColor: "rgba(222,80,21,0.08)",
+                border: "1px solid rgba(222,80,21,0.20)",
+              }}
+            >
+              {step}
+            </span>
+            {index < 2 ? <ArrowRight size={12} color="#5C5955" /> : null}
+          </div>
+        ))}
+      </div>
+    ),
+  },
+]
+
+const portabilityScenarios = [
+  {
+    label: "You + Sharwi company",
+    copy:
+      "Both you and your company use Sharwi — full sync, automatic evidence capture, and full measurement.",
+    background: "rgba(46,204,113,0.05)",
+    border: "1px solid rgba(46,204,113,0.20)",
+    pillBackground: "rgba(46,204,113,0.12)",
+    pillBorder: "1px solid rgba(46,204,113,0.30)",
+    color: "#2ECC71",
+  },
+  {
+    label: "You + Non-Sharwi company",
+    copy:
+      "Your company doesn't use Sharwi yet — you log work manually and keep your reputation growing independently.",
+    background: "rgba(222,80,21,0.05)",
+    border: "1px solid rgba(222,80,21,0.20)",
+    pillBackground: "rgba(222,80,21,0.12)",
+    pillBorder: "1px solid rgba(222,80,21,0.30)",
+    color: "#DE5015",
+  },
+  {
+    label: "Freelancer / Between jobs",
+    copy:
+      "No employer needed — Sharwi works as your independent professional identity layer. Your reputation keeps building no matter your status.",
+    background: "rgba(255,252,242,0.03)",
+    border: "1px solid rgba(255,252,242,0.08)",
+    pillBackground: "rgba(255,252,242,0.06)",
+    pillBorder: "1px solid rgba(255,252,242,0.12)",
+    color: "#8A8480",
+  },
+]
+
+function HighlightSharwi({ text }: { text: string }) {
+  const parts = text.split("Sharwi")
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={`${part}-${index}`}>
+          {part}
+          {index < parts.length - 1 ? (
+            <span style={{ color: "#DE5015" }}>Sharwi</span>
+          ) : null}
+        </span>
+      ))}
+    </>
+  )
+}
+
 export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void }) {
   const handleRequestDemo = () => {
     trackForProfessionalsRequestDemo()
@@ -43,152 +156,76 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
               Build a reputation that <span style={{ color: "#DE5015" }}>belongs to you.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-[680px] text-center text-[16px] leading-[1.75] text-[#8A8480]">
-              Your work is already happening. Sharwi captures it, verifies it, and turns it into a professional identity that stays with you — regardless of where you work.
+              Your work is already happening. <span style={{ color: "#DE5015" }}>Sharwi</span>{" "}
+              captures it, verifies it, and turns it into a professional identity that stays with
+              you — regardless of where you work.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid items-stretch gap-6 lg:grid-cols-3">
-          <ScrollReveal className="h-full">
-            <div
-              className="relative h-full overflow-hidden rounded-[24px] p-9"
-              style={{
-                background: "rgba(222,80,21,0.06)",
-                border: "1px solid rgba(222,80,21,0.25)",
-              }}
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 120 120"
-                className="absolute -right-5 -top-5 h-[120px] w-[120px]"
-                style={{ opacity: 0.15 }}
-              >
-                <path
-                  d="M60 6 98 22 114 60 98 98 60 114 22 98 6 60 22 22Z"
-                  fill="none"
-                  stroke="#DE5015"
-                  strokeWidth="7"
-                />
-                <text x="60" y="65" textAnchor="middle" fill="#DE5015" fontSize="13" fontWeight="800">
-                  VERIFIED
-                </text>
-              </svg>
-              <ShieldCheck size={32} color="#DE5015" />
-              <h3
-                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
-                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
-              >
-                Sharwi Verified Badge
-              </h3>
-              <p
-                className="mt-3 text-[#8A8480]"
-                style={{
-                  fontSize: "14px",
-                  lineHeight: 1.65,
-                  display: "-webkit-box",
-                  WebkitLineClamp: 5,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
-                }}
-              >
-                How many people know you work well? How many actually value what you deliver? Those recognitions stay locked inside internal platforms — and disappear when you leave. The Sharwi Badge changes that. Every verified achievement becomes a permanent, portable proof of your capabilities.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {["Proof-backed", "Evidence-first", "Tamper-proof"].map((pill) => (
+        <div className="grid items-stretch gap-5 lg:grid-cols-3">
+          {mainCards.map((card, index) => {
+            const Icon = card.icon
+
+            return (
+              <ScrollReveal key={card.title} delay={index * 0.08} className="h-full">
+                <div
+                  className="flex h-full flex-col rounded-[20px] p-7"
+                  style={{
+                    background: card.featured ? "rgba(222,80,21,0.05)" : "rgba(255,252,242,0.04)",
+                    border: card.featured
+                      ? "1px solid rgba(222,80,21,0.20)"
+                      : "1px solid rgba(255,252,242,0.08)",
+                  }}
+                >
+                  <Icon size={28} color="#DE5015" />
+                  <h3
+                    className="mt-4 font-extrabold tracking-[-0.02em] text-[#FFFCF2]"
+                    style={{ fontSize: "clamp(16px, 1.5vw, 20px)" }}
+                  >
+                    <HighlightSharwi text={card.title} />
+                  </h3>
+                  <p className="mt-2 flex-1 text-[14px] leading-[1.65] text-[#8A8480]">
+                    <HighlightSharwi text={card.copy} />
+                  </p>
+                  {card.footer}
+                </div>
+              </ScrollReveal>
+            )
+          })}
+        </div>
+
+        <div className="mt-10">
+          <p className="mb-5 text-center text-[13px] font-semibold uppercase tracking-[0.12em] text-[#DE5015]">
+            The 3 portability scenarios
+          </p>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {portabilityScenarios.map((scenario, index) => (
+              <ScrollReveal key={scenario.label} delay={index * 0.06}>
+                <div
+                  className="h-full rounded-2xl p-5"
+                  style={{
+                    background: scenario.background,
+                    border: scenario.border,
+                  }}
+                >
                   <span
-                    key={pill}
-                    className="rounded-full px-[14px] py-[5px] text-[12px] font-semibold text-[#DE5015]"
+                    className="mb-3 inline-flex rounded-full px-3 py-1 text-[11px] font-bold"
                     style={{
-                      backgroundColor: "rgba(222,80,21,0.08)",
-                      border: "1px solid rgba(222,80,21,0.20)",
+                      backgroundColor: scenario.pillBackground,
+                      border: scenario.pillBorder,
+                      color: scenario.color,
                     }}
                   >
-                    {pill}
+                    {scenario.label}
                   </span>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.08} className="h-full">
-            <div className="glass-card h-full rounded-[24px] p-9">
-              <Infinity size={32} color="#DE5015" />
-              <h3
-                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
-                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
-              >
-                Portable Reputation
-              </h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
-                Every time you change jobs, you start from zero — again. Your contributions get buried in closed systems nobody outside your company can see. Sharwi makes your professional track record portable. Your reputation belongs to you — not to your employer.
-              </p>
-              <div className="mt-6 grid gap-2">
-                {[
-                  ["You + Sharwi company", "Both you and your company use Sharwi → full sync, automatic evidence, full measurement.", "#2ECC71"],
-                  ["You + Non-Sharwi company", "Your company doesn't use Sharwi yet → you log work manually, keep your reputation growing.", "#DE5015"],
-                  ["Freelancer / Between jobs", "No employer needed → Sharwi works as your independent professional identity layer.", "#8A8480"],
-                ].map(([label, copy, color]) => (
-                  <div
-                    key={label}
-                    className="flex items-start rounded-xl"
-                    style={{
-                      backgroundColor: "rgba(255,252,242,0.03)",
-                      border: "1px solid rgba(255,252,242,0.06)",
-                      gap: "8px",
-                      padding: "10px 14px",
-                    }}
-                  >
-                    <span
-                      className="shrink-0 whitespace-nowrap rounded-full px-[10px] py-[3px] text-[10px] font-bold"
-                      style={{
-                        backgroundColor:
-                          color === "#2ECC71"
-                            ? "rgba(46,204,113,0.10)"
-                            : color === "#DE5015"
-                              ? "rgba(222,80,21,0.10)"
-                              : "rgba(255,252,242,0.06)",
-                        color,
-                      }}
-                    >
-                      {label}
-                    </span>
-                    <p className="flex-1 text-[13px] leading-[1.6] text-[#8A8480]">{copy}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.16} className="h-full">
-            <div className="glass-card h-full rounded-[24px] p-9">
-              <Sparkles size={32} color="#DE5015" />
-              <h3
-                className="mt-4 overflow-hidden text-ellipsis whitespace-normal font-extrabold tracking-[-0.02em] text-[#FFFCF2] md:whitespace-nowrap"
-                style={{ fontSize: "clamp(18px, 1.8vw, 22px)" }}
-              >
-                Your Brand, Automated
-              </h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-[#8A8480]">
-                Most professionals know they should build a presence online. Almost none do — because creating content takes time they don&apos;t have, and the blank page is terrifying. Sharwi turns what you already do into content that sounds like you, backed by evidence, ready to publish.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                {["Work", "Evidence", "Your voice"].map((step, index) => (
-                  <div key={step} className="flex items-center gap-3">
-                    <span
-                      className="rounded-full px-4 py-1.5 text-[12px] font-semibold text-[#DE5015]"
-                      style={{
-                        backgroundColor: "rgba(222,80,21,0.08)",
-                        border: "1px solid rgba(222,80,21,0.20)",
-                      }}
-                    >
-                      {step}
-                    </span>
-                    {index < 2 ? <ArrowRight size={14} color="#5C5955" /> : null}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+                  <p className="text-[13px] leading-[1.65] text-[#8A8480]">
+                    <HighlightSharwi text={scenario.copy} />
+                  </p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
@@ -197,7 +234,9 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
               <div className="glass-card h-full p-6">
                 <benefit.icon size={22} color="#DE5015" />
                 <h3 className="mt-4 text-[16px] font-bold text-[#FFFCF2]">{benefit.title}</h3>
-                <p className="mt-2 text-[13px] leading-[1.65] text-[#8A8480]">{benefit.desc}</p>
+                <p className="mt-2 text-[13px] leading-[1.65] text-[#8A8480]">
+                  <HighlightSharwi text={benefit.desc} />
+                </p>
               </div>
             </ScrollReveal>
           ))}

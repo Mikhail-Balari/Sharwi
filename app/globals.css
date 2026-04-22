@@ -142,6 +142,16 @@ iframe {
   scrollbar-width: none;
 }
 
+/* Ocultar scrollbar del iframe de demo */
+#mobile-demo iframe {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#mobile-demo iframe::-webkit-scrollbar {
+  display: none;
+}
+
 /* ─── GLASSMORPHISM SYSTEM ─── */
 
 .glass-card {

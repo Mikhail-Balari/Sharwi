@@ -11,9 +11,14 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Sharwi | Turn Real Work Into Reputation and Business Impact",
+  title: "Sharwi — Turn Real Work Into Visible Reputation",
   description:
-    "Sharwi gives professionals a Personal Layer and companies an Enterprise Layer to turn real work into visible reputation and measurable business impact.",
+    "Sharwi transforms everyday work into verified professional content and measurable business impact.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 }
 
 export const viewport: Viewport = {

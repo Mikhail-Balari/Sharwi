@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import {
   Area,
   AreaChart,
@@ -319,7 +319,7 @@ function MetricCard({
   icon: typeof Users
   label: string
   value: string
-  subtext: string
+  subtext: ReactNode
   trend: string
   trendColor?: string
   valueColor?: string
@@ -583,18 +583,22 @@ export function EnterpriseDemoSection({
       <div className="section-wrapper">
         <div className="mx-auto mb-12 max-w-[760px] text-center">
           <div className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-[#DE5015]">
-            Enterprise Dashboard
+            Enterprise Dashboard · Live Data
           </div>
           <h2
-            className="font-display text-3xl font-extrabold text-[#FFFCF2] sm:text-4xl lg:text-5xl"
-            style={{ letterSpacing: "-0.04em" }}
+            className="font-display text-[#FFFCF2]"
+            style={{
+              fontSize: "clamp(28px, 3vw, 40px)",
+              fontWeight: 800,
+              letterSpacing: "-0.025em",
+            }}
           >
-            The infrastructure that turns your team&apos;s work into measurable pipeline.
+            See exactly what your leadership would see.
           </h2>
           <p className="mx-auto mt-5 max-w-[680px] text-base leading-relaxed text-[#CCC6BA]">
-            Most employee advocacy programs fail because they can&apos;t prove ROI. Sharwi connects
-            work evidence to business outcomes — giving your marketing, sales, and HR teams a
-            system they can actually defend to leadership.
+            Real metrics. Real governance. Real attribution. Toggle between company scenarios,
+            time ranges, and teams to explore what{" "}
+            <span style={{ color: "#DE5015" }}>Sharwi</span> surfaces for decision-makers.
           </p>
         </div>
 
@@ -740,7 +744,11 @@ export function EnterpriseDemoSection({
               icon={ChartBar}
               label="VVR"
               value={`${animatedVvr}%`}
-              subtext="Sharwi's North Star metric"
+              subtext={
+                <>
+                  <span style={{ color: "#DE5015" }}>Sharwi</span>&apos;s North Star metric
+                </>
+              }
               trend="↑ +18pp since activation"
               tooltip="% of employees who published verified content at least once this period. Industry baseline: <15%. Sharwi target: >40%."
             />
@@ -1102,7 +1110,7 @@ export function EnterpriseDemoSection({
               <div className="flex items-center gap-2">
                 <Database size={20} color="#DE5015" />
                 <h3 className="text-base font-bold text-[#FFFCF2]">
-                  Why Sharwi&apos;s dataset is irreplaceable
+                  Why <span style={{ color: "#DE5015" }}>Sharwi</span>&apos;s dataset is irreplaceable
                 </h3>
               </div>
               <span
@@ -1118,7 +1126,8 @@ export function EnterpriseDemoSection({
             <p className="mt-3 max-w-[700px] text-[13px] leading-[1.7] text-[#8A8480]">
               Every proof-backed post creates a training signal: which work type, for which role,
               in which industry, generated which business outcome. No employee advocacy tool has
-              this. It compounds with every company that uses Sharwi.
+              this. It compounds with every company that uses{" "}
+              <span style={{ color: "#DE5015" }}>Sharwi</span>.
             </p>
             <div className="mt-7 grid gap-5 md:grid-cols-3">
               {[
@@ -1158,10 +1167,10 @@ export function EnterpriseDemoSection({
         <div className="mt-20">
           <div className="mx-auto mb-10 max-w-[720px] text-center">
             <h3 className="font-display text-3xl font-extrabold text-[#FFFCF2]">
-              How Sharwi compares to existing advocacy tools
+              How <span style={{ color: "#DE5015" }}>Sharwi</span> compares to existing advocacy tools
             </h3>
             <p className="mt-3 text-[#8A8480]">
-              The market amplifies content. Sharwi builds infrastructure.
+              The market amplifies content. <span style={{ color: "#DE5015" }}>Sharwi</span> builds infrastructure.
             </p>
           </div>
           <div className="overflow-x-auto rounded-3xl border border-[#FFFCF2]/[0.08] bg-black/90">

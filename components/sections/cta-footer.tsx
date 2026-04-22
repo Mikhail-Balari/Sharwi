@@ -6,6 +6,23 @@ import { SharwiLogoCombined } from "../sharwi-logo"
 import { trackScheduleLiveDemo } from "@/lib/analytics"
 import { useI18n } from "@/lib/i18n"
 
+function HighlightSharwi({ text }: { text: string }) {
+  const parts = text.split("Sharwi")
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={`${part}-${index}`}>
+          {part}
+          {index < parts.length - 1 ? (
+            <span style={{ color: "#DE5015" }}>Sharwi</span>
+          ) : null}
+        </span>
+      ))}
+    </>
+  )
+}
+
 export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
   const { t } = useI18n()
 
@@ -22,10 +39,10 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   {t("cta_label")}
                 </p>
                 <h2 className="section-title text-center">
-                  {t("cta_h2")}
+                  <HighlightSharwi text={t("cta_h2")} />
                 </h2>
                 <p className="section-copy mx-auto mt-5 max-w-2xl text-center">
-                  {t("cta_body")}
+                  <HighlightSharwi text={t("cta_body")} />
                 </p>
                 <p
                   style={{
@@ -37,7 +54,10 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                     textAlign: "center",
                   }}
                 >
-                  Whether you lead marketing, revenue, or people — Sharwi gives your organization a system to turn employee expertise into measurable business impact. One platform. Two layers. Results you can defend to leadership.
+                  Whether you lead marketing, revenue, or people —{" "}
+                  <span style={{ color: "#DE5015" }}>Sharwi</span> gives your organization a system
+                  to turn employee expertise into measurable business impact. One platform. Two
+                  layers. Results you can defend to leadership.
                 </p>
                 <button
                   onClick={() => {

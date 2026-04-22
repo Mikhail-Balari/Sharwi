@@ -13,11 +13,12 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-black"
+      className="relative overflow-hidden"
       style={{
         minHeight: "100vh",
         padding: "calc(var(--section-padding-y) + 64px) var(--section-padding-x) var(--section-padding-y)",
         zIndex: 3,
+        backgroundColor: "#000000",
       }}
     >
       <div className="section-wrapper grid min-h-[calc(100vh-190px)] items-center gap-8 md:grid-cols-2 lg:gap-14">
@@ -63,7 +64,8 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
               letterSpacing: "-0.01em",
             }}
           >
-            Sharwi transforms everyday work into visible impact, for professionals and the organizations they power.
+            <span style={{ color: "#DE5015" }}>Sharwi</span> transforms everyday work into visible
+            impact, for professionals and the organizations they power.
           </p>
 
           <div className="mt-9 flex flex-wrap justify-center gap-4 md:justify-start">
@@ -135,6 +137,7 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
             backgroundColor: "transparent",
             border: "none",
             boxShadow: "none",
+            overflow: "visible",
           }}
         >
           <HeroLogo3D />

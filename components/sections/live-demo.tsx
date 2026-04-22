@@ -100,16 +100,19 @@ export function LiveDemoSection() {
                 boxShadow: "0 24px 80px rgba(0,0,0,0.6)",
                 aspectRatio: "390 / 780",
                 position: "relative",
+                backgroundColor: "#000000",
               }}
             >
                 <iframe
                   src={mobileDemoUrl}
                   title="Sharwi App Demo"
+                  scrolling="no"
                   style={{
                     width: "100%",
                     height: "100%",
                     border: "none",
                     display: "block",
+                    overflow: "hidden",
                   }}
                   allow="clipboard-read; clipboard-write"
                 />
