@@ -7,7 +7,7 @@
     "sharwi-backend"
   ],
   "scripts": {
-    "build:demo": "cd sharwi-app && EXPO_PUBLIC_DEMO_MODE=true npx expo export --platform web --output-dir ../public/app",
+    "build:demo": "node scripts/build-demo.mjs",
     "dev": "next dev",
     "dev:landing": "next dev",
     "dev:mobile": "npm --workspace sharwi-app run start -- --port 8083 --clear",
