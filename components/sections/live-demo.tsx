@@ -13,6 +13,23 @@ import { useI18n } from "@/lib/i18n"
 const DEMO_URL = "/app/"
 const FALLBACK_URL = "https://sharwi-527721ed.base44.app"
 
+function HighlightSharwi({ text }: { text: string }) {
+  const parts = text.split("Sharwi")
+
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={`${part}-${index}`}>
+          {part}
+          {index < parts.length - 1 ? (
+            <span style={{ color: "#DE5015" }}>Sharwi</span>
+          ) : null}
+        </span>
+      ))}
+    </>
+  )
+}
+
 export function LiveDemoSection() {
   const { t } = useI18n()
   const [useFallback, setUseFallback] = useState(false)
@@ -65,7 +82,7 @@ export function LiveDemoSection() {
               PERSONAL LAYER · LIVE DEMO
             </p>
             <h2 className="section-title">
-              {t("demo_h2")}
+              <HighlightSharwi text={t("demo_h2")} />
             </h2>
             <p className="section-copy mt-5">
               {t("demo_body")}
