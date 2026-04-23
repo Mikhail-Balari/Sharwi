@@ -143,8 +143,7 @@ export function MetricsSection({ onRequestDemo }: { onRequestDemo: () => void })
             </h3>
             <p className="mx-auto mt-3 max-w-[520px] text-[15px] leading-relaxed text-[#8A8480]">
               Book a 30-minute session. We&apos;ll map your team size, current stack, and advocacy
-              baseline to show you what <span style={{ color: "#DE5015" }}>Sharwi</span> would
-              surface.
+              baseline to show you what Sharwi would surface.
             </p>
             <button
               onClick={() => {

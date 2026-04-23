@@ -597,8 +597,7 @@ export function EnterpriseDemoSection({
           </h2>
           <p className="mx-auto mt-5 max-w-[680px] text-base leading-relaxed text-[#CCC6BA]">
             Real metrics. Real governance. Real attribution. Toggle between company scenarios,
-            time ranges, and teams to explore what{" "}
-            <span style={{ color: "#DE5015" }}>Sharwi</span> surfaces for decision-makers.
+            time ranges, and teams to explore what Sharwi surfaces for decision-makers.
           </p>
         </div>
 
@@ -746,7 +745,7 @@ export function EnterpriseDemoSection({
               value={`${animatedVvr}%`}
               subtext={
                 <>
-                  <span style={{ color: "#DE5015" }}>Sharwi</span>&apos;s North Star metric
+                  Sharwi&apos;s North Star metric
                 </>
               }
               trend="↑ +18pp since activation"
@@ -1126,8 +1125,7 @@ export function EnterpriseDemoSection({
             <p className="mt-3 max-w-[700px] text-[13px] leading-[1.7] text-[#8A8480]">
               Every proof-backed post creates a training signal: which work type, for which role,
               in which industry, generated which business outcome. No employee advocacy tool has
-              this. It compounds with every company that uses{" "}
-              <span style={{ color: "#DE5015" }}>Sharwi</span>.
+              this. It compounds with every company that uses Sharwi.
             </p>
             <div className="mt-7 grid gap-5 md:grid-cols-3">
               {[
@@ -1170,7 +1168,7 @@ export function EnterpriseDemoSection({
               How <span style={{ color: "#DE5015" }}>Sharwi</span> compares to existing advocacy tools
             </h3>
             <p className="mt-3 text-[#8A8480]">
-              The market amplifies content. <span style={{ color: "#DE5015" }}>Sharwi</span> builds infrastructure.
+              The market amplifies content. Sharwi builds infrastructure.
             </p>
           </div>
           <div className="overflow-x-auto rounded-3xl border border-[#FFFCF2]/[0.08] bg-black/90">

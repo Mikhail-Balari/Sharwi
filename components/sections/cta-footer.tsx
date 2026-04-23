@@ -42,7 +42,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   <HighlightSharwi text={t("cta_h2")} />
                 </h2>
                 <p className="section-copy mx-auto mt-5 max-w-2xl text-center">
-                  <HighlightSharwi text={t("cta_body")} />
+                  {t("cta_body")}
                 </p>
                 <p
                   style={{
@@ -55,7 +55,7 @@ export function CtaFooter({ onRequestDemo }: { onRequestDemo: () => void }) {
                   }}
                 >
                   Whether you lead marketing, revenue, or people —{" "}
-                  <span style={{ color: "#DE5015" }}>Sharwi</span> gives your organization a system
+                  Sharwi gives your organization a system
                   to turn employee expertise into measurable business impact. One platform. Two
                   layers. Results you can defend to leadership.
                 </p>

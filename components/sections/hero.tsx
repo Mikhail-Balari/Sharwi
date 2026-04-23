@@ -64,8 +64,8 @@ export function HeroSection({ onRequestDemo }: { onRequestDemo: () => void }) {
               letterSpacing: "-0.01em",
             }}
           >
-            <span style={{ color: "#DE5015" }}>Sharwi</span> transforms everyday work into visible
-            impact, for professionals and the organizations they power.
+            Sharwi transforms everyday work into visible impact, for professionals and the
+            organizations they power.
           </p>
 
           <div className="mt-9 flex flex-wrap justify-center gap-4 md:justify-start">

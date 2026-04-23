@@ -156,9 +156,8 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
               Build a reputation that <span style={{ color: "#DE5015" }}>belongs to you.</span>
             </h2>
             <p className="mx-auto mt-5 max-w-[680px] text-center text-[16px] leading-[1.75] text-[#8A8480]">
-              Your work is already happening. <span style={{ color: "#DE5015" }}>Sharwi</span>{" "}
-              captures it, verifies it, and turns it into a professional identity that stays with
-              you — regardless of where you work.
+              Your work is already happening. Sharwi captures it, verifies it, and turns it into a
+              professional identity that stays with you — regardless of where you work.
             </p>
           </div>
         </ScrollReveal>
@@ -186,7 +185,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                     <HighlightSharwi text={card.title} />
                   </h3>
                   <p className="mt-2 flex-1 text-[14px] leading-[1.65] text-[#8A8480]">
-                    <HighlightSharwi text={card.copy} />
+                    {card.copy}
                   </p>
                   {card.footer}
                 </div>
@@ -220,7 +219,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                     {scenario.label}
                   </span>
                   <p className="text-[13px] leading-[1.65] text-[#8A8480]">
-                    <HighlightSharwi text={scenario.copy} />
+                    {scenario.copy}
                   </p>
                 </div>
               </ScrollReveal>
@@ -235,7 +234,7 @@ export function ForProfessionals({ onRequestDemo }: { onRequestDemo: () => void 
                 <benefit.icon size={22} color="#DE5015" />
                 <h3 className="mt-4 text-[16px] font-bold text-[#FFFCF2]">{benefit.title}</h3>
                 <p className="mt-2 text-[13px] leading-[1.65] text-[#8A8480]">
-                  <HighlightSharwi text={benefit.desc} />
+                  {benefit.desc}
                 </p>
               </div>
             </ScrollReveal>
