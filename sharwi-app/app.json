@@ -18,9 +18,9 @@
       "package": "com.sharwi.app"
     },
     "web": {
-      "publicPath": "/app/",
-      "output": "single",
-      "bundler": "metro"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
       "expo-router",

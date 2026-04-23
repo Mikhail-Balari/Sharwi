@@ -117,6 +117,7 @@ export function LiveDemoSection() {
               }}
             >
                 <iframe
+                  key={useFallback ? "fallback" : "demo"}
                   src={useFallback ? FALLBACK_URL : DEMO_URL}
                   title="Sharwi App Demo"
                   scrolling="no"
