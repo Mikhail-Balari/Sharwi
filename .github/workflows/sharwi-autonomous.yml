@@ -24,6 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: agent/staging
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
@@ -76,6 +77,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: agent/staging
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
@@ -104,6 +106,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: agent/staging
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
@@ -135,6 +138,8 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: agent/staging
       - uses: actions/download-artifact@v4
         with:
           name: sharwi-change
@@ -145,18 +150,25 @@ jobs:
           git apply --binary "$RUNNER_TEMP/sharwi-change.patch"
           git add -N -- .
           node scripts/agent-guard.mjs
-      - name: Open draft PR — never merge autonomously
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: bot/sharwi-iteration-${{ github.run_id }}
-          base: main
-          delete-branch: true
-          draft: true
-          title: "agent: Sharwi autonomous iteration #${{ github.run_number }}"
-          body: |
-            Generated from a bounded, autonomous Sharwi iteration.
-            Checks completed: root npm install, backend build, Expo typecheck, Next.js build, independent AI security/code review.
-            Inspect the code, verify staging and approve manually before merging.
-            Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          commit-message: "agent: propose verified Sharwi product slice"
+      - name: Commit reviewed patch to isolated staging branch
+        shell: bash
+        run: |
+          git add --all
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "agent: verified Sharwi iteration #${{ github.run_number }}"
+          git push origin HEAD:agent/staging
+      - name: Create release PR if none exists
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          count="$(gh pr list --head agent/staging --base main --state open --json number --jq 'length')"
+          if [ "$count" = "0" ]; then
+            gh pr create \
+              --base main \
+              --head agent/staging \
+              --draft \
+              --title "release: Sharwi autonomous staging → production" \
+              --body "Validated autonomous changes accumulate in agent/staging. Review CI, privacy/security and the live staging deployment before merging to production. This PR is never merged automatically."
+          fi
