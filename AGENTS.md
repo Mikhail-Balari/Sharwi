@@ -19,7 +19,7 @@ The immediate commercial wedge is **verified employee-led advocacy for B2B compa
 3. Implement a small vertical slice, reusing existing components and APIs. Delegate independent work to specialist subagents when the runtime supports it; see `ops/agents/`. Never have agents concurrently modify the same files.
 4. Run relevant checks, inspect failures, repair and retest. Do not mark anything done merely because code compiled.
 5. Request independent review where available (security, authorization, evidence grounding and test gaps).
-6. Submit an evidence-backed PR. Do not autonomously merge to `main`. Update roadmap/status only in PRs, preserving the historical record.
+6. In autonomous mode, the workflow applies independently tested/reviewed patches to isolated `agent/staging`; a draft release PR accumulates changes toward `main`. Do not merge to `main` autonomously. Keep release notes and test evidence in GitHub Actions/PR history.
 7. After integration, select the next unblocked slice. If a missing credential or product decision blocks progress, work on another safe task and record the blocker.
 
 ## Mandatory domain guarantees
