@@ -1,0 +1,162 @@
+name: Sharwi Autonomous Iteration
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sharwi-autonomous
+  cancel-in-progress: false
+
+jobs:
+  implement:
+    if: ${{ vars.SHARWI_AUTONOMY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.patch.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Prepare dependencies before access to API proxy
+        run: npm ci
+      - name: Implement bounded Sharwi slice
+        id: codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":workspace"
+          prompt-file: ops/agent-prompts/iterate.md
+      - name: Validate paths and create agent patch
+        id: patch
+        shell: bash
+        run: |
+          git add -N -- .
+          set +e
+          node scripts/agent-guard.mjs
+          result=$?
+          set -e
+          if [ "$result" = 2 ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            touch "$RUNNER_TEMP/sharwi-change.patch"
+            exit 0
+          fi
+          if [ "$result" != 0 ]; then exit "$result"; fi
+          git diff --binary -- . > "$RUNNER_TEMP/sharwi-change.patch"
+          if [ -s "$RUNNER_TEMP/sharwi-change.patch" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sharwi-change
+          path: ${{ runner.temp }}/sharwi-change.patch
+          retention-days: 3
+          if-no-files-found: error
+
+  test:
+    needs: implement
+    if: ${{ needs.implement.outputs.changed == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: sharwi-change
+          path: ${{ runner.temp }}
+      - name: Apply agent patch
+        run: |
+          git apply --check --binary "$RUNNER_TEMP/sharwi-change.patch"
+          git apply --binary "$RUNNER_TEMP/sharwi-change.patch"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - run: npm run build:backend
+      - run: npm run typecheck:mobile
+      - run: npm run build
+
+  review:
+    needs: [implement, test]
+    if: ${{ needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: sharwi-change
+          path: ${{ runner.temp }}
+      - name: Apply patch for independent review
+        run: |
+          git apply --check --binary "$RUNNER_TEMP/sharwi-change.patch"
+          git apply --binary "$RUNNER_TEMP/sharwi-change.patch"
+          git add -N -- .
+      - name: Run separate read-only Codex reviewer
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":read-only"
+          prompt-file: ops/agent-prompts/review.md
+          output-schema-file: ops/review-schema.json
+          output-file: ${{ runner.temp }}/sharwi-review.json
+      - name: Enforce independent verdict
+        run: node scripts/check-agent-review.mjs "$RUNNER_TEMP/sharwi-review.json"
+
+  open_pr:
+    needs: [implement, test, review]
+    if: ${{ needs.review.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: sharwi-change
+          path: ${{ runner.temp }}
+      - name: Apply verified patch
+        run: |
+          git apply --check --binary "$RUNNER_TEMP/sharwi-change.patch"
+          git apply --binary "$RUNNER_TEMP/sharwi-change.patch"
+          git add -N -- .
+          node scripts/agent-guard.mjs
+      - name: Open draft PR — never merge autonomously
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: bot/sharwi-iteration-${{ github.run_id }}
+          base: main
+          delete-branch: true
+          draft: true
+          title: "agent: Sharwi autonomous iteration #${{ github.run_number }}"
+          body: |
+            Generated from a bounded, autonomous Sharwi iteration.
+            Checks completed: root npm install, backend build, Expo typecheck, Next.js build, independent AI security/code review.
+            Inspect the code, verify staging and approve manually before merging.
+            Workflow run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          commit-message: "agent: propose verified Sharwi product slice"
