@@ -26,3 +26,11 @@ NO usar BlurView. Todo debe funcionar en Expo Go sin eject.
 - No agregar tabs nuevas sin instrucción explícita
 - No usar datos de usuarios distintos a Mikhail Balari en la demo
 - No poner íconos dentro de View circulares rellenas
+
+## Autonomous build addendum
+- Preserve every design and Expo Go compatibility rule above; do not change the four-tab structure without explicit product authorization.
+- These fixed demo identity details apply to *demo fixtures only*. Real authenticated users and enterprise data must never be replaced with demo values or portrayed as verified.
+- Prioritize manual work capture, source-backed evidence, AI draft review, explicit human approval and portable profile; preserve existing routes while connecting real typed API flows.
+- Never imply seeded/fake data is imported from a vendor or persisted in production. Label demonstration experiences explicitly.
+- Use typed API contracts and authenticated storage; handle offline/expired-session states and protect corporate private sources.
+- Run `npm run typecheck:mobile` from the repository root, and test affected UX flows as part of the task.
